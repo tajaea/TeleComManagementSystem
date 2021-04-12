@@ -2,7 +2,7 @@ package com.microstar.cablevision.controller;
 
 import com.microstar.cablevision.views.ChatView;
 import com.microstar.cablevision.views.CustomerDashBoard;
-
+import com.microstar.cablevision.views.LoginView;
 import com.microstar.cablevision.views.MakeComplaint;
 import com.microstar.cablevision.views.ViewAllComplaintCustomer;
 
@@ -38,6 +38,7 @@ public class CustomerDashboardController {
 		con.closeConnection();//close the connection to the server
 		
 		customerDashboardview.getFrame().dispose();//Close the Dashboard of a customer
+		new LoginView(con);
 	}
 	public void setCustomerInformation(Customer customerObj) {
 
