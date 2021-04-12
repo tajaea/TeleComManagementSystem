@@ -29,6 +29,7 @@ public class TechnicianController {
 	}
 	
 	public void getLoginPage() {
+		clientObj.closeConnection();
 		window.dispose();
 		new LoginView(clientObj);
 	}

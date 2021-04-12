@@ -31,6 +31,7 @@ public class RepresentativeController {
 	}
 	
 	public void getLoginPage() {
+		clientObj.closeConnection();
 		window.dispose();
 		new LoginView(clientObj);
 	}
