@@ -3,8 +3,10 @@ package com.microstar.cablevision.views;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import com.microstar.cablevision.controller.RepresentativeController;
+import com.microstar.cablevision.controller.ViewCompalintController;
 
 import microStarCableVision.Client;
 
@@ -52,7 +54,11 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 	JTable pDDetailTable;
 	JScrollPane pDTableSPane;
 	
-	static RepresentativeController repController;
+	Object[] row = new Object[5];
+	DefaultTableModel model = new DefaultTableModel();
+	
+	RepresentativeController repController;
+	ViewCompalintController viewcomplaintControl;
 	
 	public static void main(String[] args) {
 		/*EventQueue.invokeLater(new Runnable() {
@@ -110,6 +116,9 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 							noServiceDetailPanel.setVisible(true);
 							billComplaintDetailPanel.setVisible(false);
 							pDestructionDetailPanel.setVisible(false);
+							
+							viewcomplaintControl.returnNSComplaintForEmployee();;
+							viewcomplaintControl.populateTable();
 						}
 					}
 				});
@@ -194,6 +203,31 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 		noServiceDetailPanel.add(noServiceTableSPane);
 		
 		noServiceDetailTable = new JTable();
+		noServiceDetailTable.setModel(new DefaultTableModel(
+			new Object[][] {
+				
+			},
+			new String[] {
+					"Complaint ID", "Customer ID", "Type", "Details", "Status", "Date", "Time"
+			}
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false, false, false, false, false, false	
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		noServiceDetailTable.getColumnModel().getColumn(0);
+		noServiceDetailTable.getColumnModel().getColumn(1);
+		noServiceDetailTable.getColumnModel().getColumn(2);
+		noServiceDetailTable.getColumnModel().getColumn(3);
+		noServiceDetailTable.getColumnModel().getColumn(4);
+		noServiceDetailTable.getColumnModel().getColumn(5);
+		noServiceDetailTable.getColumnModel().getColumn(6);
+		model = (DefaultTableModel) noServiceDetailTable.getModel();
+		noServiceDetailTable.setBackground(Color.WHITE);
+		noServiceDetailTable.setRowHeight(30);
 		noServiceTableSPane.setViewportView(noServiceDetailTable);
 		
 		billComplaintDetailPanel = new JPanel();
@@ -226,5 +260,23 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 		scrollBar.setBounds(1067, 11, 17, 449);
 		contentPane.add(scrollBar);
 		setVisible(true);
+	}
+	public JTable getNoServiceDetailTable() {
+		return noServiceDetailTable;
+	}
+	public void setNoServiceDetailTable(JTable noServiceDetailTable) {
+		this.noServiceDetailTable = noServiceDetailTable;
+	}
+	public DefaultTableModel getModel() {
+		return model;
+	}
+	public void setModel(DefaultTableModel model) {
+		this.model = model;
+	}
+	public Object[] getRow() {
+		return row;
+	}
+	public void setRow(Object[] row) {
+		this.row = row;
 	}
 }

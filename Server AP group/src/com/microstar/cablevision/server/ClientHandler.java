@@ -77,9 +77,11 @@ public class ClientHandler extends Thread implements Runnable {
 						objOs.writeObject(complaint);
 						break;
 						
-					/*case "Get Employee":
-
-						break;*/
+					case "Get NSComplaint":
+						customerobj = (Customer) objIs.readObject();
+						ArrayList<Complaint>nsComplaint=getCustomerNSComplaint(customerobj);
+						objOs.writeObject(nsComplaint);
+						break;
 						
 					case "User Login":
 						Authentication authe = (Authentication) objIs.readObject();
@@ -302,6 +304,26 @@ public class ClientHandler extends Thread implements Runnable {
 		
 		try (PreparedStatement pst=dBConn.prepareStatement(CRUD.readAllComplaints());
 		ResultSet resultSet=state.executeQuery(CRUD.readAllComplaints())){
+		
+		while (resultSet.next()) {
+			complaintlist.add(new Complaint(resultSet.getInt("complaint_id"), resultSet.getString("cust_id"), resultSet.getString("type"), resultSet.getString("details"),responselist,resultSet.getString("status"),resultSet.getString("date"),resultSet.getString("time")));
+		}
+		System.out.println(complaintlist.size()+"The size");
+		
+		//ViewComplaintView.getTable().setModel(DbUtils.resultSetToTableModel(result));
+		}catch(Exception e){
+			
+		}
+		//System.out.println(complaintlist.get(0).getDetails()+"Client Handler");
+		return complaintlist;
+	}
+	
+	private ArrayList<Complaint> getCustomerNSComplaint(Customer customer) {
+		ArrayList<Complaint> complaintlist= new ArrayList<Complaint>();
+		ArrayList<Responses> responselist= new ArrayList<Responses>();		
+		
+		try (PreparedStatement pst=dBConn.prepareStatement(CRUD.viewComplaintByType(complaintObj));
+		ResultSet resultSet=state.executeQuery(CRUD.viewComplaintByType(complaintObj))){
 		
 		while (resultSet.next()) {
 			complaintlist.add(new Complaint(resultSet.getInt("complaint_id"), resultSet.getString("cust_id"), resultSet.getString("type"), resultSet.getString("details"),responselist,resultSet.getString("status"),resultSet.getString("date"),resultSet.getString("time")));

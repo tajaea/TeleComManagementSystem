@@ -77,6 +77,9 @@ public class CRUD {
 	public static String viewSpecificComplaint(Complaint complaint) {
 		return "SELECT * FROM ap.complaint WHERE complaint_id = "+"'"+complaint.getComplaintID()+"';";
 	}
+	public static String viewComplaintByType(Complaint complaint) {
+		return "SELECT * FROM ap.complaint WHERE type = "+"'"+complaint.getType()+"';";
+	}
 	public static String readAllComplaints() {
 		return "SELECT * FROM ap.complaint";
 	}
