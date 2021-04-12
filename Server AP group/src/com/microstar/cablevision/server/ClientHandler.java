@@ -76,6 +76,11 @@ public class ClientHandler extends Thread implements Runnable {
 						ArrayList<Complaint>complaint=getCustomerComplaint(customerobj);
 						objOs.writeObject(complaint);
 						break;
+						
+					/*case "Get Employee":
+
+						break;*/
+						
 					case "User Login":
 						Authentication authe = (Authentication) objIs.readObject();
 						if (authe.getUserid().substring(0, 3).equals(CUSTOMER)) {
@@ -117,10 +122,6 @@ public class ClientHandler extends Thread implements Runnable {
 						 * if(!clienthandler.customerobj.getCustomerID().equals(customerobj.
 						 * getCustomerID())) { clienthandler.send(onlinemsg); } }
 						 */
-						break;
-					
-					case "Get Employee":
-
 						break;
 					}
 				} catch (ClassNotFoundException e) {

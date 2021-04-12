@@ -191,7 +191,4 @@ public class ViewAllComplaintCustomer {
 	public void setFrame(JFrame frame) {
 		this.frame = frame;
 	}
-	
-
-
 }

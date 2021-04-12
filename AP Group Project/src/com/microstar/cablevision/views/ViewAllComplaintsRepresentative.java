@@ -72,16 +72,16 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 	 */
 	public ViewAllComplaintsRepresentative(Client client) {
 		setResizable(false);
-		setMinimumSize(new Dimension(800, 500));
-		setMaximumSize(new Dimension(800, 500));
+		setMinimumSize(new Dimension(1100, 500));
+		setMaximumSize(new Dimension(1100, 500));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		repController = new RepresentativeController(null, this, null);
 		repController.setClient(client);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 245, 238));
-		contentPane.setMinimumSize(new Dimension(800, 500));
-		contentPane.setMaximumSize(new Dimension(800, 500));
+		contentPane.setMinimumSize(new Dimension(1100, 500));
+		contentPane.setMaximumSize(new Dimension(1100, 500));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -180,41 +180,41 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 		
 		complaintsOptionsDetails = new JPanel();
 		complaintsOptionsDetails.setBackground(new Color(255, 245, 238));
-		complaintsOptionsDetails.setBounds(273, 11, 483, 449);
+		complaintsOptionsDetails.setBounds(273, 11, 784, 449);
 		contentPane.add(complaintsOptionsDetails);
 		complaintsOptionsDetails.setLayout(null);
 		
 		noServiceDetailPanel = new JPanel();
-		noServiceDetailPanel.setBounds(10, 11, 463, 427);
+		noServiceDetailPanel.setBounds(10, 11, 764, 427);
 		complaintsOptionsDetails.add(noServiceDetailPanel);
 		noServiceDetailPanel.setLayout(null);
 		
 		noServiceTableSPane = new JScrollPane();
-		noServiceTableSPane.setBounds(10, 415, 443, -403);
+		noServiceTableSPane.setBounds(10, 415, 744, -403);
 		noServiceDetailPanel.add(noServiceTableSPane);
 		
 		noServiceDetailTable = new JTable();
 		noServiceTableSPane.setViewportView(noServiceDetailTable);
 		
 		billComplaintDetailPanel = new JPanel();
-		billComplaintDetailPanel.setBounds(10, 11, 463, 427);
+		billComplaintDetailPanel.setBounds(10, 11, 764, 427);
 		complaintsOptionsDetails.add(billComplaintDetailPanel);
 		billComplaintDetailPanel.setLayout(null);
 		
 		billCTableSPane = new JScrollPane();
-		billCTableSPane.setBounds(10, 416, 443, -404);
+		billCTableSPane.setBounds(10, 416, 744, -404);
 		billComplaintDetailPanel.add(billCTableSPane);
 		
 		billCDetailTable = new JTable();
 		billCTableSPane.setViewportView(billCDetailTable);
 		
 		pDestructionDetailPanel = new JPanel();
-		pDestructionDetailPanel.setBounds(10, 11, 463, 427);
+		pDestructionDetailPanel.setBounds(10, 11, 764, 427);
 		complaintsOptionsDetails.add(pDestructionDetailPanel);
 		pDestructionDetailPanel.setLayout(null);
 		
 		pDTableSPane = new JScrollPane();
-		pDTableSPane.setBounds(10, 412, 443, -400);
+		pDTableSPane.setBounds(10, 412, 744, -400);
 		pDestructionDetailPanel.add(pDTableSPane);
 		
 		pDDetailTable = new JTable();
@@ -223,7 +223,7 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 		scrollBar = new JScrollBar();
 		scrollBar.setForeground(new Color(255, 245, 238));
 		scrollBar.setBackground(new Color(255, 245, 238));
-		scrollBar.setBounds(767, 11, 17, 449);
+		scrollBar.setBounds(1067, 11, 17, 449);
 		contentPane.add(scrollBar);
 		setVisible(true);
 	}

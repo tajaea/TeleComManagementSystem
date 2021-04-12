@@ -153,10 +153,6 @@ public static String createEmployee(Employee employee) {
 			+ employee.getTelephoneNumber() + "', '" + employee.getPassword() + "', '" + employee.getJob_Title() + "');";
 }
 
-
-
-
- 
  public static String login_credentials(Authentication auth) {
 	 return "SELECT * FROM ap.customer WHERE customer_ID = "+ "'"+auth.getUserid()+"'" + " AND password = "+ "'"+auth.getPassword()+"'";
 	 
