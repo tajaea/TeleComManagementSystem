@@ -39,8 +39,9 @@ public class ViewAllComplaintsRep {
 		}
 	}
 	
-	public void returnNSComplaintForEmployee(String type) {
+	public void returnComplaintForEmployee(String type) {
 		clientObj.sendAction("Get NSComplaint");
+		clientObj.sendAction("Get BCComplaint");
 	}
 	
 	public void returnToRepGui() {

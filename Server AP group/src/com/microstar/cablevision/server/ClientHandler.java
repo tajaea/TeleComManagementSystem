@@ -76,11 +76,24 @@ public class ClientHandler extends Thread implements Runnable {
 						ArrayList<Complaint>complaint=getCustomerComplaint(customerobj);
 						objOs.writeObject(complaint);
 						break;
-						
+				
+					/*Added new Actions that came from the ViewAllComplaintRep Controller*/
 					case "Get NSComplaint":
-						String type = (String) objIs.readObject();
-						ArrayList<Complaint>nsComplaint=getCustomerNSComplaint(type);
+						String nsType = (String) objIs.readObject();
+						ArrayList<Complaint> nsComplaint = getCustomerComplaintForEmployee(nsType);
 						objOs.writeObject(nsComplaint);
+						break;
+						
+					case "Get BCComplaint":
+						String bcType = (String) objIs.readObject();
+						ArrayList<Complaint> bcComplaint = getCustomerComplaintForEmployee(bcType);
+						objOs.writeObject(bcComplaint);
+						break;
+						
+					case "Get PDComplaint":
+						String pdType = (String) objIs.readObject();
+						ArrayList<Complaint> pdComplaint = getCustomerComplaintForEmployee(pdType);
+						objOs.writeObject(pdComplaint);
 						break;
 						
 					case "User Login":
@@ -318,7 +331,7 @@ public class ClientHandler extends Thread implements Runnable {
 		return complaintlist;
 	}
 	
-	private ArrayList<Complaint> getCustomerNSComplaint(String type) {
+	private ArrayList<Complaint> getCustomerComplaintForEmployee(String type) {
 		ArrayList<Complaint> complaintlist= new ArrayList<Complaint>();
 		ArrayList<Responses> responselist= new ArrayList<Responses>();		
 		

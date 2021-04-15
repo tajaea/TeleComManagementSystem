@@ -117,8 +117,8 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 							billComplaintDetailPanel.setVisible(false);
 							pDestructionDetailPanel.setVisible(false);
 							
-							String type = "No Service";
-							viewcomplaintControl.returnNSComplaintForEmployee(type);
+							String nsType = "No Service";
+							viewcomplaintControl.returnComplaintForEmployee(nsType);
 							viewcomplaintControl.populateTableForRep();
 						}
 					}
@@ -141,6 +141,10 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 							noServiceDetailPanel.setVisible(false);
 							billComplaintDetailPanel.setVisible(true);
 							pDestructionDetailPanel.setVisible(false);
+							
+							String bcType = "Bill Complaint";
+							viewcomplaintControl.returnComplaintForEmployee(bcType);
+							viewcomplaintControl.populateTableForRep();
 						}
 					}
 				});
@@ -162,6 +166,10 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 							noServiceDetailPanel.setVisible(false);
 							billComplaintDetailPanel.setVisible(false);
 							pDestructionDetailPanel.setVisible(true);
+							
+							String pdType = "Property Destruction";
+							viewcomplaintControl.returnComplaintForEmployee(pdType);
+							viewcomplaintControl.populateTableForRep();
 						}
 					}
 				});
@@ -212,6 +220,10 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 					"Complaint ID", "Customer ID", "Type", "Details", "Status", "Date", "Time"
 			}
 		) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] {
 				false, false, false, false, false, false, false	
 			};
@@ -241,6 +253,35 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 		billComplaintDetailPanel.add(billCTableSPane);
 		
 		billCDetailTable = new JTable();
+		billCDetailTable.setModel(new DefaultTableModel(
+				new Object[][] {
+					
+				},
+				new String[] {
+						"Complaint ID", "Customer ID", "Type", "Details", "Status", "Date", "Time"
+				}
+			) {
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+				boolean[] columnEditables = new boolean[] {
+					false, false, false, false, false, false, false	
+				};
+				public boolean isCellEditable(int row, int column) {
+					return columnEditables[column];
+				}
+			});
+			billCDetailTable.getColumnModel().getColumn(0);
+			billCDetailTable.getColumnModel().getColumn(1);
+			billCDetailTable.getColumnModel().getColumn(2);
+			billCDetailTable.getColumnModel().getColumn(3);
+			billCDetailTable.getColumnModel().getColumn(4);
+			billCDetailTable.getColumnModel().getColumn(5);
+			billCDetailTable.getColumnModel().getColumn(6);
+			model = (DefaultTableModel) billCDetailTable.getModel();
+			billCDetailTable.setBackground(Color.WHITE);
+			billCDetailTable.setRowHeight(30);
 		billCTableSPane.setViewportView(billCDetailTable);
 		
 		pDestructionDetailPanel = new JPanel();
@@ -253,6 +294,35 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 		pDestructionDetailPanel.add(pDTableSPane);
 		
 		pDDetailTable = new JTable();
+		pDDetailTable.setModel(new DefaultTableModel(
+				new Object[][] {
+					
+				},
+				new String[] {
+						"Complaint ID", "Customer ID", "Type", "Details", "Status", "Date", "Time"
+				}
+			) {
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+				boolean[] columnEditables = new boolean[] {
+					false, false, false, false, false, false, false	
+				};
+				public boolean isCellEditable(int row, int column) {
+					return columnEditables[column];
+				}
+			});
+			pDDetailTable.getColumnModel().getColumn(0);
+			pDDetailTable.getColumnModel().getColumn(1);
+			pDDetailTable.getColumnModel().getColumn(2);
+			pDDetailTable.getColumnModel().getColumn(3);
+			pDDetailTable.getColumnModel().getColumn(4);
+			pDDetailTable.getColumnModel().getColumn(5);
+			pDDetailTable.getColumnModel().getColumn(6);
+			model = (DefaultTableModel) pDDetailTable.getModel();
+			pDDetailTable.setBackground(Color.WHITE);
+			pDDetailTable.setRowHeight(30);
 		pDTableSPane.setViewportView(pDDetailTable);
 		
 		scrollBar = new JScrollBar();

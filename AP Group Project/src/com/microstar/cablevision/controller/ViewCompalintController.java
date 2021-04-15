@@ -69,9 +69,4 @@ public class ViewCompalintController {
 
 		this.customerObj=customerObj;
 	}
-
-	
-	
-	
-	
 }
