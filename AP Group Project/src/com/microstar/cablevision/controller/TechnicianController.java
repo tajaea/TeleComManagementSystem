@@ -10,18 +10,16 @@ import microStarCableVision.Employee;
 
 public class TechnicianController {
 	EmployeeTechnicianView window;
-	ViewAllComplaintsTechnician tWindow;
 	Client clientObj;
-	
 	Employee empObj;
 	String id = empObj.getStaff_Id();
-	public TechnicianController(EmployeeTechnicianView view, ViewAllComplaintsTechnician viewAllComplaintsTechnician) {
-		setWindow(view, viewAllComplaintsTechnician);
+	
+	public TechnicianController(EmployeeTechnicianView view) {
+		setWindow(view);
 	}
 	
-	private void setWindow(EmployeeTechnicianView view, ViewAllComplaintsTechnician viewAllComplaintsTechnician) {
+	private void setWindow(EmployeeTechnicianView view) {
 		window = view;
-		tWindow = viewAllComplaintsTechnician;
 	}
 		
 	public void setClient(Client client) {
@@ -44,11 +42,6 @@ public class TechnicianController {
 		new ViewAllComplaintsTechnician(clientObj);
 	}
 	
-	public void returnToTechGui() {
-		tWindow.dispose();
-		new EmployeeTechnicianView(clientObj);
-	}
-
 	public void setEmpObj(Employee employee) {
 		empObj = employee;
 		window.getNameTextField().setText(this.empObj.getFirst_Name() + " " + this.empObj.getLast_Name());

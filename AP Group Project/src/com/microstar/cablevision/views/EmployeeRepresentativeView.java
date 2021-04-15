@@ -76,7 +76,7 @@ public class EmployeeRepresentativeView extends JFrame {
 		getContentPane().setMinimumSize(new Dimension(1150, 714));
 		getContentPane().setMaximumSize(new Dimension(1523, 914));
 		setMinimumSize(new Dimension(1150, 714));
-		repController = new RepresentativeController(this, null, null);
+		repController = new RepresentativeController(this);
 		repController.setClient(client); 
 		setTitle("Representative DashBoard");
 		getContentPane().setBackground(new Color(255, 245, 238));

@@ -19,8 +19,11 @@ import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 
 import com.microstar.cablevision.controller.TechnicianController;
+import com.microstar.cablevision.controller.ViewAllComplaintsTech;
 
 import microStarCableVision.Client;
+import microStarCableVision.Employee;
+
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
@@ -65,8 +68,8 @@ public class ViewAllComplaintsTechnician extends JFrame {
 	JButton pDSubmitResponseButton;
 	JLabel pDResponseDateLabel;
 	JTextField pDDateTextField;
-	
-	static TechnicianController techController;
+
+	ViewAllComplaintsTech complaintTechController;
 	
 	public static void main(String[] args) {
 		/*EventQueue.invokeLater(new Runnable() {
@@ -91,8 +94,8 @@ public class ViewAllComplaintsTechnician extends JFrame {
 		setMaximumSize(new Dimension(1100, 500));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
-		techController = new TechnicianController(null, this);
-		techController.setClient(client);
+		complaintTechController = new ViewAllComplaintsTech(this);
+		complaintTechController.setClient(client);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 245, 238));
 		contentPane.setMinimumSize(new Dimension(1100, 500));
@@ -184,8 +187,7 @@ public class ViewAllComplaintsTechnician extends JFrame {
 					@Override
 					public void mouseClicked(MouseEvent event) {
 						if(SwingUtilities.isLeftMouseButton(event)) {
-							techController.returnToTechGui();
-						}
+							complaintTechController.returnToTechGui();						}
 					}
 				});
 			}
@@ -322,5 +324,9 @@ public class ViewAllComplaintsTechnician extends JFrame {
 		scrollBar.setBounds(1067, 11, 17, 449);
 		contentPane.add(scrollBar);
 		setVisible(true);
+	}
+	
+	public void setEmp(Employee employee) {
+		complaintTechController.setEmpObj(employee);
 	}
 }

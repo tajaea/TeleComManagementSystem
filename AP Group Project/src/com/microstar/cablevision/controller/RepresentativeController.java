@@ -11,19 +11,15 @@ import microStarCableVision.Employee;
 
 public class RepresentativeController {
 	EmployeeRepresentativeView window;
-	ViewAllComplaintsRepresentative rCWindow;
-	ViewAllServicesRepresentative rSWindow;
 	Client clientObj;
 	Employee empObj;//create global employee object
 	
-	public RepresentativeController(EmployeeRepresentativeView view, ViewAllComplaintsRepresentative viewAllComplaintsRepresentative, ViewAllServicesRepresentative viewAllServicesRepresentative) {
-		setWindow(view, viewAllComplaintsRepresentative, viewAllServicesRepresentative);
+	public RepresentativeController(EmployeeRepresentativeView view) {
+		setWindow(view);
 	}
 	
-	private void setWindow(EmployeeRepresentativeView view, ViewAllComplaintsRepresentative viewAllComplaintsRepresentative, ViewAllServicesRepresentative viewAllServicesRepresentative) {
+	private void setWindow(EmployeeRepresentativeView view) {
 		window = view;
-		rCWindow = viewAllComplaintsRepresentative;
-		rSWindow = viewAllServicesRepresentative;
 	} 
 	
 	public void setClient(Client client) {
@@ -46,16 +42,6 @@ public class RepresentativeController {
 		new ViewAllServicesRepresentative(clientObj);
 	}
 	
-	public void  returnToRepGui() {
-		rSWindow.dispose();
-		new EmployeeRepresentativeView(clientObj);
-	}
-	
-	public void  returnToRepGui1() {
-		rCWindow.dispose();
-		new EmployeeRepresentativeView(clientObj);
-	}
-
 	public void setEmpObj(Employee employee) {
 		this.empObj = employee;//set the global object to the local employee object
 		window.getNameTextField().setText(this.empObj.getFirst_Name() + " " + this.empObj.getLast_Name());

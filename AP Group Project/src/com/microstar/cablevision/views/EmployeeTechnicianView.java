@@ -41,7 +41,7 @@ public class EmployeeTechnicianView extends JFrame {
 	JLabel customerServicesLabel;
 	JButton viewAllComplaintsButton;
 	
-	static TechnicianController techController;
+	TechnicianController techController;
 	/**
 	 * Launch the application.
 	 */
@@ -66,7 +66,7 @@ public class EmployeeTechnicianView extends JFrame {
 		getContentPane().setMinimumSize(new Dimension(1150, 714));
 		getContentPane().setMaximumSize(new Dimension(1523, 914));
 		setMinimumSize(new Dimension(1150, 714));
-		techController = new TechnicianController(this, null);
+		techController = new TechnicianController(this);
 		techController.setClient(client);
 		setTitle("Technician DashBoard");
 		getContentPane().setBackground(new Color(255, 245, 238));

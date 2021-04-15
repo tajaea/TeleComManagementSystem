@@ -2,7 +2,6 @@ package com.microstar.cablevision.views;
 
 import java.awt.Color;
 
-
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -20,9 +19,10 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import com.microstar.cablevision.controller.RepresentativeController;
+import com.microstar.cablevision.controller.ViewAllServicesReps;
 
 import microStarCableVision.Client;
+import microStarCableVision.Employee;
 
 public class ViewAllServicesRepresentative extends JFrame {
 	/**
@@ -73,8 +73,8 @@ public class ViewAllServicesRepresentative extends JFrame {
 	JLabel bCFooter;
 	JLabel bCDescription;
 	
-	static RepresentativeController repController;
-	
+	//static RepresentativeController repController;
+	ViewAllServicesReps servicesController;
 	/**
 	 * Launch the application.
 	 */
@@ -92,7 +92,6 @@ public class ViewAllServicesRepresentative extends JFrame {
 		
 		new ViewAllServicesRepresentative(new Client());
 	}
-
 	/**
 	 * Create the frame.
 	 */
@@ -102,8 +101,8 @@ public class ViewAllServicesRepresentative extends JFrame {
 		setMaximumSize(new Dimension(800, 500));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
-		repController = new RepresentativeController(null, null, this);
-		repController.setClient(client);
+		servicesController = new ViewAllServicesReps(this);
+		servicesController.setClient(client);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 245, 238));
 		contentPane.setMinimumSize(new Dimension(800, 500));
@@ -213,7 +212,7 @@ public class ViewAllServicesRepresentative extends JFrame {
 					@Override
 					public void mouseClicked(MouseEvent event) {
 						if(SwingUtilities.isLeftMouseButton(event)) {
-							repController.returnToRepGui();
+							servicesController.returnToRepGui();
 						}
 					}
 				});
@@ -444,5 +443,9 @@ public class ViewAllServicesRepresentative extends JFrame {
 		scrollBar.setBounds(767, 11, 17, 449);
 		contentPane.add(scrollBar);
 		setVisible(true);
+	}
+	
+	public void setEmp(Employee employee) {
+		servicesController.setEmpObj(employee);
 	}
 }

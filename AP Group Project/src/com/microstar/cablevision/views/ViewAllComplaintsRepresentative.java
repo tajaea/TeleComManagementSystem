@@ -1,14 +1,15 @@
 package com.microstar.cablevision.views;
 
 import javax.swing.JFrame;
+
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import com.microstar.cablevision.controller.RepresentativeController;
-import com.microstar.cablevision.controller.ViewCompalintController;
+import com.microstar.cablevision.controller.ViewAllComplaintsRep;
 
 import microStarCableVision.Client;
+import microStarCableVision.Employee;
 
 import java.awt.Dimension;
 import javax.swing.JScrollBar;
@@ -57,8 +58,7 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 	Object[] row = new Object[5];
 	DefaultTableModel model = new DefaultTableModel();
 	
-	RepresentativeController repController;
-	ViewCompalintController viewcomplaintControl;
+	ViewAllComplaintsRep viewcomplaintControl;
 	
 	public static void main(String[] args) {
 		/*EventQueue.invokeLater(new Runnable() {
@@ -82,8 +82,8 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 		setMaximumSize(new Dimension(1100, 500));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
-		repController = new RepresentativeController(null, this, null);
-		repController.setClient(client);
+		viewcomplaintControl = new ViewAllComplaintsRep(this);
+		viewcomplaintControl.setClient(client);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 245, 238));
 		contentPane.setMinimumSize(new Dimension(1100, 500));
@@ -116,9 +116,6 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 							noServiceDetailPanel.setVisible(true);
 							billComplaintDetailPanel.setVisible(false);
 							pDestructionDetailPanel.setVisible(false);
-							
-							viewcomplaintControl.returnNSComplaintForEmployee();;
-							viewcomplaintControl.populateTable();
 						}
 					}
 				});
@@ -178,7 +175,7 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 					@Override
 					public void mouseClicked(MouseEvent event) {
 						if(SwingUtilities.isLeftMouseButton(event)) {
-							repController.returnToRepGui1();
+							viewcomplaintControl.returnToRepGui();
 						}
 					}
 				});
@@ -261,6 +258,11 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 		contentPane.add(scrollBar);
 		setVisible(true);
 	}
+	
+	public void setEmp(Employee employee) {
+		viewcomplaintControl.setEmpObj(employee);
+	}
+	
 	public JTable getNoServiceDetailTable() {
 		return noServiceDetailTable;
 	}
