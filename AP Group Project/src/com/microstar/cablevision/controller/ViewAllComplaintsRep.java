@@ -42,6 +42,7 @@ public class ViewAllComplaintsRep {
 	public void returnComplaintForEmployee(String type) {
 		clientObj.sendAction("Get NSComplaint");
 		clientObj.sendAction("Get BCComplaint");
+		clientObj.sendAction("Get PDComplaint");
 	}
 	
 	public void returnToRepGui() {
