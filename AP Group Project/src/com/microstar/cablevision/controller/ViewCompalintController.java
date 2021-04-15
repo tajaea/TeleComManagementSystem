@@ -59,12 +59,6 @@ public class ViewCompalintController {
 		con.sendCustomer(customerObj);
 	}
 	
-	public void returnNSComplaintForEmployee() {
-		con.sendAction("Get NSComplaint");
-		System.out.println(customerObj);
-		con.sendCustomer(customerObj);
-	}
-	
 	public void returnToCustomerDashboard() {
 
 		ViewComplaintView.getFrame().dispose();//close make a complaint window

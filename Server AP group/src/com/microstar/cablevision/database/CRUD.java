@@ -74,12 +74,15 @@ public class CRUD {
 	public static String getComplaint(Customer customer) {
 		return "SELECT * FROM ap.complaint WHERE cust_id = "+"'"+customer.getCustomerID()+"';";
 	}
+	
 	public static String viewSpecificComplaint(Complaint complaint) {
 		return "SELECT * FROM ap.complaint WHERE complaint_id = "+"'"+complaint.getComplaintID()+"';";
 	}
-	public static String viewComplaintByType(Complaint complaint) {
-		return "SELECT * FROM ap.complaint WHERE type = "+"'"+complaint.getType()+"';";
+	
+	public static String viewComplaintByType(String type) {
+		return "SELECT * FROM ap.complaint WHERE type = '" + type + "';";
 	}
+	
 	public static String readAllComplaints() {
 		return "SELECT * FROM ap.complaint";
 	}
@@ -99,7 +102,7 @@ public class CRUD {
 	public static String getResponse(Complaint complaint) {
 		return "SELECT * FROM ap.complaint WHERE cust_id ="+"'"+complaint.getCustomerId();
 	}
-	
+		
 	public static String createResponse(Responses response) {
 		return "INSERT INTO ap.response (cust_id,response,response_date,responded_by, date_of_visit)"+
 				"VALUES ('" + response.getCustID() +"', '"+ response.getResponse()+"', '"+response.getResponseDate()+"', '"

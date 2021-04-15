@@ -78,8 +78,8 @@ public class ClientHandler extends Thread implements Runnable {
 						break;
 						
 					case "Get NSComplaint":
-						customerobj = (Customer) objIs.readObject();
-						ArrayList<Complaint>nsComplaint=getCustomerNSComplaint(customerobj);
+						String type = (String) objIs.readObject();
+						ArrayList<Complaint>nsComplaint=getCustomerNSComplaint(type);
 						objOs.writeObject(nsComplaint);
 						break;
 						
@@ -302,8 +302,8 @@ public class ClientHandler extends Thread implements Runnable {
 		ArrayList<Complaint> complaintlist= new ArrayList<Complaint>();
 		ArrayList<Responses> responselist= new ArrayList<Responses>();		
 		
-		try (PreparedStatement pst=dBConn.prepareStatement(CRUD.readAllComplaints());
-		ResultSet resultSet=state.executeQuery(CRUD.readAllComplaints())){
+		try {
+		ResultSet resultSet=state.executeQuery(CRUD.readAllComplaints());
 		
 		while (resultSet.next()) {
 			complaintlist.add(new Complaint(resultSet.getInt("complaint_id"), resultSet.getString("cust_id"), resultSet.getString("type"), resultSet.getString("details"),responselist,resultSet.getString("status"),resultSet.getString("date"),resultSet.getString("time")));
@@ -318,12 +318,12 @@ public class ClientHandler extends Thread implements Runnable {
 		return complaintlist;
 	}
 	
-	private ArrayList<Complaint> getCustomerNSComplaint(Customer customer) {
+	private ArrayList<Complaint> getCustomerNSComplaint(String type) {
 		ArrayList<Complaint> complaintlist= new ArrayList<Complaint>();
 		ArrayList<Responses> responselist= new ArrayList<Responses>();		
 		
-		try (PreparedStatement pst=dBConn.prepareStatement(CRUD.viewComplaintByType(complaintObj));
-		ResultSet resultSet=state.executeQuery(CRUD.viewComplaintByType(complaintObj))){
+		try {
+		ResultSet resultSet=state.executeQuery(CRUD.viewComplaintByType(type));
 		
 		while (resultSet.next()) {
 			complaintlist.add(new Complaint(resultSet.getInt("complaint_id"), resultSet.getString("cust_id"), resultSet.getString("type"), resultSet.getString("details"),responselist,resultSet.getString("status"),resultSet.getString("date"),resultSet.getString("time")));

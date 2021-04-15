@@ -116,6 +116,10 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 							noServiceDetailPanel.setVisible(true);
 							billComplaintDetailPanel.setVisible(false);
 							pDestructionDetailPanel.setVisible(false);
+							
+							String type = "No Service";
+							viewcomplaintControl.returnNSComplaintForEmployee(type);
+							viewcomplaintControl.populateTableForRep();
 						}
 					}
 				});
