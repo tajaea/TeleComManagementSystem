@@ -131,6 +131,10 @@ public class ViewAllComplaintsTechnician extends JFrame {
 							noServiceDetailPanel.setVisible(true);
 							billComplaintDetailPanel.setVisible(false);
 							pDestructionDetailPanel.setVisible(false);
+							
+							String nsType = "No Service";
+							complaintTechController.returnComplaintForEmployee(nsType);
+							complaintTechController.populateNSTableForTech();
 						}
 					}
 				});
@@ -152,6 +156,10 @@ public class ViewAllComplaintsTechnician extends JFrame {
 							noServiceDetailPanel.setVisible(false);
 							billComplaintDetailPanel.setVisible(true);
 							pDestructionDetailPanel.setVisible(false);
+							
+							String bcType = "Bill Complaint";
+							complaintTechController.returnComplaintForEmployee(bcType);
+							complaintTechController.populateBCTableForTech();
 						}
 					}
 				});
@@ -173,6 +181,10 @@ public class ViewAllComplaintsTechnician extends JFrame {
 							noServiceDetailPanel.setVisible(false);
 							billComplaintDetailPanel.setVisible(false);
 							pDestructionDetailPanel.setVisible(true);
+							
+							String pdType = "Property Destruction";
+							complaintTechController.returnComplaintForEmployee(pdType);
+							complaintTechController.populatePDTableForTech();
 						}
 					}
 				});
@@ -221,6 +233,10 @@ public class ViewAllComplaintsTechnician extends JFrame {
 				"Complaint ID", "Customer ID", "Type", "Details", "Status", "Date", "Time"
 			}
 		) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] {
 				false, false, false, false, false, false, false
 			};
