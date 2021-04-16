@@ -18,7 +18,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 
-import com.microstar.cablevision.controller.TechnicianController;
 import com.microstar.cablevision.controller.ViewAllComplaintsTech;
 
 import microStarCableVision.Client;
@@ -26,6 +25,7 @@ import microStarCableVision.Employee;
 
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
 
 public class ViewAllComplaintsTechnician extends JFrame {
 	/**
@@ -68,6 +68,9 @@ public class ViewAllComplaintsTechnician extends JFrame {
 	JButton pDSubmitResponseButton;
 	JLabel pDResponseDateLabel;
 	JTextField pDDateTextField;
+	
+	Object[] row = new Object[5];
+	DefaultTableModel model = new DefaultTableModel();
 
 	ViewAllComplaintsTech complaintTechController;
 	
@@ -211,6 +214,30 @@ public class ViewAllComplaintsTechnician extends JFrame {
 		noServiceDetailPanel.add(noServiceTableSPane);
 		
 		noServiceDetailTable = new JTable();
+		noServiceDetailTable.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Complaint ID", "Customer ID", "Type", "Details", "Status", "Date", "Time"
+			}
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false, false, false, false, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		noServiceDetailTable.getColumnModel().getColumn(0).setPreferredWidth(80);
+		noServiceDetailTable.getColumnModel().getColumn(1).setPreferredWidth(80);
+		noServiceDetailTable.getColumnModel().getColumn(2).setPreferredWidth(80);
+		noServiceDetailTable.getColumnModel().getColumn(3).setPreferredWidth(80);
+		noServiceDetailTable.getColumnModel().getColumn(4).setPreferredWidth(80);
+		noServiceDetailTable.getColumnModel().getColumn(5).setPreferredWidth(80);
+		noServiceDetailTable.getColumnModel().getColumn(6).setPreferredWidth(80);
+		model = (DefaultTableModel) noServiceDetailTable.getModel();
+		noServiceDetailTable.setBackground(Color.WHITE);
+		noServiceDetailTable.setRowHeight(30);
 		noServiceTableSPane.setViewportView(noServiceDetailTable);
 		
 		nSResponseLabel = new JLabel("Response");
@@ -250,6 +277,34 @@ public class ViewAllComplaintsTechnician extends JFrame {
 		billComplaintDetailPanel.add(billCTableSPane);
 		
 		billCDetailTable = new JTable();
+		billCDetailTable.setModel(new DefaultTableModel(
+				new Object[][] {
+				},
+				new String[] {
+					"Complaint ID", "Customer ID", "Type", "Details", "Status", "Date", "Time"
+				}
+			) {
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+				boolean[] columnEditables = new boolean[] {
+					false, false, false, false, false, false, false
+				};
+				public boolean isCellEditable(int row, int column) {
+					return columnEditables[column];
+				}
+			});
+			billCDetailTable.getColumnModel().getColumn(0).setPreferredWidth(80);
+			billCDetailTable.getColumnModel().getColumn(1).setPreferredWidth(80);
+			billCDetailTable.getColumnModel().getColumn(2).setPreferredWidth(80);
+			billCDetailTable.getColumnModel().getColumn(3).setPreferredWidth(80);
+			billCDetailTable.getColumnModel().getColumn(4).setPreferredWidth(80);
+			billCDetailTable.getColumnModel().getColumn(5).setPreferredWidth(80);
+			billCDetailTable.getColumnModel().getColumn(6).setPreferredWidth(80);
+			model = (DefaultTableModel) billCDetailTable.getModel();
+			billCDetailTable.setBackground(Color.WHITE);
+			billCDetailTable.setRowHeight(30);
 		billCTableSPane.setViewportView(billCDetailTable);
 		
 		bCResponseLabel = new JLabel("Response");
@@ -289,6 +344,34 @@ public class ViewAllComplaintsTechnician extends JFrame {
 		pDestructionDetailPanel.add(pDTableSPane);
 		
 		pDDetailTable = new JTable();
+		pDDetailTable.setModel(new DefaultTableModel(
+				new Object[][] {
+				},
+				new String[] {
+					"Complaint ID", "Customer ID", "Type", "Details", "Status", "Date", "Time"
+				}
+			) {
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+				boolean[] columnEditables = new boolean[] {
+					false, false, false, false, false, false, false
+				};
+				public boolean isCellEditable(int row, int column) {
+					return columnEditables[column];
+				}
+			});
+			pDDetailTable.getColumnModel().getColumn(0).setPreferredWidth(80);
+			pDDetailTable.getColumnModel().getColumn(1).setPreferredWidth(80);
+			pDDetailTable.getColumnModel().getColumn(2).setPreferredWidth(80);
+			pDDetailTable.getColumnModel().getColumn(3).setPreferredWidth(80);
+			pDDetailTable.getColumnModel().getColumn(4).setPreferredWidth(80);
+			pDDetailTable.getColumnModel().getColumn(5).setPreferredWidth(80);
+			pDDetailTable.getColumnModel().getColumn(6).setPreferredWidth(80);
+			model = (DefaultTableModel) pDDetailTable.getModel();
+			pDDetailTable.setBackground(Color.WHITE);
+			pDDetailTable.setRowHeight(30);
 		pDTableSPane.setViewportView(pDDetailTable);
 		
 		pDResponseLabel = new JLabel("Response");
@@ -328,5 +411,35 @@ public class ViewAllComplaintsTechnician extends JFrame {
 	
 	public void setEmp(Employee employee) {
 		complaintTechController.setEmpObj(employee);
+	}
+	public JTable getNoServiceDetailTable() {
+		return noServiceDetailTable;
+	}
+	public void setNoServiceDetailTable(JTable noServiceDetailTable) {
+		this.noServiceDetailTable = noServiceDetailTable;
+	}
+	public JTable getBillCDetailTable() {
+		return billCDetailTable;
+	}
+	public void setBillCDetailTable(JTable billCDetailTable) {
+		this.billCDetailTable = billCDetailTable;
+	}
+	public JTable getpDDetailTable() {
+		return pDDetailTable;
+	}
+	public void setpDDetailTable(JTable pDDetailTable) {
+		this.pDDetailTable = pDDetailTable;
+	}
+	public Object[] getRow() {
+		return row;
+	}
+	public void setRow(Object[] row) {
+		this.row = row;
+	}
+	public DefaultTableModel getModel() {
+		return model;
+	}
+	public void setModel(DefaultTableModel model) {
+		this.model = model;
 	}
 }

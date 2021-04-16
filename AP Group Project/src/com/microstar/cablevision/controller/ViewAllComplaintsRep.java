@@ -26,11 +26,11 @@ public class ViewAllComplaintsRep {
 		clientObj = client;
 	}
 	
-	public void populateTableForRep() {
-		ArrayList<Complaint> complaintList = new ArrayList<Complaint>();
-		complaintList = clientObj.readCustomerComplaint();
+	public void populateNSTableForRep() {
+		ArrayList<Complaint> nsComplaintList = new ArrayList<Complaint>();
+		nsComplaintList = clientObj.readCustomerComplaint();
 		
-		for(Complaint complaint: complaintList) {
+		for(Complaint complaint: nsComplaintList) {
 			rCWindow.getModel().insertRow(rCWindow.getNoServiceDetailTable().getModel().getRowCount(), new Object[] {
 				complaint.getComplaintID(), complaint.getCustomerId(), complaint.getType(),
 				complaint.getDetails(), complaint.getStatus(), complaint.getComplaintDate(),
@@ -39,6 +39,33 @@ public class ViewAllComplaintsRep {
 		}
 	}
 	
+	
+	public void populateBCTableForRep() {
+		ArrayList<Complaint> bcComplaintList = new ArrayList<Complaint>();
+		bcComplaintList = clientObj.readCustomerComplaint();
+		
+		for(Complaint complaint: bcComplaintList) {
+			rCWindow.getModel().insertRow(rCWindow.getBillCDetailTable().getModel().getRowCount(), new Object[] {
+					complaint.getComplaintID(), complaint.getCustomerId(), complaint.getType(),
+					complaint.getDetails(), complaint.getStatus(), complaint.getComplaintDate(),
+					complaint.getComplaintTime()
+			});
+		}
+	}
+	
+	public void populatePDTableForRep() {
+		ArrayList<Complaint> pdComplaintList = new ArrayList<Complaint>();
+		pdComplaintList = clientObj.readCustomerComplaint();
+		
+		for(Complaint complaint: pdComplaintList) {
+			rCWindow.getModel().insertRow(rCWindow.getpDDetailTable().getModel().getRowCount(), new Object[] {
+					complaint.getComplaintID(), complaint.getCustomerId(), complaint.getType(),
+					complaint.getDetails(), complaint.getStatus(), complaint.getComplaintDate(),
+					complaint.getComplaintTime()
+			});
+		}
+	}
+		
 	public void returnComplaintForEmployee(String type) {
 		clientObj.sendAction("Get NSComplaint");
 		clientObj.sendAction("Get BCComplaint");

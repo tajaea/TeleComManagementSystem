@@ -119,7 +119,7 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 							
 							String nsType = "No Service";
 							viewcomplaintControl.returnComplaintForEmployee(nsType);
-							viewcomplaintControl.populateTableForRep();
+							viewcomplaintControl.populateNSTableForRep();
 						}
 					}
 				});
@@ -144,7 +144,7 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 							
 							String bcType = "Bill Complaint";
 							viewcomplaintControl.returnComplaintForEmployee(bcType);
-							viewcomplaintControl.populateTableForRep();
+							viewcomplaintControl.populateBCTableForRep();
 						}
 					}
 				});
@@ -169,7 +169,7 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 							
 							String pdType = "Property Destruction";
 							viewcomplaintControl.returnComplaintForEmployee(pdType);
-							viewcomplaintControl.populateTableForRep();
+							viewcomplaintControl.populatePDTableForRep();
 						}
 					}
 				});
@@ -231,13 +231,13 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 				return columnEditables[column];
 			}
 		});
-		noServiceDetailTable.getColumnModel().getColumn(0);
-		noServiceDetailTable.getColumnModel().getColumn(1);
-		noServiceDetailTable.getColumnModel().getColumn(2);
-		noServiceDetailTable.getColumnModel().getColumn(3);
-		noServiceDetailTable.getColumnModel().getColumn(4);
-		noServiceDetailTable.getColumnModel().getColumn(5);
-		noServiceDetailTable.getColumnModel().getColumn(6);
+		noServiceDetailTable.getColumnModel().getColumn(0).setPreferredWidth(80);
+		noServiceDetailTable.getColumnModel().getColumn(1).setPreferredWidth(80);
+		noServiceDetailTable.getColumnModel().getColumn(2).setPreferredWidth(80);
+		noServiceDetailTable.getColumnModel().getColumn(3).setPreferredWidth(80);
+		noServiceDetailTable.getColumnModel().getColumn(4).setPreferredWidth(80);
+		noServiceDetailTable.getColumnModel().getColumn(5).setPreferredWidth(80);
+		noServiceDetailTable.getColumnModel().getColumn(6).setPreferredWidth(80);
 		model = (DefaultTableModel) noServiceDetailTable.getModel();
 		noServiceDetailTable.setBackground(Color.WHITE);
 		noServiceDetailTable.setRowHeight(30);
@@ -272,13 +272,13 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 					return columnEditables[column];
 				}
 			});
-			billCDetailTable.getColumnModel().getColumn(0);
-			billCDetailTable.getColumnModel().getColumn(1);
-			billCDetailTable.getColumnModel().getColumn(2);
-			billCDetailTable.getColumnModel().getColumn(3);
-			billCDetailTable.getColumnModel().getColumn(4);
-			billCDetailTable.getColumnModel().getColumn(5);
-			billCDetailTable.getColumnModel().getColumn(6);
+			billCDetailTable.getColumnModel().getColumn(0).setPreferredWidth(80);
+			billCDetailTable.getColumnModel().getColumn(1).setPreferredWidth(80);
+			billCDetailTable.getColumnModel().getColumn(2).setPreferredWidth(80);
+			billCDetailTable.getColumnModel().getColumn(3).setPreferredWidth(80);
+			billCDetailTable.getColumnModel().getColumn(4).setPreferredWidth(80);
+			billCDetailTable.getColumnModel().getColumn(5).setPreferredWidth(80);
+			billCDetailTable.getColumnModel().getColumn(6).setPreferredWidth(80);
 			model = (DefaultTableModel) billCDetailTable.getModel();
 			billCDetailTable.setBackground(Color.WHITE);
 			billCDetailTable.setRowHeight(30);
@@ -313,13 +313,13 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 					return columnEditables[column];
 				}
 			});
-			pDDetailTable.getColumnModel().getColumn(0);
-			pDDetailTable.getColumnModel().getColumn(1);
-			pDDetailTable.getColumnModel().getColumn(2);
-			pDDetailTable.getColumnModel().getColumn(3);
-			pDDetailTable.getColumnModel().getColumn(4);
-			pDDetailTable.getColumnModel().getColumn(5);
-			pDDetailTable.getColumnModel().getColumn(6);
+			pDDetailTable.getColumnModel().getColumn(0).setPreferredWidth(80);
+			pDDetailTable.getColumnModel().getColumn(1).setPreferredWidth(80);
+			pDDetailTable.getColumnModel().getColumn(2).setPreferredWidth(80);
+			pDDetailTable.getColumnModel().getColumn(3).setPreferredWidth(80);
+			pDDetailTable.getColumnModel().getColumn(4).setPreferredWidth(80);
+			pDDetailTable.getColumnModel().getColumn(5).setPreferredWidth(80);
+			pDDetailTable.getColumnModel().getColumn(6).setPreferredWidth(80);
 			model = (DefaultTableModel) pDDetailTable.getModel();
 			pDDetailTable.setBackground(Color.WHITE);
 			pDDetailTable.setRowHeight(30);
@@ -342,6 +342,19 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 	}
 	public void setNoServiceDetailTable(JTable noServiceDetailTable) {
 		this.noServiceDetailTable = noServiceDetailTable;
+	}
+	
+	public JTable getBillCDetailTable() {
+		return billCDetailTable;
+	}
+	public void setBillCDetailTable(JTable billCDetailTable) {
+		this.billCDetailTable = billCDetailTable;
+	}
+	public JTable getpDDetailTable() {
+		return pDDetailTable;
+	}
+	public void setpDDetailTable(JTable pDDetailTable) {
+		this.pDDetailTable = pDDetailTable;
 	}
 	public DefaultTableModel getModel() {
 		return model;
