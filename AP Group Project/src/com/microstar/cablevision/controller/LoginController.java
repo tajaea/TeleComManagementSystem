@@ -56,10 +56,9 @@ public class LoginController {
 					window.dispose();
 					if(employee.getJob_Title().equalsIgnoreCase("Technician")) {
 						new EmployeeTechnicianView(con).setEmp(employee);
-					}else {
+					}else if(employee.getJob_Title().equalsIgnoreCase("Representative")) {
 						new EmployeeRepresentativeView(con).setEmp(employee);
 					}
-					
 				}
 				else {
 					JOptionPane.showMessageDialog(window, "Invalid ID number or password","Login Error",JOptionPane.ERROR_MESSAGE);

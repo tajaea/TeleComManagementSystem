@@ -12,7 +12,7 @@ public class TechnicianController {
 	EmployeeTechnicianView window;
 	Client clientObj;
 	Employee empObj;
-	String id = empObj.getStaff_Id();
+	//String id = empObj.getStaff_Id();
 	
 	public TechnicianController(EmployeeTechnicianView view) {
 		setWindow(view);
@@ -32,14 +32,15 @@ public class TechnicianController {
 		new LoginView(clientObj);
 	}
 	
-	public void getChatViewPage() {
+	/*public void getChatViewPage() {
 		window.dispose();
 		new ChatView(id,clientObj.getConnectionSocket());
-	}
+	}*/
 	
 	public void getViewAllComplaintsGui() {
 		window.dispose();
 		new ViewAllComplaintsTechnician(clientObj);
+		//setEmpObj(empObj);
 	}
 	
 	public void setEmpObj(Employee employee) {

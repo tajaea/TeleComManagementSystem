@@ -75,6 +75,7 @@ public class ViewAllComplaintsRep {
 	public void returnToRepGui() {
 		rCWindow.dispose();
 		new EmployeeRepresentativeView(clientObj);
+		//setEmpObj(empObj);
 	}
 	
 	public void setEmpObj(Employee employee) {

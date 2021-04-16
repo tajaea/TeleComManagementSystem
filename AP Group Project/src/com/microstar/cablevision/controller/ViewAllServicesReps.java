@@ -26,6 +26,7 @@ public class ViewAllServicesReps {
 	public void returnToRepGui() {
 		rSWindow.dispose();
 		new EmployeeRepresentativeView(clientObj);
+		//setEmpObj(empObj);
 	}
 	
 	public void setEmpObj(Employee employee) {

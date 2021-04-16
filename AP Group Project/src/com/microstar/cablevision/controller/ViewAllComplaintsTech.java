@@ -76,6 +76,7 @@ public class ViewAllComplaintsTech {
 	public void returnToTechGui() {
 		tWindow.dispose();
 		new EmployeeTechnicianView(clientObj);
+		//setEmpObj(employeeObj);
 	}
 	
 	public void setEmpObj(Employee employee) {

@@ -35,11 +35,13 @@ public class RepresentativeController {
 	public void getViewAllComplaintsGui() {
 		window.dispose();
 		new ViewAllComplaintsRepresentative(clientObj);
+		//setEmpObj(empObj);
 	}
 	
 	public void getAllServicesGui() {
 		window.dispose();
 		new ViewAllServicesRepresentative(clientObj);
+		//setEmpObj(empObj);
 	}
 	
 	public void setEmpObj(Employee employee) {

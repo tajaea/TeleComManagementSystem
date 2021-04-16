@@ -131,10 +131,8 @@ private void registerButton() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				control.Login();
-				
+				control.Login();	
 			}
-			
 		});
 		
 	signupLabel.addMouseListener(new MouseAdapter() {
