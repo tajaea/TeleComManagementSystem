@@ -66,6 +66,7 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		setLocation(125,45);
+		setTitle("View All Complaints");
 		viewcomplaintControl = new ViewAllComplaintsRep(this);
 		viewcomplaintControl.setClient(client);
 		contentPane = new JPanel();

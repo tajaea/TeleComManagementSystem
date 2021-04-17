@@ -36,7 +36,8 @@ public class ViewAllComplaintsRep {
 		
 		ArrayList<Complaint> nsComplaintList = new ArrayList<Complaint>();
 		nsComplaintList = clientObj.readComplaints();
-		if(rCWindow.getNSTable().getModel().getRowCount()==0) {
+		
+		if(rCWindow.getNSTable().getModel().getRowCount()<0) {
 			for(Complaint complaint: nsComplaintList) {
 				((DefaultTableModel)rCWindow.getNSTable().getModel()).insertRow(rCWindow.getNSTable().getModel().getRowCount(), new Object[] {
 					complaint.getComplaintID(), complaint.getType(),
@@ -46,9 +47,7 @@ public class ViewAllComplaintsRep {
 			}
 		}
 		else {
-			for(int i = 0;i<rCWindow.getNSTable().getModel().getRowCount();i++) {
-				((DefaultTableModel)rCWindow.getNSTable().getModel()).removeRow(i);
-			}
+			((DefaultTableModel)rCWindow.getNSTable().getModel()).setRowCount(0);
 			for(Complaint complaint: nsComplaintList) {
 				((DefaultTableModel)rCWindow.getNSTable().getModel()).insertRow(rCWindow.getNSTable().getModel().getRowCount(), new Object[] {
 					complaint.getComplaintID(), complaint.getType(),
@@ -65,12 +64,24 @@ public class ViewAllComplaintsRep {
 		ArrayList<Complaint> bcComplaintList = new ArrayList<Complaint>();
 		bcComplaintList = clientObj.readComplaints();
 		
-		for(Complaint complaint: bcComplaintList) {
-			((DefaultTableModel)rCWindow.getBCTable().getModel()).insertRow(rCWindow.getBCTable().getModel().getRowCount(), new Object[] {
-					complaint.getComplaintID(), complaint.getType(),
-					complaint.getDetails(), complaint.getStatus(), complaint.getComplaintDate(),
-					complaint.getComplaintTime()
-			});
+		if(rCWindow.getBCTable().getModel().getRowCount()<0) {
+			for(Complaint complaint: bcComplaintList) {
+				((DefaultTableModel)rCWindow.getBCTable().getModel()).insertRow(rCWindow.getBCTable().getModel().getRowCount(), new Object[] {
+						complaint.getComplaintID(), complaint.getType(),
+						complaint.getDetails(), complaint.getStatus(), complaint.getComplaintDate(),
+						complaint.getComplaintTime()
+				});
+			}
+		}
+		else {
+			((DefaultTableModel)rCWindow.getBCTable().getModel()).setRowCount(0);
+			for(Complaint complaint: bcComplaintList) {
+				((DefaultTableModel)rCWindow.getBCTable().getModel()).insertRow(rCWindow.getBCTable().getModel().getRowCount(), new Object[] {
+						complaint.getComplaintID(), complaint.getType(),
+						complaint.getDetails(), complaint.getStatus(), complaint.getComplaintDate(),
+						complaint.getComplaintTime()
+				});
+			}
 		}
 	}
 	
@@ -80,12 +91,24 @@ public class ViewAllComplaintsRep {
 		ArrayList<Complaint> pdComplaintList = new ArrayList<Complaint>();
 		pdComplaintList = clientObj.readComplaints();
 		
-		for(Complaint complaint: pdComplaintList) {
-			((DefaultTableModel)rCWindow.getPDTable().getModel()).insertRow(rCWindow.getPDTable().getModel().getRowCount(), new Object[] {
-					complaint.getComplaintID(), complaint.getType(),
-					complaint.getDetails(), complaint.getStatus(), complaint.getComplaintDate(),
-					complaint.getComplaintTime()
-			});
+		if(rCWindow.getBCTable().getModel().getRowCount()<0) {
+			for(Complaint complaint: pdComplaintList) {
+				((DefaultTableModel)rCWindow.getPDTable().getModel()).insertRow(rCWindow.getPDTable().getModel().getRowCount(), new Object[] {
+						complaint.getComplaintID(), complaint.getType(),
+						complaint.getDetails(), complaint.getStatus(), complaint.getComplaintDate(),
+						complaint.getComplaintTime()
+				});
+			}
+		}
+		else {
+			((DefaultTableModel)rCWindow.getPDTable().getModel()).setRowCount(0);
+			for(Complaint complaint: pdComplaintList) {
+				((DefaultTableModel)rCWindow.getPDTable().getModel()).insertRow(rCWindow.getPDTable().getModel().getRowCount(), new Object[] {
+						complaint.getComplaintID(), complaint.getType(),
+						complaint.getDetails(), complaint.getStatus(), complaint.getComplaintDate(),
+						complaint.getComplaintTime()
+				});
+			}
 		}
 	}
 	

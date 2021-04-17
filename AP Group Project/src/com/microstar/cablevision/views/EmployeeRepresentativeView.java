@@ -148,7 +148,7 @@ public class EmployeeRepresentativeView extends JFrame {
 		if(time >=12 && time < 17){ 
 			greetingsTextField.setText("Good Afternoon,");
 		}
-		else if(time > 17 && time < 19 ) {
+		else if(time >=17 && time < 19 ) {
 			greetingsTextField.setText("Good Evening,");
 		}
 		else if(time > 19 ) {
