@@ -321,13 +321,9 @@ public class ClientHandler extends Thread implements Runnable {
 		while (resultSet.next()) {
 			complaintlist.add(new Complaint(resultSet.getInt("complaint_id"), resultSet.getString("cust_id"), resultSet.getString("type"), resultSet.getString("details"),responselist,resultSet.getString("status"),resultSet.getString("date"),resultSet.getString("time")));
 		}
-		System.out.println(complaintlist.size()+"The size");
-		
-		//ViewComplaintView.getTable().setModel(DbUtils.resultSetToTableModel(result));
 		}catch(Exception e){
 			
 		}
-		//System.out.println(complaintlist.get(0).getDetails()+"Client Handler");
 		return complaintlist;
 	}
 	
@@ -341,9 +337,6 @@ public class ClientHandler extends Thread implements Runnable {
 		while (resultSet.next()) {
 			complaintlist.add(new Complaint(resultSet.getInt("complaint_id"), resultSet.getString("cust_id"), resultSet.getString("type"), resultSet.getString("details"),responselist,resultSet.getString("status"),resultSet.getString("date"),resultSet.getString("time")));
 		}
-		System.out.println(complaintlist.size()+"The size");
-		
-		//ViewComplaintView.getTable().setModel(DbUtils.resultSetToTableModel(result));
 		}catch(Exception e){
 			
 		}

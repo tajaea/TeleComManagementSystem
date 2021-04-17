@@ -29,18 +29,18 @@ public class RepresentativeController {
 	public void getLoginPage() {
 		clientObj.closeConnection();
 		window.dispose();
-		new LoginView(clientObj);
+		new LoginView(new Client());
 	}
 	
 	public void getViewAllComplaintsGui() {
 		window.dispose();
-		new ViewAllComplaintsRepresentative(clientObj);
+		new ViewAllComplaintsRepresentative(clientObj).setEmp(empObj);
 		//setEmpObj(empObj);
 	}
 	
 	public void getAllServicesGui() {
 		window.dispose();
-		new ViewAllServicesRepresentative(clientObj);
+		new ViewAllServicesRepresentative(clientObj).setEmp(empObj);;
 		//setEmpObj(empObj);
 	}
 	

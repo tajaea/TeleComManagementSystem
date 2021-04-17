@@ -283,4 +283,14 @@ public class Client{
 		}
 		return flag;
 	}
+
+	public void sendComplaintType(String type) {
+		try {
+			objOs.writeObject(type);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 }

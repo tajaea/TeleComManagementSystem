@@ -26,7 +26,10 @@ public class ViewAllComplaintsRep {
 		clientObj = client;
 	}
 	
-	public void populateNSTableForRep() {
+	public void populateNSTableForRep(String type) {
+		clientObj.sendAction("Get NSComplaint");
+		clientObj.sendComplaintType(type);
+		
 		ArrayList<Complaint> nsComplaintList = new ArrayList<Complaint>();
 		nsComplaintList = clientObj.readCustomerComplaint();
 		
@@ -40,12 +43,14 @@ public class ViewAllComplaintsRep {
 	}
 	
 	
-	public void populateBCTableForRep() {
+	public void populateBCTableForRep(String type) {
+		clientObj.sendAction("Get BCComplaint");
+		clientObj.sendComplaintType(type);
 		ArrayList<Complaint> bcComplaintList = new ArrayList<Complaint>();
 		bcComplaintList = clientObj.readCustomerComplaint();
 		
 		for(Complaint complaint: bcComplaintList) {
-			rCWindow.getModel().insertRow(rCWindow.getBillCDetailTable().getModel().getRowCount(), new Object[] {
+			rCWindow.getbcModel().insertRow(rCWindow.getBillCDetailTable().getModel().getRowCount(), new Object[] {
 					complaint.getComplaintID(), complaint.getCustomerId(), complaint.getType(),
 					complaint.getDetails(), complaint.getStatus(), complaint.getComplaintDate(),
 					complaint.getComplaintTime()
@@ -53,12 +58,14 @@ public class ViewAllComplaintsRep {
 		}
 	}
 	
-	public void populatePDTableForRep() {
+	public void populatePDTableForRep(String type) {
+		clientObj.sendAction("Get PDComplaint");
+		clientObj.sendComplaintType(type);
 		ArrayList<Complaint> pdComplaintList = new ArrayList<Complaint>();
 		pdComplaintList = clientObj.readCustomerComplaint();
 		
 		for(Complaint complaint: pdComplaintList) {
-			rCWindow.getModel().insertRow(rCWindow.getpDDetailTable().getModel().getRowCount(), new Object[] {
+			rCWindow.getpdModel().insertRow(rCWindow.getpDDetailTable().getModel().getRowCount(), new Object[] {
 					complaint.getComplaintID(), complaint.getCustomerId(), complaint.getType(),
 					complaint.getDetails(), complaint.getStatus(), complaint.getComplaintDate(),
 					complaint.getComplaintTime()
@@ -66,15 +73,10 @@ public class ViewAllComplaintsRep {
 		}
 	}
 		
-	public void returnComplaintForEmployee(String type) {
-		clientObj.sendAction("Get NSComplaint");
-		clientObj.sendAction("Get BCComplaint");
-		clientObj.sendAction("Get PDComplaint");
-	}
 	
 	public void returnToRepGui() {
 		rCWindow.dispose();
-		new EmployeeRepresentativeView(clientObj);
+		new EmployeeRepresentativeView(clientObj).setEmp(this.empObj);
 		//setEmpObj(empObj);
 	}
 	
