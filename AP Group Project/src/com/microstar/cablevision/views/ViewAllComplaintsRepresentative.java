@@ -93,8 +93,8 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 		contentPane.setLayout(null);
 		
 		scomplaintsOptionsTab = new JPanel();
-		scomplaintsOptionsTab.setBackground(new Color(255, 245, 238));
 		scomplaintsOptionsTab.setBounds(10, 11, 253, 449);
+		scomplaintsOptionsTab.setBackground(new Color(255, 245, 238));
 		contentPane.add(scomplaintsOptionsTab);
 		scomplaintsOptionsTab.setLayout(null);
 		
@@ -194,8 +194,8 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 		scomplaintsOptionsTab.add(exitButton);
 		
 		complaintsOptionsDetails = new JPanel();
-		complaintsOptionsDetails.setBackground(new Color(255, 245, 238));
 		complaintsOptionsDetails.setBounds(273, 11, 784, 449);
+		complaintsOptionsDetails.setBackground(new Color(255, 245, 238));
 		contentPane.add(complaintsOptionsDetails);
 		complaintsOptionsDetails.setLayout(null);
 		
@@ -206,6 +206,7 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 		
 		noServiceTableSPane = new JScrollPane();
 		noServiceTableSPane.setBounds(0, 415, 754, -374);
+		//contentPane.add(noServiceTableSPane);
 		noServiceDetailPanel.add(noServiceTableSPane);
 		
 		noServiceDetailTable = new JTable();
@@ -245,7 +246,9 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 		billComplaintDetailPanel.setLayout(null);
 		
 		billCTableSPane = new JScrollPane();
-		billCTableSPane.setBounds(10, 416, 744, -404);
+		billCTableSPane.setBounds(0, 415, 754, -374);
+		//billCTableSPane.setBounds(10, 416, 744, -404);
+		//contentPane.add(billCTableSPane);
 		billComplaintDetailPanel.add(billCTableSPane);
 		
 		billCDetailTable = new JTable();
@@ -285,7 +288,9 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 		pDestructionDetailPanel.setLayout(null);
 		
 		pDTableSPane = new JScrollPane();
-		pDTableSPane.setBounds(10, 412, 744, -400);
+		pDTableSPane.setBounds(0, 415, 754, -374);
+		//pDTableSPane.setBounds(10, 412, 744, -400);
+		//contentPane.add(pDTableSPane);
 		pDestructionDetailPanel.add(pDTableSPane);
 		
 		pDDetailTable = new JTable();
@@ -320,7 +325,7 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 		pDTableSPane.setViewportView(pDDetailTable);
 		setVisible(true);
 	}
-	
+		
 	public void setEmp(Employee employee) {
 		viewcomplaintControl.setEmpObj(employee);
 	}

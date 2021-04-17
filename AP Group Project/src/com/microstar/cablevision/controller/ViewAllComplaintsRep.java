@@ -2,6 +2,8 @@ package com.microstar.cablevision.controller;
 
 import java.util.ArrayList;
 
+import javax.swing.table.DefaultTableModel;
+
 import com.microstar.cablevision.views.EmployeeRepresentativeView;
 import com.microstar.cablevision.views.ViewAllComplaintsRepresentative;
 
@@ -13,6 +15,8 @@ public class ViewAllComplaintsRep {
 	ViewAllComplaintsRepresentative rCWindow;
 	Client clientObj;
 	Employee empObj;
+	Object[] row = new Object[5];
+	DefaultTableModel model = new DefaultTableModel();
 	
 	public ViewAllComplaintsRep(ViewAllComplaintsRepresentative view) {
 		setWindow(view);
@@ -41,7 +45,6 @@ public class ViewAllComplaintsRep {
 			});
 		}
 	}
-	
 	
 	public void populateBCTableForRep(String type) {
 		clientObj.sendAction("Get BCComplaint");
@@ -72,12 +75,10 @@ public class ViewAllComplaintsRep {
 			});
 		}
 	}
-		
 	
 	public void returnToRepGui() {
 		rCWindow.dispose();
 		new EmployeeRepresentativeView(clientObj).setEmp(this.empObj);
-		//setEmpObj(empObj);
 	}
 	
 	public void setEmpObj(Employee employee) {
