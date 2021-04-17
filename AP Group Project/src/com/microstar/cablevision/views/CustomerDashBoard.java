@@ -103,6 +103,7 @@ public class CustomerDashBoard {
 	 */
 	private void initialize(Client client) {
 		frame = new JFrame();
+		frame.setResizable(false);
 		frame.getContentPane().setBackground(new Color(255, 245, 238));
 		frame.getContentPane().setMinimumSize(new Dimension(1100, 714));
 		frame.getContentPane().setMaximumSize(new Dimension(1523, 914));

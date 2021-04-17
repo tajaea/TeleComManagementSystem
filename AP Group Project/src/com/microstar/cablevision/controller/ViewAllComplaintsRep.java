@@ -15,6 +15,8 @@ public class ViewAllComplaintsRep {
 	ViewAllComplaintsRepresentative rCWindow;
 	Client clientObj;
 	Employee empObj;
+	Object[] row = new Object[5];
+	DefaultTableModel model = new DefaultTableModel();
 	
 	public ViewAllComplaintsRep(ViewAllComplaintsRepresentative view) {
 		setWindow(view);
@@ -57,7 +59,6 @@ public class ViewAllComplaintsRep {
 		}
 	}
 	
-	
 	public void populateBCTableForRep(String type) {
 		clientObj.sendAction("Get BCComplaint");
 		clientObj.sendComplaintType(type);
@@ -87,7 +88,6 @@ public class ViewAllComplaintsRep {
 			});
 		}
 	}
-		
 	
 	public void returnToRepGui() {
 		rCWindow.dispose();

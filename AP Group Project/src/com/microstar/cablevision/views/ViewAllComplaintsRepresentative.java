@@ -77,8 +77,8 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 		contentPane.setLayout(null);
 		
 		scomplaintsOptionsTab = new JPanel();
-		scomplaintsOptionsTab.setBackground(new Color(255, 245, 238));
 		scomplaintsOptionsTab.setBounds(10, 11, 253, 449);
+		scomplaintsOptionsTab.setBackground(new Color(255, 245, 238));
 		contentPane.add(scomplaintsOptionsTab);
 		scomplaintsOptionsTab.setLayout(null);
 		
@@ -181,19 +181,22 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 		exitButton.setBounds(10, 415, 89, 23);
 		scomplaintsOptionsTab.add(exitButton);
 		
+
 		JLayeredPane layeredPane = new JLayeredPane();
 		layeredPane.setBounds(273, 11, 811, 449);
 		contentPane.add(layeredPane);
+	
 		
 		NSPanel = new JPanel();
 		NSPanel.setVisible(false);
 		NSPanel.setBounds(0, 0, 811, 449);
 		layeredPane.add(NSPanel);
 		NSPanel.setLayout(null);
-		
+
 		JScrollPane NSscrollPane = new JScrollPane();
 		NSscrollPane.setBounds(0, 0, 811, 449);
 		NSPanel.add(NSscrollPane);
+		
 		
 		BCPanel = new JPanel();
 		BCPanel.setVisible(false);
@@ -230,9 +233,12 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 		layeredPane.add(PDPanel);
 		PDPanel.setLayout(null);
 		
+
 		PDscrollPane = new JScrollPane();
 		PDscrollPane.setBounds(0, 0, 811, 449);
 		PDPanel.add(PDscrollPane);
+
+		
 		
 		PDTable = new JTable();
 		PDscrollPane.setViewportView(PDTable);
@@ -275,7 +281,7 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 		
 		setVisible(true);
 	}
-	
+		
 	public void setEmp(Employee employee) {
 		viewcomplaintControl.setEmpObj(employee);
 	}
