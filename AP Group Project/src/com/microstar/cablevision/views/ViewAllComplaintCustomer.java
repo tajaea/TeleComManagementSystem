@@ -38,20 +38,7 @@ public class ViewAllComplaintCustomer {
 	/**
 	 * Launch the application.
 	 */
-	
-	public static void main(String[] args) {
-		/*EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ViewAllComplaintCustomer window = new ViewAllComplaintCustomer();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});*/
-		new ViewAllComplaintCustomer(new Client());
-	}
+
 
 	/**
 	 * Create the application.
@@ -103,16 +90,7 @@ public class ViewAllComplaintCustomer {
 		table.getColumnModel().getColumn(6).setPreferredWidth(94);
 
 		Model = (DefaultTableModel) table.getModel();
-		/*Object[] columns = {"Complaint Id", "Customer Id", "Complaint Type", "Details", " Status","Date","Time"};
-		Model.setColumnIdentifiers(columns);
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"Complaint ID", "Customer ID", "Complaint Type", "Details", "Status", "Date", "Time"
-			}
-		));*/
-		//table.getColumnModel().getColumn(2).setPreferredWidth(94);
+		
 		table.setBackground(Color.cyan);
 		table.setForeground(Color.WHITE);
 		Font font = new Font ("", 1, 22);

@@ -15,6 +15,7 @@ public class Client{
 	private ObjectOutputStream objOs;
 	private ObjectInputStream objIs;
 	private String action = "";
+	private String complaintType = "";
 	private String state = " ";
 	private int amount;
 	
@@ -167,6 +168,22 @@ public class Client{
 		return array;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public ArrayList <Complaint> readComplaints() {
+		ArrayList<Complaint> array = new ArrayList<Complaint>();
+		try {
+			 array=(ArrayList<Complaint>) objIs.readObject();
+			 System.out.println(array);
+		} catch (IOException e) {
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return array;
+	}
+	
 	public Complaint getComplaint() {
 		Complaint complaint = null;
 		try {
@@ -286,7 +303,8 @@ public class Client{
 
 	public void sendComplaintType(String type) {
 		try {
-			objOs.writeObject(type);
+			this.complaintType = type;
+			objOs.writeObject(this.complaintType);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

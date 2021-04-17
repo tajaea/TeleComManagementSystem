@@ -26,6 +26,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import java.awt.Font;
+import javax.swing.JLayeredPane;
+import java.awt.Cursor;
 
 public class ViewAllComplaintsRepresentative extends JFrame {
 	/**
@@ -39,40 +41,21 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 	 */
 	JPanel scomplaintsOptionsTab;
 	JLabel logoImageLabel;
-	JPanel complaintsOptionsDetails;
-	JPanel noServiceDetailPanel;
-	JPanel billComplaintDetailPanel;
-	JPanel pDestructionDetailPanel;
 	JButton noServiceButton;
 	JButton billCButton;
 	JButton pDestructionButton;
 	JButton exitButton;
-	JTable noServiceDetailTable;
-	JTable billCDetailTable;
-	JScrollPane billCTableSPane;
-	JScrollPane noServiceTableSPane;
-	JTable pDDetailTable;
-	JScrollPane pDTableSPane;
 	
-	Object[] row = new Object[5];
-	DefaultTableModel model = new DefaultTableModel();
-	DefaultTableModel bcmodel = new DefaultTableModel();
-	DefaultTableModel pdmodel = new DefaultTableModel();
 	ViewAllComplaintsRep viewcomplaintControl;
+	JPanel NSPanel;
+	JPanel BCPanel;
+	JPanel PDPanel;
+	private JTable NSTable;
+	private JTable BCTable;
+	private JScrollPane BCscrollPane;
+	private JTable PDTable;
+	private JScrollPane PDscrollPane;
 	
-	public static void main(String[] args) {
-		/*EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ViewAllComplaintsRepresentative frame = new ViewAllComplaintsRepresentative(null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});*/
-		new ViewAllComplaintsRepresentative(new Client());
-	}
 	/**
 	 * Create the frame.
 	 */
@@ -82,6 +65,7 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 		setMaximumSize(new Dimension(1100, 500));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
+		setLocation(125,45);
 		viewcomplaintControl = new ViewAllComplaintsRep(this);
 		viewcomplaintControl.setClient(client);
 		contentPane = new JPanel();
@@ -104,6 +88,7 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 		scomplaintsOptionsTab.add(logoImageLabel);
 		
 		noServiceButton = new JButton("No Service");
+		noServiceButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		noServiceButton.setFont(new Font("Dubai", Font.PLAIN, 23));
 		noServiceButton.addActionListener(new ActionListener() {
 			@Override
@@ -113,9 +98,9 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 					@Override
 					public void mouseClicked(MouseEvent event) {
 						if(SwingUtilities.isLeftMouseButton(event)) {
-							noServiceDetailPanel.setVisible(true);
-							billComplaintDetailPanel.setVisible(false);
-							pDestructionDetailPanel.setVisible(false);
+							NSPanel.setVisible(true);
+							BCPanel.setVisible(false);
+							PDPanel.setVisible(false);
 							
 							String nsType = "No Service";
 							viewcomplaintControl.populateNSTableForRep(nsType);
@@ -128,6 +113,7 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 		scomplaintsOptionsTab.add(noServiceButton);
 		
 		billCButton = new JButton("Bill Complaint");
+		billCButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		billCButton.setFont(new Font("Dubai", Font.PLAIN, 20));
 		billCButton.addActionListener(new ActionListener() {
 			@Override
@@ -137,9 +123,9 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 					@Override
 					public void mouseClicked(MouseEvent event) {
 						if(SwingUtilities.isLeftMouseButton(event)) {
-							noServiceDetailPanel.setVisible(false);
-							billComplaintDetailPanel.setVisible(true);
-							pDestructionDetailPanel.setVisible(false);
+							NSPanel.setVisible(false);
+							BCPanel.setVisible(true);
+							PDPanel.setVisible(false);
 							
 							String bcType = "Bill Complaint";
 							viewcomplaintControl.populateBCTableForRep(bcType);
@@ -152,6 +138,7 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 		scomplaintsOptionsTab.add(billCButton);
 		
 		pDestructionButton = new JButton("Property Destruction");
+		pDestructionButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		pDestructionButton.setFont(new Font("Dubai", Font.PLAIN, 20));
 		pDestructionButton.addActionListener(new ActionListener() {
 			@Override
@@ -161,9 +148,9 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 					@Override
 					public void mouseClicked(MouseEvent event) {
 						if(SwingUtilities.isLeftMouseButton(event)) {
-							noServiceDetailPanel.setVisible(false);
-							billComplaintDetailPanel.setVisible(false);
-							pDestructionDetailPanel.setVisible(true);
+							NSPanel.setVisible(false);
+							BCPanel.setVisible(false);
+							PDPanel.setVisible(true);
 							
 							String pdType = "Property Destruction";
 							viewcomplaintControl.populatePDTableForRep(pdType);
@@ -175,7 +162,8 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 		pDestructionButton.setBounds(10, 316, 233, 37);
 		scomplaintsOptionsTab.add(pDestructionButton);
 		
-		exitButton = new JButton("Exit");
+		exitButton = new JButton("Back");
+		exitButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		exitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -193,131 +181,98 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 		exitButton.setBounds(10, 415, 89, 23);
 		scomplaintsOptionsTab.add(exitButton);
 		
-		complaintsOptionsDetails = new JPanel();
-		complaintsOptionsDetails.setBackground(new Color(255, 245, 238));
-		complaintsOptionsDetails.setBounds(273, 11, 784, 449);
-		contentPane.add(complaintsOptionsDetails);
-		complaintsOptionsDetails.setLayout(null);
+		JLayeredPane layeredPane = new JLayeredPane();
+		layeredPane.setBounds(273, 11, 811, 449);
+		contentPane.add(layeredPane);
 		
-		noServiceDetailPanel = new JPanel();
-		noServiceDetailPanel.setBounds(10, 11, 764, 427);
-		complaintsOptionsDetails.add(noServiceDetailPanel);
-		noServiceDetailPanel.setLayout(null);
+		NSPanel = new JPanel();
+		NSPanel.setVisible(false);
+		NSPanel.setBounds(0, 0, 811, 449);
+		layeredPane.add(NSPanel);
+		NSPanel.setLayout(null);
 		
-		noServiceTableSPane = new JScrollPane();
-		noServiceTableSPane.setBounds(0, 415, 754, -374);
-		noServiceDetailPanel.add(noServiceTableSPane);
+		JScrollPane NSscrollPane = new JScrollPane();
+		NSscrollPane.setBounds(0, 0, 811, 449);
+		NSPanel.add(NSscrollPane);
 		
-		noServiceDetailTable = new JTable();
-		noServiceDetailTable.setModel(new DefaultTableModel(
+		BCPanel = new JPanel();
+		BCPanel.setVisible(false);
+		BCPanel.setBounds(0, 0, 811, 449);
+		layeredPane.add(BCPanel);
+		BCPanel.setLayout(null);
+		
+		BCscrollPane = new JScrollPane();
+		BCscrollPane.setBounds(0, 0, 811, 449);
+		BCPanel.add(BCscrollPane);
+		
+		BCTable = new JTable();
+		BCTable.setModel(new DefaultTableModel(
 			new Object[][] {
-				
 			},
 			new String[] {
-					"Complaint ID", "Customer ID", "Type", "Details", "Status", "Date", "Time"
+				"Complaint ID", "Complaint Type", "Complaint Detail", "Status", "Date", "Time"
 			}
 		) {
-			/**
-			 * 
-			 */
 			boolean[] columnEditables = new boolean[] {
-				false, false, false, false, false, false, false	
+				false, false, false, false, false, false
 			};
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
 			}
 		});
-		noServiceDetailTable.getColumnModel().getColumn(0).setPreferredWidth(80);
-		noServiceDetailTable.getColumnModel().getColumn(1).setPreferredWidth(80);
-		noServiceDetailTable.getColumnModel().getColumn(2).setPreferredWidth(80);
-		noServiceDetailTable.getColumnModel().getColumn(3).setPreferredWidth(80);
-		noServiceDetailTable.getColumnModel().getColumn(4).setPreferredWidth(80);
-		noServiceDetailTable.getColumnModel().getColumn(5).setPreferredWidth(80);
-		noServiceDetailTable.getColumnModel().getColumn(6).setPreferredWidth(80);
-		model = (DefaultTableModel) noServiceDetailTable.getModel();
-		noServiceDetailTable.setBackground(Color.WHITE);
-		noServiceDetailTable.setRowHeight(30);
-		noServiceTableSPane.setViewportView(noServiceDetailTable);
+		BCTable.getColumnModel().getColumn(1).setPreferredWidth(97);
+		BCTable.getColumnModel().getColumn(2).setPreferredWidth(101);
+		BCscrollPane.setViewportView(BCTable);
 		
-		billComplaintDetailPanel = new JPanel();
-		billComplaintDetailPanel.setBounds(10, 11, 764, 427);
-		complaintsOptionsDetails.add(billComplaintDetailPanel);
-		billComplaintDetailPanel.setLayout(null);
+		PDPanel = new JPanel();
+		PDPanel.setVisible(false);
+		PDPanel.setBounds(0, 0, 811, 449);
+		layeredPane.add(PDPanel);
+		PDPanel.setLayout(null);
 		
-		billCTableSPane = new JScrollPane();
-		billCTableSPane.setBounds(10, 416, 744, -404);
-		billComplaintDetailPanel.add(billCTableSPane);
+		PDscrollPane = new JScrollPane();
+		PDscrollPane.setBounds(0, 0, 811, 449);
+		PDPanel.add(PDscrollPane);
 		
-		billCDetailTable = new JTable();
-		billCDetailTable.setModel(new DefaultTableModel(
-				new Object[][] {
-					
-				},
-				new String[] {
-						"Complaint ID", "Customer ID", "Type", "Details", "Status", "Date", "Time"
-				}
-			) {
-				/**
-				 * 
-				 */
-				boolean[] columnEditables = new boolean[] {
-					false, false, false, false, false, false, false	
-				};
-				public boolean isCellEditable(int row, int column) {
-					return columnEditables[column];
-				}
-			});
-			billCDetailTable.getColumnModel().getColumn(0).setPreferredWidth(80);
-			billCDetailTable.getColumnModel().getColumn(1).setPreferredWidth(80);
-			billCDetailTable.getColumnModel().getColumn(2).setPreferredWidth(80);
-			billCDetailTable.getColumnModel().getColumn(3).setPreferredWidth(80);
-			billCDetailTable.getColumnModel().getColumn(4).setPreferredWidth(80);
-			billCDetailTable.getColumnModel().getColumn(5).setPreferredWidth(80);
-			billCDetailTable.getColumnModel().getColumn(6).setPreferredWidth(80);
-			bcmodel = (DefaultTableModel) billCDetailTable.getModel();
-			billCDetailTable.setBackground(Color.WHITE);
-			billCDetailTable.setRowHeight(30);
-		billCTableSPane.setViewportView(billCDetailTable);
+		PDTable = new JTable();
+		PDscrollPane.setViewportView(PDTable);
+		PDTable.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Complaint ID", "Complaint Type", "Complaint Detail", "Status", "Date", "Time"
+			}
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false, false, false, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		PDTable.getColumnModel().getColumn(1).setPreferredWidth(92);
+		PDTable.getColumnModel().getColumn(2).setPreferredWidth(101);
 		
-		pDestructionDetailPanel = new JPanel();
-		pDestructionDetailPanel.setBounds(10, 11, 764, 427);
-		complaintsOptionsDetails.add(pDestructionDetailPanel);
-		pDestructionDetailPanel.setLayout(null);
+		NSTable = new JTable();
+		NSTable.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Complaint ID", "Complaint Type", "Complaint Detail", "Status", "Date", "Time"
+			}
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false, false, false, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		NSTable.getColumnModel().getColumn(1).setPreferredWidth(91);
+		NSTable.getColumnModel().getColumn(2).setPreferredWidth(94);
+		NSscrollPane.setViewportView(NSTable);
 		
-		pDTableSPane = new JScrollPane();
-		pDTableSPane.setBounds(10, 412, 744, -400);
-		pDestructionDetailPanel.add(pDTableSPane);
 		
-		pDDetailTable = new JTable();
-		pDDetailTable.setModel(new DefaultTableModel(
-				new Object[][] {
-					
-				},
-				new String[] {
-						"Complaint ID", "Customer ID", "Type", "Details", "Status", "Date", "Time"
-				}
-			) {
-				/**
-				 * 
-				 */
-				boolean[] columnEditables = new boolean[] {
-					false, false, false, false, false, false, false	
-				};
-				public boolean isCellEditable(int row, int column) {
-					return columnEditables[column];
-				}
-			});
-			pDDetailTable.getColumnModel().getColumn(0).setPreferredWidth(80);
-			pDDetailTable.getColumnModel().getColumn(1).setPreferredWidth(80);
-			pDDetailTable.getColumnModel().getColumn(2).setPreferredWidth(80);
-			pDDetailTable.getColumnModel().getColumn(3).setPreferredWidth(80);
-			pDDetailTable.getColumnModel().getColumn(4).setPreferredWidth(80);
-			pDDetailTable.getColumnModel().getColumn(5).setPreferredWidth(80);
-			pDDetailTable.getColumnModel().getColumn(6).setPreferredWidth(80);
-			pdmodel = (DefaultTableModel) pDDetailTable.getModel();
-			pDDetailTable.setBackground(Color.WHITE);
-			pDDetailTable.setRowHeight(30);
-		pDTableSPane.setViewportView(pDDetailTable);
 		setVisible(true);
 	}
 	
@@ -325,47 +280,16 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 		viewcomplaintControl.setEmpObj(employee);
 	}
 	
-	public JTable getNoServiceDetailTable() {
-		return noServiceDetailTable;
-	}
-	public void setNoServiceDetailTable(JTable noServiceDetailTable) {
-		this.noServiceDetailTable = noServiceDetailTable;
+	public JTable getNSTable() {
+		return NSTable;
 	}
 	
-	public JTable getBillCDetailTable() {
-		return billCDetailTable;
+	public JTable getBCTable() {
+		return BCTable;
 	}
-	public void setBillCDetailTable(JTable billCDetailTable) {
-		this.billCDetailTable = billCDetailTable;
+	
+	public JTable getPDTable() {
+		return PDTable;
 	}
-	public JTable getpDDetailTable() {
-		return pDDetailTable;
-	}
-	public void setpDDetailTable(JTable pDDetailTable) {
-		this.pDDetailTable = pDDetailTable;
-	}
-	public DefaultTableModel getModel() {
-		return model;
-	}
-	public void setModel(DefaultTableModel model) {
-		this.model = model;
-	}
-	public DefaultTableModel getbcModel() {
-		return bcmodel;
-	}
-	public void setbcModel(DefaultTableModel model) {
-		this.bcmodel = model;
-	}
-	public DefaultTableModel getpdModel() {
-		return pdmodel;
-	}
-	public void setpdModel(DefaultTableModel model) {
-		this.pdmodel = model;
-	}
-	public Object[] getRow() {
-		return row;
-	}
-	public void setRow(Object[] row) {
-		this.row = row;
-	}
+
 }

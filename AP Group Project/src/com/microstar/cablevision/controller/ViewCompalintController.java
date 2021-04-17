@@ -1,7 +1,6 @@
 package com.microstar.cablevision.controller;
 
 
-import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import javax.swing.table.DefaultTableModel;
@@ -35,14 +34,10 @@ public class ViewCompalintController {
 	}
 	
 	public void populateTable() {
-	//	ViewComplaintView.getTable().setModel(Model);
 		ArrayList<Complaint> arrayList = new ArrayList<Complaint>();
 		
-		//con.getCustomerComplaint(complaintObj);
-		arrayList=con.readCustomerComplaint();
+		arrayList=con.readCustomerComplaint(); // Returns an arraylist of the complaints made by the signed in ucustomer
 		
-		//System.out.println(ViewComplaintView.getModel().getRowCount());
-		//complaintObj = complaint
 		for(Complaint complain:arrayList) {
 			
 			ViewComplaintView.getModel().insertRow(ViewComplaintView.getTable().getModel().getRowCount(), new Object[] {
@@ -62,7 +57,7 @@ public class ViewCompalintController {
 	public void returnToCustomerDashboard() {
 
 		ViewComplaintView.getFrame().dispose();//close make a complaint window
-		new CustomerDashBoard(con).setCustomerObject(customerObj);;// return to customer dashboard
+		new CustomerDashBoard(con).setCustomerObject(customerObj);// return to customer dashboard
 	}
 	
 	public void setCustomer(Customer customerObj) {

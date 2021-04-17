@@ -48,4 +48,7 @@ public class RepresentativeController {
 		this.empObj = employee;//set the global object to the local employee object
 		window.getNameTextField().setText(this.empObj.getFirst_Name() + " " + this.empObj.getLast_Name());
 	}
+	public void endConnection() {
+		clientObj.closeConnection();
+	}
 }

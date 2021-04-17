@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import com.microstar.cablevision.controller.RepresentativeController;
+import com.microstar.cablevision.utility.Utility;
 
 import microStarCableVision.Client;
 import microStarCableVision.Employee;
@@ -25,6 +26,8 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.awt.event.ActionEvent;
 
 public class EmployeeRepresentativeView extends JFrame {	
@@ -52,30 +55,14 @@ public class EmployeeRepresentativeView extends JFrame {
 	JLabel customerServicesLabel;
 	
 	static RepresentativeController repController;
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		/*EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					LoginView frame = new LoginView();
-					control = new LoginController(frame);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});*/
-		
-		new EmployeeRepresentativeView(new Client());
-	}
-
+	
 	public EmployeeRepresentativeView(Client client) {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
 		getContentPane().setMinimumSize(new Dimension(1150, 714));
 		getContentPane().setMaximumSize(new Dimension(1523, 914));
 		setMinimumSize(new Dimension(1150, 714));
+		setLocation(100,25);
 		repController = new RepresentativeController(this);
 		repController.setClient(client); 
 		setTitle("Representative DashBoard");
@@ -84,6 +71,51 @@ public class EmployeeRepresentativeView extends JFrame {
 		getContentPane().setForeground(new Color(192, 192, 192));
 		setMaximumSize(new Dimension(1523, 914));
 		getContentPane().setLayout(null);
+		this.addWindowListener(new WindowListener() {
+
+			@Override
+			public void windowOpened(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowClosing(WindowEvent e) {
+				repController.endConnection();
+				
+			}
+
+			@Override
+			public void windowClosed(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowIconified(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowDeiconified(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowActivated(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowDeactivated(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 		
 		mainGreetingsPanel = new JPanel();
 		mainGreetingsPanel.setBounds(156, 11, 953, 65);
@@ -98,7 +130,7 @@ public class EmployeeRepresentativeView extends JFrame {
 				signOutButton.addMouseListener(new MouseAdapter() {
 					public void mouseClicked(MouseEvent event) {
 						if(SwingUtilities.isLeftMouseButton(event)) {
-							repController.getLoginPage();;
+							repController.getLoginPage();
 						}
 					}
 				});
@@ -112,7 +144,20 @@ public class EmployeeRepresentativeView extends JFrame {
 		greetingsTextField.setBackground(new Color(30, 144, 255));
 		greetingsTextField.setEditable(false);
 		greetingsTextField.setFont(new Font("Dubai", Font.BOLD | Font.ITALIC, 30));
-		greetingsTextField.setText("Good Afternoon,");
+		int time = Integer.parseInt(Utility.setTime().subSequence(0, 2).toString()); 
+		if(time >=12 && time < 17){ 
+			greetingsTextField.setText("Good Afternoon,");
+		}
+		else if(time > 17 && time < 19 ) {
+			greetingsTextField.setText("Good Evening,");
+		}
+		else if(time > 19 ) {
+			greetingsTextField.setText("Good Night,");
+		}
+		else if(time < 12 && time >= 0) {
+			greetingsTextField.setText("Good Morning,");
+		}
+		
 		greetingsTextField.setBounds(10, 11, 230, 43);
 		mainGreetingsPanel.add(greetingsTextField);
 		greetingsTextField.setColumns(10);

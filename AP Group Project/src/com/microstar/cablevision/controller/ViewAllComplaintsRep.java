@@ -2,6 +2,8 @@ package com.microstar.cablevision.controller;
 
 import java.util.ArrayList;
 
+import javax.swing.table.DefaultTableModel;
+
 import com.microstar.cablevision.views.EmployeeRepresentativeView;
 import com.microstar.cablevision.views.ViewAllComplaintsRepresentative;
 
@@ -31,14 +33,27 @@ public class ViewAllComplaintsRep {
 		clientObj.sendComplaintType(type);
 		
 		ArrayList<Complaint> nsComplaintList = new ArrayList<Complaint>();
-		nsComplaintList = clientObj.readCustomerComplaint();
-		
-		for(Complaint complaint: nsComplaintList) {
-			rCWindow.getModel().insertRow(rCWindow.getNoServiceDetailTable().getModel().getRowCount(), new Object[] {
-				complaint.getComplaintID(), complaint.getCustomerId(), complaint.getType(),
-				complaint.getDetails(), complaint.getStatus(), complaint.getComplaintDate(),
-				complaint.getComplaintTime()
-			});
+		nsComplaintList = clientObj.readComplaints();
+		if(rCWindow.getNSTable().getModel().getRowCount()==0) {
+			for(Complaint complaint: nsComplaintList) {
+				((DefaultTableModel)rCWindow.getNSTable().getModel()).insertRow(rCWindow.getNSTable().getModel().getRowCount(), new Object[] {
+					complaint.getComplaintID(), complaint.getType(),
+					complaint.getDetails(), complaint.getStatus(), complaint.getComplaintDate(),
+					complaint.getComplaintTime()
+				});
+			}
+		}
+		else {
+			for(int i = 0;i<rCWindow.getNSTable().getModel().getRowCount();i++) {
+				((DefaultTableModel)rCWindow.getNSTable().getModel()).removeRow(i);
+			}
+			for(Complaint complaint: nsComplaintList) {
+				((DefaultTableModel)rCWindow.getNSTable().getModel()).insertRow(rCWindow.getNSTable().getModel().getRowCount(), new Object[] {
+					complaint.getComplaintID(), complaint.getType(),
+					complaint.getDetails(), complaint.getStatus(), complaint.getComplaintDate(),
+					complaint.getComplaintTime()
+				});
+			}
 		}
 	}
 	
@@ -47,11 +62,11 @@ public class ViewAllComplaintsRep {
 		clientObj.sendAction("Get BCComplaint");
 		clientObj.sendComplaintType(type);
 		ArrayList<Complaint> bcComplaintList = new ArrayList<Complaint>();
-		bcComplaintList = clientObj.readCustomerComplaint();
+		bcComplaintList = clientObj.readComplaints();
 		
 		for(Complaint complaint: bcComplaintList) {
-			rCWindow.getbcModel().insertRow(rCWindow.getBillCDetailTable().getModel().getRowCount(), new Object[] {
-					complaint.getComplaintID(), complaint.getCustomerId(), complaint.getType(),
+			((DefaultTableModel)rCWindow.getBCTable().getModel()).insertRow(rCWindow.getBCTable().getModel().getRowCount(), new Object[] {
+					complaint.getComplaintID(), complaint.getType(),
 					complaint.getDetails(), complaint.getStatus(), complaint.getComplaintDate(),
 					complaint.getComplaintTime()
 			});
@@ -62,11 +77,11 @@ public class ViewAllComplaintsRep {
 		clientObj.sendAction("Get PDComplaint");
 		clientObj.sendComplaintType(type);
 		ArrayList<Complaint> pdComplaintList = new ArrayList<Complaint>();
-		pdComplaintList = clientObj.readCustomerComplaint();
+		pdComplaintList = clientObj.readComplaints();
 		
 		for(Complaint complaint: pdComplaintList) {
-			rCWindow.getpdModel().insertRow(rCWindow.getpDDetailTable().getModel().getRowCount(), new Object[] {
-					complaint.getComplaintID(), complaint.getCustomerId(), complaint.getType(),
+			((DefaultTableModel)rCWindow.getPDTable().getModel()).insertRow(rCWindow.getPDTable().getModel().getRowCount(), new Object[] {
+					complaint.getComplaintID(), complaint.getType(),
 					complaint.getDetails(), complaint.getStatus(), complaint.getComplaintDate(),
 					complaint.getComplaintTime()
 			});
@@ -77,7 +92,6 @@ public class ViewAllComplaintsRep {
 	public void returnToRepGui() {
 		rCWindow.dispose();
 		new EmployeeRepresentativeView(clientObj).setEmp(this.empObj);
-		//setEmpObj(empObj);
 	}
 	
 	public void setEmpObj(Employee employee) {
