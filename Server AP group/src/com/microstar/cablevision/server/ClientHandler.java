@@ -45,6 +45,7 @@ public class ClientHandler extends Thread implements Runnable {
 	@Override
 	public void run() {
 		System.out.println("run");
+		Security.logger.info("run");
 		String action = " ";
 		getDatabaseConnection();
 
@@ -54,6 +55,7 @@ public class ClientHandler extends Thread implements Runnable {
 				try {
 					action = (String) objIs.readObject();
 					System.out.println(action + " action");
+					Security.logger.info(action + " action");
 					switch (action) {
 					case "Add Customer":
 						customerobj = (Customer) objIs.readObject();
