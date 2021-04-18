@@ -115,7 +115,7 @@ public class CustomerDashBoard {
 		frame.getContentPane().setMaximumSize(new Dimension(1523, 914));
 		frame.setMinimumSize(new Dimension(1100, 714));
 		frame.setMaximumSize(new Dimension(1523, 914));
-		frame.getContentPane().setFont(new Font("Times New Roman", Font.BOLD, 12));
+		frame.getContentPane().setFont(new Font("Times New Roman", Font.BOLD, 10));
 		frame.setBounds(100, 100, 697, 425);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -172,7 +172,7 @@ public class CustomerDashBoard {
 		JPanel mainGreetingsPanel = new JPanel();
 		mainGreetingsPanel.setLayout(null);
 		mainGreetingsPanel.setBackground(new Color(255, 245, 238));
-		mainGreetingsPanel.setBounds(832, 11, 252, 65);
+		mainGreetingsPanel.setBounds(832, 11, 265, 65);
 		frame.getContentPane().add(mainGreetingsPanel);
 		
 		greetingsTextField = new JTextField();

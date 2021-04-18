@@ -10,6 +10,8 @@ import java.util.*;
 
 import javax.swing.JOptionPane;
 
+import com.microstar.cablevision.security.Security;
+
 public class Server implements Serializable {
 
 /*public class Server {
@@ -108,7 +110,8 @@ public class Server implements Serializable {
 			}			
 		}catch(IOException e)
 		{
-			e.printStackTrace();
+			System.out.println("An error occurred while trying to connect to the server. Please try again later");
+			Security.logger.error("An Input/Output Exception was caught in the sendComplaintType method of the Client class");
 		}
 	}
 	
@@ -145,7 +148,8 @@ public class Server implements Serializable {
 				}					
 			} catch (IOException e) {	
 				
-				e.printStackTrace();
+				System.out.println("An error occurred while trying to connect to the server. Please try again later");
+				Security.logger.error("An Input/Output Exception was caught in the sendComplaintType method of the Client class");
 			}
 		}
 	}

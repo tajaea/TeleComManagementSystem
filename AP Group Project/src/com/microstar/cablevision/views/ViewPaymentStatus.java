@@ -9,6 +9,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import com.microstar.cablevision.security.Security;
+
 public class ViewPaymentStatus {
 
 	private JFrame frame;
@@ -23,7 +25,8 @@ public class ViewPaymentStatus {
 					ViewPaymentStatus window = new ViewPaymentStatus();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					System.out.println("An error occurred while trying to fetch your Payment Status. Please try again later");
+					Security.logger.error("An exception was caught in the main method of the ViewPaymentStatus class");
 				}
 			}
 		});

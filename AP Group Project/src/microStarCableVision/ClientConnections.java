@@ -3,6 +3,8 @@ package microStarCableVision;
 import java.io.*;
 import java.net.*;
 
+import com.microstar.cablevision.security.Security;
+
 public class ClientConnections extends Thread implements Serializable
 {
 
@@ -42,8 +44,8 @@ public class ClientConnections extends Thread implements Serializable
 			clientOutput.flush();
 		} catch (IOException e) 
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("An error occurred while trying to connect to the server. Please try again later");
+			Security.logger.error("An Input/Output Exception was caught in the sendComplaintType method of the ClientConnections class");
 			//The close function is used to close the overall connection/ports between the
 			//client and server.
 			close();
@@ -77,8 +79,8 @@ public class ClientConnections extends Thread implements Serializable
 						//during the activity.
 						} catch (InterruptedException e) 
 						{
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+							System.out.println("An error occurred while trying to connect to the server. Please try again later");
+							Security.logger.error("An Interrupted Exception was caught in the run method of the ClientConnections class");
 						}
 					}
 					//The readUTF(DataInput in) method of DataInputStream class reads
@@ -89,8 +91,8 @@ public class ClientConnections extends Thread implements Serializable
 					System.out.println(reply);
 				} catch (IOException e) 
 				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					System.out.println("An error occurred while trying to connect to the server. Please try again later");
+					Security.logger.error("An Input/Output Exception was caught in the run method of the ClientConnections class");
 					//The close function is used to close the overall connection/ports between the
 					//client and server.
 					close();
@@ -98,8 +100,8 @@ public class ClientConnections extends Thread implements Serializable
 			}
 		} catch (IOException e) 
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("An error occurred while trying to connect to the server. Please try again later");
+			Security.logger.error("An Input/Output Exception was caught in the run method of the ClientConnections class");
 			//The close function is used to close the overall connection/ports between the
 			//client and server.
 			close();
@@ -117,7 +119,8 @@ public class ClientConnections extends Thread implements Serializable
 			socket.close();
 		}catch(IOException ioe) 
 		{
-			System.err.println(ioe);
+			System.out.println("An error occurred while trying to connect to the server. Please try again later");
+			Security.logger.error("An Input/Output Exception was caught in the close method of the ClientConnections class");
 		}
 	}	
 }

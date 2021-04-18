@@ -8,6 +8,8 @@ import java.net.Socket;
 import javax.swing.JOptionPane;
 
 import com.microstar.cablevision.security.Authentication;
+import com.microstar.cablevision.security.Security;
+
 import java.util.ArrayList;
 public class Client{
 
@@ -42,8 +44,8 @@ public class Client{
 			objIs = new ObjectInputStream(connectionSocket.getInputStream());
 			objOs = new ObjectOutputStream(connectionSocket.getOutputStream());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("An error occurred while trying to connect to the server. Please try again later");
+			Security.logger.error("An Input/Output Exception was caught in the configureStreams method of the Client class");
 		}
 	}
 		
@@ -63,8 +65,8 @@ public class Client{
 			connectionSocket = new Socket("127.0.0.1",8888);
 			System.out.println("port"+connectionSocket.getPort());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("An error occurred while trying to connect to the server. Please try again later");
+			Security.logger.error("An Input/Output Exception was caught in the createConnection method of the Client class");
 		}
 	}
 	
@@ -77,8 +79,8 @@ public class Client{
 			objIs.close();
 			connectionSocket.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("An error occurred while trying to connect to the server. Please try again later");
+			Security.logger.error("An Input/Output Exception was caught in the closeConnection method of the Client class");
 		}
 		
 	}
@@ -92,8 +94,8 @@ public class Client{
 			objOs.writeObject(this.action);
 		
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("An error occurred while trying to connect to the server. Please try again later");
+			Security.logger.error("An Input/Output Exception was caught in the sendAction method of the Client class");
 		}
 	}
 	
@@ -105,8 +107,8 @@ public class Client{
 		try {
 			objOs.writeObject(cust);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("An error occurred while trying to connect to the server. Please try again later");
+			Security.logger.error("An Input/Output Exception was caught in the addCustomer method of the Client class");
 		}
 	}
 
@@ -115,16 +117,8 @@ public class Client{
 		try {
 			objOs.writeObject(comp);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	public void sendResponse(Responses response) {
-		try {
-			objOs.writeObject(response);
-		}catch(IOException e) {
-			e.printStackTrace();
+			System.out.println("An error occurred while trying to connect to the server. Please try again later");
+			Security.logger.error("An Input/Output Exception was caught in the addComplaint method of the Client class");
 		}
 	}
 	
@@ -132,8 +126,8 @@ public class Client{
 		try {
 			objOs.writeObject(auth);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("An error occurred while trying to connect to the server. Please try again later");
+			Security.logger.error("An Input/Output Exception was caught in the sendUser method of the Client class");
 		}
 	}
 	
@@ -142,11 +136,11 @@ public class Client{
 		try {
 			customer = (Customer)objIs.readObject();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("An error occurred while trying to connect to the server. Please try again later");
+			Security.logger.error("An Input/Output Exception was caught in the getCustomer method of the Client class");
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("An error occurred while trying to connect to the server. Please try again later");
+			Security.logger.error("A ClassNotFound Exception was caught in the getCustomer method of the Client class");
 		}
 		return customer;
 	}
@@ -155,7 +149,8 @@ public class Client{
 		try {
 			objOs.writeObject(customer);
 		}catch(IOException e){
-			
+			System.out.println("An error occurred while trying to connect to the server. Please try again later");
+			Security.logger.error("An Input/Output Exception was caught in the sendCustomer method of the Client class");
 		}
 	}
 
@@ -167,10 +162,11 @@ public class Client{
 			 array=(ArrayList<Complaint>) objIs.readObject();
 			 System.out.println(array);
 		} catch (IOException e) {
-			
+			System.out.println("An error occurred while trying to connect to the server. Please try again later");
+			Security.logger.error("An Input/Output Exception was caught in the readCustomerComplaint method of the Client class");
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("An error occurred while trying to connect to the server. Please try again later");
+			Security.logger.error("A ClassNotFound Exception was caught in the readCustomerComplaint method of the Client class");
 		}
 		
 		return array;
@@ -183,10 +179,11 @@ public class Client{
 			 array=(ArrayList<Complaint>) objIs.readObject();
 			 System.out.println(array);
 		} catch (IOException e) {
-			
+			System.out.println("An error occurred while trying to connect to the server. Please try again later");
+			Security.logger.error("An Input/Output Exception was caught in the readComplaints method of the Client class");
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("An error occurred while trying to connect to the server. Please try again later");
+			Security.logger.error("A ClassNotFound Exception was caught in the readComplaints method of the Client class");
 		}
 		
 		return array;
@@ -197,11 +194,11 @@ public class Client{
 		try {
 			complaint = (Complaint)objIs.readObject();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("An error occurred while trying to connect to the server. Please try again later");
+			Security.logger.error("An Input/Output Exception was caught in the getComplaint method of the Client class");
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("An error occurred while trying to connect to the server. Please try again later");
+			Security.logger.error("A ClassNotFound Exception was caught in the getComplaint method of the Client class");
 		}
 		return complaint;
 	}
@@ -219,9 +216,12 @@ public class Client{
 		 this.amount = 0 ;
 		try {
 			amount = (int)objIs.readObject();
-		} catch (IOException | ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (IOException e) {
+			System.out.println("An error occurred while trying to connect to the server. Please try again later");
+			Security.logger.error("An Input/Output Exception was caught in the numOfUsers method of the Client class");
+		} catch (ClassNotFoundException e) {
+			System.out.println("An error occurred while trying to connect to the server. Please try again later");
+			Security.logger.error("A ClassNotFound Exception was caught in the numOfUsers method of the Client class");
 		}
 		return amount;
 	}
@@ -255,8 +255,8 @@ public class Client{
 		try {
 			objOs.writeObject(emp);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("An error occurred while trying to connect to the server. Please try again later");
+			Security.logger.error("An Input/Output Exception was caught in the addEmployee method of the Client class");
 		}
 	}
 	
@@ -264,11 +264,13 @@ public class Client{
 		String userType = " ";
 		try {
 			userType = (String) objIs.readObject();
-		} catch (ClassNotFoundException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (IOException e) {
+			System.out.println("An error occurred while trying to connect to the server. Please try again later");
+			Security.logger.error("An Input/Output Exception was caught in the getUserType method of the Client class");
+		} catch (ClassNotFoundException e) {
+			System.out.println("An error occurred while trying to connect to the server. Please try again later");
+			Security.logger.error("A ClassNotFound Exception was caught in the getUserType method of the Client class");
 		}
-		
 		return userType;
 	}
 	
@@ -276,9 +278,12 @@ public class Client{
 		Integer loginValue = 0;
 		try {
 			loginValue = (Integer) objIs.readObject();
-		} catch (ClassNotFoundException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (IOException e) {
+			System.out.println("An error occurred while trying to connect to the server. Please try again later");
+			Security.logger.error("An Input/Output Exception was caught in the getloginValue method of the Client class");
+		} catch (ClassNotFoundException e) {
+			System.out.println("An error occurred while trying to connect to the server. Please try again later");
+			Security.logger.error("A ClassNotFound Exception was caught in the getloginValue method of the Client class");
 		}
 		
 		return loginValue;
@@ -289,12 +294,13 @@ public class Client{
 		try {
 			employee = (Employee)objIs.readObject();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("An error occurred while trying to connect to the server. Please try again later");
+			Security.logger.error("An Input/Output Exception was caught in the getEmployee method of the Client class");
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("An error occurred while trying to connect to the server. Please try again later");
+			Security.logger.error("A ClassNotFound Exception was caught in the getEmployee method of the Client class");
 		}
+		
 		return employee;
 	}
 	
@@ -302,9 +308,12 @@ public class Client{
 		boolean flag = false;
 		try {
 			flag = (boolean) objIs.readObject();
-		} catch (ClassNotFoundException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (IOException e) {
+			System.out.println("An error occurred while trying to connect to the server. Please try again later");
+			Security.logger.error("An Input/Output Exception was caught in the SuccessStatus method of the Client class");
+		} catch (ClassNotFoundException e) {
+			System.out.println("An error occurred while trying to connect to the server. Please try again later");
+			Security.logger.error("A ClassNotFound Exception was caught in the SuccessStatus method of the Client class");
 		}
 		return flag;
 	}
@@ -314,8 +323,8 @@ public class Client{
 			this.complaintType = type;
 			objOs.writeObject(this.complaintType);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("An error occurred while trying to connect to the server. Please try again later");
+			Security.logger.error("An Input/Output Exception was caught in the sendComplaintType method of the Client class");
 		}
 		
 	}

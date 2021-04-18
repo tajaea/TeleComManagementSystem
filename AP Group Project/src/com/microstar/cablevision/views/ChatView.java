@@ -20,7 +20,10 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import com.microstar.cablevision.security.Security;
 
 public class ChatView extends JFrame {
 
@@ -56,7 +59,8 @@ public class ChatView extends JFrame {
 			dout = new DataOutputStream(s.getOutputStream());
 			new Read().start(); 
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			System.out.println("An error occurred in our chat server. Please try again later");	
+			Security.logger.error("An exception was caught in Chat View");
 		}
 	}
 
@@ -85,7 +89,8 @@ public class ChatView extends JFrame {
 						msgBox.append("" + m + "\n"); 
 					}
 				} catch (Exception e) {
-					e.printStackTrace();
+					System.out.println("An error occurred in our chat server. Please try again later");	
+					Security.logger.error("An exception was caught in inner class Read in parent class ChatView");
 					break;
 				}
 			}
@@ -155,6 +160,8 @@ public class ChatView extends JFrame {
 						clientID = ""; 
 					} catch (Exception ex) {
 						JOptionPane.showMessageDialog(frame, "User does not exist anymore."); 
+						Security.logger.info("User does not exist anymore");
+
 					}
 				}
 			}
@@ -176,8 +183,8 @@ public class ChatView extends JFrame {
 					msgBox.append("You are disconnected now.\n");
 					frame.dispose();  
 				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
+					System.out.println("An error occurred in our chat server. Please try again later");	
+					Security.logger.error("An Input/Output Exception was caught in the Action Listener in the ChatView class");}
 			}
 		});
 		exitchatBtn.setBounds(480,420, 89, 38);

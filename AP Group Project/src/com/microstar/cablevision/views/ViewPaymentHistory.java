@@ -5,6 +5,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import java.awt.Dimension;
 import javax.swing.JLabel;
+
+import com.microstar.cablevision.security.Security;
+
 import java.awt.Font;
 import java.awt.Color;
 import javax.swing.JButton;
@@ -23,7 +26,8 @@ public class ViewPaymentHistory {
 					ViewPaymentHistory window = new ViewPaymentHistory();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					System.out.println("An error occurred while trying to fetch your Payment History. Please try again later");
+					Security.logger.error("An exception was caught in the main method of the ViewPaymentHistory class");
 				}
 			}
 		});
