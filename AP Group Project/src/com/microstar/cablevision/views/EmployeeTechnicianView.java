@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -75,6 +77,51 @@ public class EmployeeTechnicianView extends JFrame {
 		getContentPane().setForeground(new Color(192, 192, 192));
 		setMaximumSize(new Dimension(1523, 914));
 		getContentPane().setLayout(null);
+		this.addWindowListener(new WindowListener() {
+
+			@Override
+			public void windowOpened(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowClosing(WindowEvent e) {
+				// TODO Auto-generated method stub
+				techController.endConnection();
+			}
+
+			@Override
+			public void windowClosed(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowIconified(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowDeiconified(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowActivated(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowDeactivated(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 		
 		mainGreetingsPanel = new JPanel();
 		mainGreetingsPanel.setBounds(156, 11, 953, 65);
@@ -241,4 +288,5 @@ public class EmployeeTechnicianView extends JFrame {
 	public void setNameTextField(JTextField nameTextField) {
 		this.nameTextField = nameTextField;
 	}
+	
 }

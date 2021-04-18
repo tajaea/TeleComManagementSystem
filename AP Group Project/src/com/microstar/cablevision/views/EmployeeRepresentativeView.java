@@ -309,5 +309,4 @@ public class EmployeeRepresentativeView extends JFrame {
 		this.nameTextField = nameTextField;
 	}
 	
-	
 }

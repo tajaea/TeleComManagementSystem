@@ -278,8 +278,6 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 		NSTable.getColumnModel().getColumn(1).setPreferredWidth(91);
 		NSTable.getColumnModel().getColumn(2).setPreferredWidth(94);
 		NSscrollPane.setViewportView(NSTable);
-		
-		
 		setVisible(true);
 	}
 		
@@ -298,5 +296,4 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 	public JTable getPDTable() {
 		return PDTable;
 	}
-
 }
