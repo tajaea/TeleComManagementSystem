@@ -157,7 +157,6 @@ public class EmployeeRepresentativeView extends JFrame {
 		else if(time < 12 && time >= 0) {
 			greetingsTextField.setText("Good Morning,");
 		}
-		
 		greetingsTextField.setBounds(10, 11, 230, 43);
 		mainGreetingsPanel.add(greetingsTextField);
 		greetingsTextField.setColumns(10);

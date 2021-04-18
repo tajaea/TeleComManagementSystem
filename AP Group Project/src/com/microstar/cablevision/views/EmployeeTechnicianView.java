@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import com.microstar.cablevision.controller.TechnicianController;
+import com.microstar.cablevision.utility.Utility;
 
 import microStarCableVision.Client;
 import microStarCableVision.Employee;
@@ -101,7 +102,19 @@ public class EmployeeTechnicianView extends JFrame {
 		greetingsTextField.setBackground(new Color(30, 144, 255));
 		greetingsTextField.setEditable(false);
 		greetingsTextField.setFont(new Font("Dubai", Font.BOLD | Font.ITALIC, 30));
-		greetingsTextField.setText("Good Afternoon,");
+		int time = Integer.parseInt(Utility.setTime().subSequence(0, 2).toString()); 
+		if(time >=12 && time < 17){ 
+			greetingsTextField.setText("Good Afternoon,");
+		}
+		else if(time >=17 && time < 19 ) {
+			greetingsTextField.setText("Good Evening,");
+		}
+		else if(time > 19 ) {
+			greetingsTextField.setText("Good Night,");
+		}
+		else if(time < 12 && time >= 0) {
+			greetingsTextField.setText("Good Morning,");
+		}
 		greetingsTextField.setBounds(10, 11, 230, 43);
 		mainGreetingsPanel.add(greetingsTextField);
 		greetingsTextField.setColumns(10);
