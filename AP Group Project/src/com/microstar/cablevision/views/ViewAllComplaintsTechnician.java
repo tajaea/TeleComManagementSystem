@@ -71,9 +71,20 @@ public class ViewAllComplaintsTechnician extends JFrame {
 	JLabel pDResponseDateLabel;
 	JTextField pDDateTextField;
 	JButton pDSubmitResponseButton;
+	JLabel nsCustomerIDLabel;
+	JLabel nsComplaintIDLabel;
+	JTextField nsCustomerIDTextField;
+	JTextField nsComplaintIDTextField;
+	JLabel bcCustomerIDLabel;
+	JTextField bcCustomerIDTextField;
+	JLabel bcComplaintIDLabel;
+	JTextField bcComplaintIDTextField;
+	JLabel pdCustomerIDLabel;
+	JTextField pdCustomerIDTextField;
+	JLabel pdComplaintIDLabel;
+	JTextField pdComplaintIDTextField;
 	
 	ViewAllComplaintsTech techComplaintControl;
-	
 	/**
 	 * Create the frame.
 	 */
@@ -220,7 +231,7 @@ public class ViewAllComplaintsTechnician extends JFrame {
 						new Object[][] {
 						},
 						new String[] {
-							"Complaint ID", "Complaint Type", "Complaint Detail", "Status", "Date", "Time"
+							"Complaint ID", "Customer ID", "Complaint Type", "Complaint Detail", "Status", "Date", "Time"
 						}
 					) {
 						boolean[] columnEditables = new boolean[] {
@@ -236,137 +247,213 @@ public class ViewAllComplaintsTechnician extends JFrame {
 					
 					nSResponseLabel = new JLabel("Response");
 					nSResponseLabel.setFont(new Font("Dubai", Font.PLAIN, 21));
-					nSResponseLabel.setBounds(237, 276, 93, 27);
+					nSResponseLabel.setBounds(352, 276, 93, 27);
 					noServiceDetailPanel.add(nSResponseLabel);
 					
 					nSResponseTextField = new JTextField();
-					nSResponseTextField.setBounds(412, 276, 389, 79);
+					nSResponseTextField.setBounds(455, 276, 346, 79);
 					noServiceDetailPanel.add(nSResponseTextField);
 					nSResponseTextField.setColumns(10);
 					
 					nSResponseDateLabel = new JLabel("Date");
 					nSResponseDateLabel.setFont(new Font("Dubai", Font.PLAIN, 21));
-					nSResponseDateLabel.setBounds(236, 374, 56, 27);
+					nSResponseDateLabel.setBounds(389, 374, 56, 27);
 					noServiceDetailPanel.add(nSResponseDateLabel);
 					
 					nSDateTextField = new JTextField();
-					nSDateTextField.setBounds(412, 378, 176, 22);
+					nSDateTextField.setBounds(455, 378, 176, 22);
 					noServiceDetailPanel.add(nSDateTextField);
 					nSDateTextField.setColumns(10);
 					
 					nSSubmitResponseButton = new JButton("Submit");
 					nSSubmitResponseButton.setFont(new Font("Dubai", Font.PLAIN, 15));
+					
+					nSSubmitResponseButton.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							// TODO Auto-generated method stub
+							nSSubmitResponseButton.addMouseListener(new MouseAdapter() {
+								@Override
+								public void mouseClicked(MouseEvent event) {
+									if(SwingUtilities.isLeftMouseButton(event)) {
+										techComplaintControl.submitNSResponseToCustomer();
+									}
+								}
+							});
+						}
+					});
+					
 					nSSubmitResponseButton.setBounds(702, 411, 99, 27);
 					noServiceDetailPanel.add(nSSubmitResponseButton);
 					
+					nsCustomerIDLabel = new JLabel("Customer ID");
+					nsCustomerIDLabel.setFont(new Font("Dubai", Font.PLAIN, 21));
+					nsCustomerIDLabel.setBounds(10, 276, 115, 27);
+					noServiceDetailPanel.add(nsCustomerIDLabel);
 					
+					nsCustomerIDTextField = new JTextField();
+					nsCustomerIDTextField.setColumns(10);
+					nsCustomerIDTextField.setBounds(135, 276, 176, 22);
+					noServiceDetailPanel.add(nsCustomerIDTextField);
+					
+					nsComplaintIDLabel = new JLabel("Complaint ID");
+					nsComplaintIDLabel.setFont(new Font("Dubai", Font.PLAIN, 21));
+					nsComplaintIDLabel.setBounds(10, 382, 115, 27);
+					noServiceDetailPanel.add(nsComplaintIDLabel);
+					
+					nsComplaintIDTextField = new JTextField();
+					nsComplaintIDTextField.setColumns(10);
+					nsComplaintIDTextField.setBounds(135, 379, 176, 22);
+					noServiceDetailPanel.add(nsComplaintIDTextField);
+			
+			
 			billComplaintDetailPanel = new JPanel();
 			billComplaintDetailPanel.setBounds(0, 0, 811, 449);
 			billComplaintDetailPanel.setVisible(false);
 			layeredPane.add(billComplaintDetailPanel);
 			billComplaintDetailPanel.setLayout(null);
-					
-					billCTableSPane = new JScrollPane();
-					billCTableSPane.setBounds(0, 0, 811, 275);
-					billComplaintDetailPanel.add(billCTableSPane);
-					
-					billCDetailTable = new JTable();
-					billCDetailTable.setModel(new DefaultTableModel(
-						new Object[][] {
-						},
-						new String[] {
-							"Complaint ID", "Complaint Type", "Complaint Detail", "Status", "Date", "Time"
-						}
-					) {
-						boolean[] columnEditables = new boolean[] {
-							false, false, false, false, false, false
-						};
-						public boolean isCellEditable(int row, int column) {
-							return columnEditables[column];
-						}
-					});
-					billCDetailTable.getColumnModel().getColumn(1).setPreferredWidth(97);
-					billCDetailTable.getColumnModel().getColumn(2).setPreferredWidth(101);
-					billCTableSPane.setViewportView(billCDetailTable);
-					
-					bCResponseLabel = new JLabel("Response");
-					bCResponseLabel.setFont(new Font("Dubai", Font.PLAIN, 21));
-					bCResponseLabel.setBounds(237, 276, 93, 27);
-					billComplaintDetailPanel.add(bCResponseLabel);
-					
-					bCResponseTextField = new JTextField();
-					bCResponseTextField.setBounds(412, 276, 389, 79);
-					billComplaintDetailPanel.add(bCResponseTextField);
-					bCResponseTextField.setColumns(10);
-					
-					bCResponseDateLabel = new JLabel("Date");
-					bCResponseDateLabel.setFont(new Font("Dubai", Font.PLAIN, 21));
-					bCResponseDateLabel.setBounds(236, 374, 56, 27);
-					billComplaintDetailPanel.add(bCResponseDateLabel);
-					
-					bCDateTextField = new JTextField();
-					bCDateTextField.setBounds(412, 378, 176, 22);
-					billComplaintDetailPanel.add(bCDateTextField);
-					bCDateTextField.setColumns(10);
-					
-					bCSubmitResponseButton = new JButton("Submit");
-					bCSubmitResponseButton.setFont(new Font("Dubai", Font.PLAIN, 15));
-					bCSubmitResponseButton.setBounds(702, 411, 99, 27);
-					billComplaintDetailPanel.add(bCSubmitResponseButton);
-					
+			
+			billCTableSPane = new JScrollPane();
+			billCTableSPane.setBounds(0, 0, 811, 275);
+			billComplaintDetailPanel.add(billCTableSPane);
+			
+			billCDetailTable = new JTable();
+			billCDetailTable.setModel(new DefaultTableModel(
+				new Object[][] {
+				},
+				new String[] {
+					"Complaint ID", "Customer ID", "Complaint Type", "Complaint Detail", "Status", "Date", "Time"
+				}
+			) {
+				boolean[] columnEditables = new boolean[] {
+					false, false, false, false, false, false
+				};
+				public boolean isCellEditable(int row, int column) {
+					return columnEditables[column];
+				}
+			});
+			billCDetailTable.getColumnModel().getColumn(1).setPreferredWidth(97);
+			billCDetailTable.getColumnModel().getColumn(2).setPreferredWidth(101);
+			billCTableSPane.setViewportView(billCDetailTable);
+			
+			bCResponseLabel = new JLabel("Response");
+			bCResponseLabel.setFont(new Font("Dubai", Font.PLAIN, 21));
+			bCResponseLabel.setBounds(352, 276, 93, 27);
+			billComplaintDetailPanel.add(bCResponseLabel);
+			
+			bCResponseTextField = new JTextField();
+			bCResponseTextField.setBounds(455, 276, 346, 79);
+			billComplaintDetailPanel.add(bCResponseTextField);
+			bCResponseTextField.setColumns(10);
+			
+			bCResponseDateLabel = new JLabel("Date");
+			bCResponseDateLabel.setFont(new Font("Dubai", Font.PLAIN, 21));
+			bCResponseDateLabel.setBounds(389, 374, 56, 27);
+			billComplaintDetailPanel.add(bCResponseDateLabel);
+			
+			bCDateTextField = new JTextField();
+			bCDateTextField.setBounds(455, 378, 176, 22);
+			billComplaintDetailPanel.add(bCDateTextField);
+			bCDateTextField.setColumns(10);
+			
+			bCSubmitResponseButton = new JButton("Submit");
+			bCSubmitResponseButton.setFont(new Font("Dubai", Font.PLAIN, 15));
+			bCSubmitResponseButton.setBounds(702, 411, 99, 27);
+			billComplaintDetailPanel.add(bCSubmitResponseButton);
+			
+			bcCustomerIDLabel = new JLabel("Customer ID");
+			bcCustomerIDLabel.setFont(new Font("Dubai", Font.PLAIN, 21));
+			bcCustomerIDLabel.setBounds(10, 276, 115, 27);
+			billComplaintDetailPanel.add(bcCustomerIDLabel);
+			
+			bcCustomerIDTextField = new JTextField();
+			bcCustomerIDTextField.setColumns(10);
+			bcCustomerIDTextField.setBounds(135, 276, 176, 22);
+			billComplaintDetailPanel.add(bcCustomerIDTextField);
+			
+			bcComplaintIDLabel = new JLabel("Complaint ID");
+			bcComplaintIDLabel.setFont(new Font("Dubai", Font.PLAIN, 21));
+			bcComplaintIDLabel.setBounds(10, 382, 115, 27);
+			billComplaintDetailPanel.add(bcComplaintIDLabel);
+			
+			bcComplaintIDTextField = new JTextField();
+			bcComplaintIDTextField.setColumns(10);
+			bcComplaintIDTextField.setBounds(135, 379, 176, 22);
+			billComplaintDetailPanel.add(bcComplaintIDTextField);
+			
 			pDestructionDetailPanel = new JPanel();
 			pDestructionDetailPanel.setBounds(0, 0, 811, 449);
 			pDestructionDetailPanel.setVisible(false);
 			layeredPane.add(pDestructionDetailPanel);
 			pDestructionDetailPanel.setLayout(null);
-					
-					pDTableSPane = new JScrollPane();
-					pDTableSPane.setBounds(0, 0, 811, 275);
-					pDestructionDetailPanel.add(pDTableSPane);
-					
-						pDDetailTable = new JTable();
-						pDDetailTable.setModel(new DefaultTableModel(
-							new Object[][] {
-							},
-							new String[] {
-								"Complaint ID", "Complaint Type", "Complaint Detail", "Status", "Date", "Time"
-							}
-						) {
-							boolean[] columnEditables = new boolean[] {
-								false, false, false, false, false, false
-							};
-							public boolean isCellEditable(int row, int column) {
-								return columnEditables[column];
-							}
-						});
-						pDDetailTable.getColumnModel().getColumn(1).setPreferredWidth(92);
-						pDDetailTable.getColumnModel().getColumn(2).setPreferredWidth(101);
-						pDTableSPane.setViewportView(pDDetailTable);
-						
-						pDResponseLabel = new JLabel("Response");
-						pDResponseLabel.setFont(new Font("Dubai", Font.PLAIN, 21));
-						pDResponseLabel.setBounds(237, 276, 93, 27);
-						pDestructionDetailPanel.add(pDResponseLabel);
-						
-						pDresponseTextField = new JTextField();
-						pDresponseTextField.setBounds(412, 276, 389, 79);
-						pDestructionDetailPanel.add(pDresponseTextField);
-						pDresponseTextField.setColumns(10);
-						
-						pDResponseDateLabel = new JLabel("Date");
-						pDResponseDateLabel.setFont(new Font("Dubai", Font.PLAIN, 21));
-						pDResponseDateLabel.setBounds(236, 374, 56, 27);
-						pDestructionDetailPanel.add(pDResponseDateLabel);
-						
-						pDDateTextField = new JTextField();
-						pDDateTextField.setBounds(412, 378, 176, 22);
-						pDestructionDetailPanel.add(pDDateTextField);
-						pDDateTextField.setColumns(10);
-						
-						pDSubmitResponseButton = new JButton("Submit");
-						pDSubmitResponseButton.setFont(new Font("Dubai", Font.PLAIN, 15));
-						pDSubmitResponseButton.setBounds(702, 411, 99, 27);
-						pDestructionDetailPanel.add(pDSubmitResponseButton);
+			
+			pDTableSPane = new JScrollPane();
+			pDTableSPane.setBounds(0, 0, 811, 275);
+			pDestructionDetailPanel.add(pDTableSPane);
+			
+				pDDetailTable = new JTable();
+				pDDetailTable.setModel(new DefaultTableModel(
+					new Object[][] {
+					},
+					new String[] {
+						"Complaint ID", "Customer ID", "Complaint Type", "Complaint Detail", "Status", "Date", "Time"
+					}
+				) {
+					boolean[] columnEditables = new boolean[] {
+						false, false, false, false, false, false
+					};
+					public boolean isCellEditable(int row, int column) {
+						return columnEditables[column];
+					}
+				});
+				pDDetailTable.getColumnModel().getColumn(1).setPreferredWidth(92);
+				pDDetailTable.getColumnModel().getColumn(2).setPreferredWidth(101);
+				pDTableSPane.setViewportView(pDDetailTable);
+				
+				pDResponseLabel = new JLabel("Response");
+				pDResponseLabel.setFont(new Font("Dubai", Font.PLAIN, 21));
+				pDResponseLabel.setBounds(352, 276, 93, 27);
+				pDestructionDetailPanel.add(pDResponseLabel);
+				
+				pDresponseTextField = new JTextField();
+				pDresponseTextField.setBounds(455, 276, 346, 79);
+				pDestructionDetailPanel.add(pDresponseTextField);
+				pDresponseTextField.setColumns(10);
+				
+				pDResponseDateLabel = new JLabel("Date");
+				pDResponseDateLabel.setFont(new Font("Dubai", Font.PLAIN, 21));
+				pDResponseDateLabel.setBounds(389, 374, 56, 27);
+				pDestructionDetailPanel.add(pDResponseDateLabel);
+				
+				pDDateTextField = new JTextField();
+				pDDateTextField.setBounds(455, 378, 176, 22);
+				pDestructionDetailPanel.add(pDDateTextField);
+				pDDateTextField.setColumns(10);
+				
+				pDSubmitResponseButton = new JButton("Submit");
+				pDSubmitResponseButton.setFont(new Font("Dubai", Font.PLAIN, 15));
+				pDSubmitResponseButton.setBounds(702, 411, 99, 27);
+				pDestructionDetailPanel.add(pDSubmitResponseButton);
+				
+				pdCustomerIDLabel = new JLabel("Customer ID");
+				pdCustomerIDLabel.setFont(new Font("Dubai", Font.PLAIN, 21));
+				pdCustomerIDLabel.setBounds(10, 276, 115, 27);
+				pDestructionDetailPanel.add(pdCustomerIDLabel);
+				
+				pdCustomerIDTextField = new JTextField();
+				pdCustomerIDTextField.setColumns(10);
+				pdCustomerIDTextField.setBounds(135, 276, 176, 22);
+				pDestructionDetailPanel.add(pdCustomerIDTextField);
+				
+				pdComplaintIDLabel = new JLabel("Complaint ID");
+				pdComplaintIDLabel.setFont(new Font("Dubai", Font.PLAIN, 21));
+				pdComplaintIDLabel.setBounds(10, 382, 115, 27);
+				pDestructionDetailPanel.add(pdComplaintIDLabel);
+				
+				pdComplaintIDTextField = new JTextField();
+				pdComplaintIDTextField.setColumns(10);
+				pdComplaintIDTextField.setBounds(135, 379, 176, 22);
+				pDestructionDetailPanel.add(pdComplaintIDTextField);
 		setVisible(true);
 	}
 		
@@ -396,6 +483,22 @@ public class ViewAllComplaintsTechnician extends JFrame {
 
 	public void setpDDetailTable(JTable pDDetailTable) {
 		this.pDDetailTable = pDDetailTable;
+	}
+	
+	public JTextField getNsCustomerIDTextField() {
+		return nsCustomerIDTextField;
+	}
+
+	public void setNsCustomerIDTextField(JTextField nsCustomerIDTextField) {
+		this.nsCustomerIDTextField = nsCustomerIDTextField;
+	}
+
+	public JTextField getNsComplaintIDTextField() {
+		return nsComplaintIDTextField;
+	}
+
+	public void setNsComplaintIDTextField(JTextField nsComplaintIDTextField) {
+		this.nsComplaintIDTextField = nsComplaintIDTextField;
 	}
 
 	public JTextField getnSResponseTextField() {
@@ -468,5 +571,53 @@ public class ViewAllComplaintsTechnician extends JFrame {
 
 	public void setpDSubmitResponseButton(JButton pDSubmitResponseButton) {
 		this.pDSubmitResponseButton = pDSubmitResponseButton;
+	}
+
+	public JTextField getCustomerIDTextField() {
+		return nsCustomerIDTextField;
+	}
+
+	public void setCustomerIDTextField(JTextField customerIDTextField) {
+		this.nsCustomerIDTextField = customerIDTextField;
+	}
+
+	public JTextField getComplaintIDTextField() {
+		return nsComplaintIDTextField;
+	}
+
+	public void setComplaintIDTextField(JTextField complaintIDTextField) {
+		this.nsComplaintIDTextField = complaintIDTextField;
+	}
+
+	public JTextField getBcCustomerIDTextField() {
+		return bcCustomerIDTextField;
+	}
+
+	public void setBcCustomerIDTextField(JTextField bcCustomerIDTextField) {
+		this.bcCustomerIDTextField = bcCustomerIDTextField;
+	}
+
+	public JTextField getBcComplaintTextField() {
+		return bcComplaintIDTextField;
+	}
+
+	public void setBcComplaintTextField(JTextField bcComplaintTextField) {
+		this.bcComplaintIDTextField = bcComplaintTextField;
+	}
+
+	public JTextField getPdCustomerIDTextField() {
+		return pdCustomerIDTextField;
+	}
+
+	public void setPdCustomerIDTextField(JTextField pdCustomerIDTextField) {
+		this.pdCustomerIDTextField = pdCustomerIDTextField;
+	}
+
+	public JTextField getPdComplaintIDTextField() {
+		return pdComplaintIDTextField;
+	}
+
+	public void setPdComplaintIDTextField(JTextField pdComplaintIDTextField) {
+		this.pdComplaintIDTextField = pdComplaintIDTextField;
 	}
 }

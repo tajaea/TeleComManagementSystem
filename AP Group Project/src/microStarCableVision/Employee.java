@@ -22,6 +22,7 @@ public class Employee implements Serializable
 	private int telephoneNumber;
 	private ArrayList<Messages> messageList;
 	private ArrayList<Complaint> complaintList;
+	private ArrayList<Responses> responseList;
 	private String password;
 	final String ID_PREFIX = "EMP";
 	
@@ -37,6 +38,7 @@ public class Employee implements Serializable
 		telephoneNumber = 0;
 		this.messageList = new ArrayList<Messages>();
 		this.complaintList = new ArrayList<Complaint>();
+		this.responseList = new ArrayList<Responses>();
 	}
 
 	//Primary Constructor
@@ -61,6 +63,7 @@ public class Employee implements Serializable
 		this.telephoneNumber = telephoneNumber;
 		this.messageList = new ArrayList<Messages>();
 		this.complaintList = new ArrayList<Complaint>();
+		this.responseList = new ArrayList<Responses>();
 	}
 	
 
@@ -75,6 +78,7 @@ public class Employee implements Serializable
 		telephoneNumber = E.telephoneNumber;
 		messageList = E.messageList;
 		complaintList = E.complaintList;
+		responseList = E.responseList;
 	}
 	
 	//Getters and Setters
@@ -142,6 +146,14 @@ public class Employee implements Serializable
 		this.complaintList = complaintList;
 	}
 	
+	public ArrayList<Responses> getResponseList() {
+		return responseList;
+	}
+
+	public void setResponseList(ArrayList<Responses> responseList) {
+		this.responseList = responseList;
+	}
+
 	public String getPassword() {
 		return password;
 	}

@@ -120,6 +120,14 @@ public class Client{
 		}
 	}
 	
+	public void sendResponse(Responses response) {
+		try {
+			objOs.writeObject(response);
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void sendUser(Authentication auth) {
 		try {
 			objOs.writeObject(auth);

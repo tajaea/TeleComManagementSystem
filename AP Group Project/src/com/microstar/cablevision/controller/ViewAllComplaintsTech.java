@@ -2,6 +2,7 @@ package com.microstar.cablevision.controller;
 
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import com.microstar.cablevision.views.EmployeeTechnicianView;
@@ -10,11 +11,14 @@ import com.microstar.cablevision.views.ViewAllComplaintsTechnician;
 import microStarCableVision.Client;
 import microStarCableVision.Complaint;
 import microStarCableVision.Employee;
+import microStarCableVision.Responses;
 
 public class ViewAllComplaintsTech {
 	ViewAllComplaintsTechnician tWindow;
 	Client clientObj;
 	Employee employeeObj;
+	Complaint complaintObj;
+	Responses responseObj;
 	Object[] row = new Object[5];
 	DefaultTableModel model = new DefaultTableModel();
 	
@@ -40,7 +44,7 @@ public class ViewAllComplaintsTech {
 		if(tWindow.getNoServiceDetailTable().getModel().getRowCount()<0) {
 			for(Complaint complaint: nsComplaintList) {
 				((DefaultTableModel)tWindow.getNoServiceDetailTable().getModel()).insertRow(tWindow.getNoServiceDetailTable().getModel().getRowCount(), new Object[] {
-					complaint.getComplaintID(), complaint.getType(),
+					complaint.getComplaintID(), complaint.getCustomerId(), complaint.getType(),
 					complaint.getDetails(), complaint.getStatus(), complaint.getComplaintDate(),
 					complaint.getComplaintTime()
 				});
@@ -50,7 +54,7 @@ public class ViewAllComplaintsTech {
 			((DefaultTableModel)tWindow.getNoServiceDetailTable().getModel()).setRowCount(0);
 			for(Complaint complaint: nsComplaintList) {
 				((DefaultTableModel)tWindow.getNoServiceDetailTable().getModel()).insertRow(tWindow.getNoServiceDetailTable().getModel().getRowCount(), new Object[] {
-					complaint.getComplaintID(), complaint.getType(),
+					complaint.getComplaintID(), complaint.getCustomerId(), complaint.getType(),
 					complaint.getDetails(), complaint.getStatus(), complaint.getComplaintDate(),
 					complaint.getComplaintTime()
 				});
@@ -68,7 +72,7 @@ public class ViewAllComplaintsTech {
 		if(tWindow.getBillCDetailTable().getModel().getRowCount()<0) {
 			for(Complaint complaint: bcComplaintList) {
 				((DefaultTableModel)tWindow.getBillCDetailTable().getModel()).insertRow(tWindow.getBillCDetailTable().getModel().getRowCount(), new Object[] {
-						complaint.getComplaintID(), complaint.getType(),
+						complaint.getComplaintID(), complaint.getCustomerId(), complaint.getType(),
 						complaint.getDetails(), complaint.getStatus(), complaint.getComplaintDate(),
 						complaint.getComplaintTime()
 				});
@@ -78,7 +82,7 @@ public class ViewAllComplaintsTech {
 			((DefaultTableModel)tWindow.getBillCDetailTable().getModel()).setRowCount(0);
 			for(Complaint complaint: bcComplaintList) {
 				((DefaultTableModel)tWindow.getBillCDetailTable().getModel()).insertRow(tWindow.getBillCDetailTable().getModel().getRowCount(), new Object[] {
-						complaint.getComplaintID(), complaint.getType(),
+						complaint.getComplaintID(), complaint.getCustomerId(), complaint.getType(),
 						complaint.getDetails(), complaint.getStatus(), complaint.getComplaintDate(),
 						complaint.getComplaintTime()
 				});
@@ -96,7 +100,7 @@ public class ViewAllComplaintsTech {
 		if(tWindow.getpDDetailTable().getModel().getRowCount()<0) {
 			for(Complaint complaint: pdComplaintList) {
 				((DefaultTableModel)tWindow.getpDDetailTable().getModel()).insertRow(tWindow.getpDDetailTable().getModel().getRowCount(), new Object[] {
-						complaint.getComplaintID(), complaint.getType(),
+						complaint.getComplaintID(), complaint.getCustomerId(), complaint.getType(),
 						complaint.getDetails(), complaint.getStatus(), complaint.getComplaintDate(),
 						complaint.getComplaintTime()
 				});
@@ -106,11 +110,34 @@ public class ViewAllComplaintsTech {
 			((DefaultTableModel)tWindow.getpDDetailTable().getModel()).setRowCount(0);
 			for(Complaint complaint: pdComplaintList) {
 				((DefaultTableModel)tWindow.getpDDetailTable().getModel()).insertRow(tWindow.getpDDetailTable().getModel().getRowCount(), new Object[] {
-						complaint.getComplaintID(), complaint.getType(),
+						complaint.getComplaintID(), complaint.getCustomerId(), complaint.getType(),
 						complaint.getDetails(), complaint.getStatus(), complaint.getComplaintDate(),
 						complaint.getComplaintTime()
 				});
 			}
+		}
+	}
+	
+	public void submitNSResponseToCustomer() {
+		String customerID = tWindow.getNsCustomerIDTextField().getText();
+		String complaintID = tWindow.getNsComplaintIDTextField().getText();
+		String responseDetails = tWindow.getnSResponseTextField().getText();
+		String responseDate = tWindow.getnSDateTextField().getText();
+		
+		if(!customerID.isEmpty() && !complaintID.isEmpty() && !responseDetails.isEmpty() && !responseDate.isEmpty()) {
+			responseObj = new Responses(employeeObj.getStaff_Id(), employeeObj.getFirst_Name(), employeeObj.getLast_Name());
+			
+			clientObj.sendAction("Send NSTechResponse");
+			clientObj.sendResponse(responseObj);
+			if(clientObj.SuccessStatus()) {
+				employeeObj.getResponseList().add(responseObj);
+				returnToTechGui();
+				//new EmployeeTechnicianView(clientObj);
+			}else {
+				JOptionPane.showMessageDialog(tWindow.getContentPane(), "An error occured while submiting your response to the complaint. Please Try Again", "Send Response Error", JOptionPane.WARNING_MESSAGE);
+			}
+		}else {
+			JOptionPane.showMessageDialog(tWindow.getContentPane(), "Response or Date Text Field Cannot Be Empty. Please Try Again", "Empty Text Fields Error", JOptionPane.WARNING_MESSAGE);
 		}
 	}
 	

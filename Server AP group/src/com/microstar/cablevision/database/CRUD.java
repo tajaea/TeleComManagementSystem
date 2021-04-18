@@ -104,7 +104,7 @@ public class CRUD {
 	}
 		
 	public static String createResponse(Responses response) {
-		return "INSERT INTO ap.response (cust_id,response,response_date,responded_by, date_of_visit)"+
+		return "INSERT INTO ap.response (emp_id,cust_id,response,response_date,responded_by, date_of_visit)"+
 				"VALUES ('" + response.getCustID() +"', '"+ response.getResponse()+"', '"+response.getResponseDate()+"', '"
 				+response.getRespondedBy()+"', '"+ response.getDateOfVisit()+"');";
 	}
