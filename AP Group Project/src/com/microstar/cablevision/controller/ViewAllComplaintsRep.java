@@ -40,7 +40,7 @@ public class ViewAllComplaintsRep {
 		if(rCWindow.getNSTable().getModel().getRowCount()<0) {
 			for(Complaint complaint: nsComplaintList) {
 				((DefaultTableModel)rCWindow.getNSTable().getModel()).insertRow(rCWindow.getNSTable().getModel().getRowCount(), new Object[] {
-					complaint.getComplaintID(), complaint.getType(),
+					complaint.getComplaintID(), complaint.getCustomerId(), complaint.getType(),
 					complaint.getDetails(), complaint.getStatus(), complaint.getComplaintDate(),
 					complaint.getComplaintTime()
 				});
@@ -50,7 +50,7 @@ public class ViewAllComplaintsRep {
 			((DefaultTableModel)rCWindow.getNSTable().getModel()).setRowCount(0);
 			for(Complaint complaint: nsComplaintList) {
 				((DefaultTableModel)rCWindow.getNSTable().getModel()).insertRow(rCWindow.getNSTable().getModel().getRowCount(), new Object[] {
-					complaint.getComplaintID(), complaint.getType(),
+					complaint.getComplaintID(), complaint.getCustomerId(), complaint.getType(),
 					complaint.getDetails(), complaint.getStatus(), complaint.getComplaintDate(),
 					complaint.getComplaintTime()
 				});
@@ -67,7 +67,7 @@ public class ViewAllComplaintsRep {
 		if(rCWindow.getBCTable().getModel().getRowCount()<0) {
 			for(Complaint complaint: bcComplaintList) {
 				((DefaultTableModel)rCWindow.getBCTable().getModel()).insertRow(rCWindow.getBCTable().getModel().getRowCount(), new Object[] {
-						complaint.getComplaintID(), complaint.getType(),
+						complaint.getComplaintID(), complaint.getCustomerId(), complaint.getType(),
 						complaint.getDetails(), complaint.getStatus(), complaint.getComplaintDate(),
 						complaint.getComplaintTime()
 				});
@@ -77,7 +77,7 @@ public class ViewAllComplaintsRep {
 			((DefaultTableModel)rCWindow.getBCTable().getModel()).setRowCount(0);
 			for(Complaint complaint: bcComplaintList) {
 				((DefaultTableModel)rCWindow.getBCTable().getModel()).insertRow(rCWindow.getBCTable().getModel().getRowCount(), new Object[] {
-						complaint.getComplaintID(), complaint.getType(),
+						complaint.getComplaintID(), complaint.getCustomerId(), complaint.getType(),
 						complaint.getDetails(), complaint.getStatus(), complaint.getComplaintDate(),
 						complaint.getComplaintTime()
 				});
@@ -94,7 +94,7 @@ public class ViewAllComplaintsRep {
 		if(rCWindow.getBCTable().getModel().getRowCount()<0) {
 			for(Complaint complaint: pdComplaintList) {
 				((DefaultTableModel)rCWindow.getPDTable().getModel()).insertRow(rCWindow.getPDTable().getModel().getRowCount(), new Object[] {
-						complaint.getComplaintID(), complaint.getType(),
+						complaint.getComplaintID(), complaint.getCustomerId(), complaint.getType(),
 						complaint.getDetails(), complaint.getStatus(), complaint.getComplaintDate(),
 						complaint.getComplaintTime()
 				});
@@ -104,7 +104,7 @@ public class ViewAllComplaintsRep {
 			((DefaultTableModel)rCWindow.getPDTable().getModel()).setRowCount(0);
 			for(Complaint complaint: pdComplaintList) {
 				((DefaultTableModel)rCWindow.getPDTable().getModel()).insertRow(rCWindow.getPDTable().getModel().getRowCount(), new Object[] {
-						complaint.getComplaintID(), complaint.getType(),
+						complaint.getComplaintID(), complaint.getCustomerId(), complaint.getType(),
 						complaint.getDetails(), complaint.getStatus(), complaint.getComplaintDate(),
 						complaint.getComplaintTime()
 				});

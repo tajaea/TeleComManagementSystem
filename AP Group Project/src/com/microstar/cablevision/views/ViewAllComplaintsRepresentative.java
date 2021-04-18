@@ -214,7 +214,7 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 			new Object[][] {
 			},
 			new String[] {
-				"Complaint ID", "Complaint Type", "Complaint Detail", "Status", "Date", "Time"
+				"Complaint ID", "Customer ID", "Complaint Type", "Complaint Detail", "Status", "Date", "Time"
 			}
 		) {
 			boolean[] columnEditables = new boolean[] {
@@ -247,7 +247,7 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 			new Object[][] {
 			},
 			new String[] {
-				"Complaint ID", "Complaint Type", "Complaint Detail", "Status", "Date", "Time"
+				"Complaint ID", "Customer ID", "Complaint Type", "Complaint Detail", "Status", "Date", "Time"
 			}
 		) {
 			boolean[] columnEditables = new boolean[] {
@@ -265,7 +265,7 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 			new Object[][] {
 			},
 			new String[] {
-				"Complaint ID", "Complaint Type", "Complaint Detail", "Status", "Date", "Time"
+				"Complaint ID", "Customer ID", "Complaint Type", "Complaint Detail", "Status", "Date", "Time"
 			}
 		) {
 			boolean[] columnEditables = new boolean[] {
