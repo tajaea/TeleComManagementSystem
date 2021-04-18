@@ -95,7 +95,7 @@ public class MakeComplaint {
 		lblCustomeridentifier.setBounds(189, 63, 133, 14);
 		frame.getContentPane().add(lblCustomeridentifier);
 		
-		String[] detailtypeList = {"No Service"," Bill Complaint", " Property Destruction"};
+		String[] detailtypeList = {"No Service","Bill Complaint", "Property Destruction"};
 		complaintTypecomboBox = new JComboBox(detailtypeList);
 		complaintTypecomboBox.setBounds(189, 88, 106, 22);
 		complaintTypecomboBox.setVisible(true);
