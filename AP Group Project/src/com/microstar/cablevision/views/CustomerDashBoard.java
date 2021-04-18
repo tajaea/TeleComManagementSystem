@@ -33,6 +33,8 @@ import javax.swing.JTable;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+
 import java.awt.Dimension;
 import java.awt.Color;
 import javax.swing.JPanel;
@@ -311,22 +313,23 @@ public class CustomerDashBoard {
 		frame.getContentPane().add(cableWireImageLabel);
 		
 		 lblTeleno = new JLabel("TELE-NO");
-		lblTeleno.setBounds(112, 200, 115, 14);
+		 lblTeleno.setFont(new Font("Dubai", Font.PLAIN, 15));
+		lblTeleno.setBounds(94, 180, 115, 29);
 		frame.getContentPane().add(lblTeleno);
 		
 		 lblEmail = new JLabel("EMAIL");
-		 lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblEmail.setBounds(112, 228, 167, 27);
+		 lblEmail.setFont(new Font("Dubai", Font.PLAIN, 15));
+		lblEmail.setBounds(79, 218, 156, 27);
 		frame.getContentPane().add(lblEmail);
 		
-		JLabel lblTeleNo = new JLabel("TELE. NO.");
-		lblTeleNo.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		lblTeleNo.setBounds(18, 199, 84, 14);
+		JLabel lblTeleNo = new JLabel("TELE. NO:");
+		lblTeleNo.setFont(new Font("Dubai", Font.BOLD, 15));
+		lblTeleNo.setBounds(18, 180, 78, 29);
 		frame.getContentPane().add(lblTeleNo);
 		
-		JLabel lblEmail_1 = new JLabel("EMAIL");
-		lblEmail_1.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		lblEmail_1.setBounds(18, 233, 59, 14);
+		JLabel lblEmail_1 = new JLabel("EMAIL:");
+		lblEmail_1.setFont(new Font("Dubai", Font.BOLD, 15));
+		lblEmail_1.setBounds(18, 220, 65, 22);
 		frame.getContentPane().add(lblEmail_1);
 		
 		JLabel locationImageLabel = new JLabel("");
@@ -391,8 +394,9 @@ public class CustomerDashBoard {
 		
 		btnSignUpHere.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
 				//calling a sign up feature
+				JOptionPane.showMessageDialog(null, "You WIll Recieve An Email Shortly With Further Details, Thank You.",
+						"Sign Up For Package", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 
