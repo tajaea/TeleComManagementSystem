@@ -61,8 +61,8 @@ public class ViewAllComplaintsRep {
 	}
 	
 	public void viewNSComplaintDetails() {
-		int  index = rCWindow.getNSTable().getSelectedRow();
-		System.out.println( nsComplaintList.get(index));
+		int index = rCWindow.getNSTable().getSelectedRow();
+		System.out.println(nsComplaintList.get(index));
 	}
 	
 	public void populateBCTableForRep(String type) {
@@ -93,7 +93,7 @@ public class ViewAllComplaintsRep {
 	}
 	
 	public void viewBCComplaintDetails() {
-		int  index = rCWindow.getBCTable().getSelectedRow();
+		int index = rCWindow.getBCTable().getSelectedRow();
 		System.out.println(bcComplaintList.get(index));
 	}
 	
@@ -125,7 +125,7 @@ public class ViewAllComplaintsRep {
 	}
 	
 	public void viewPDComplaintDetails() {
-		int  index = rCWindow.getPDTable().getSelectedRow();
+		int index = rCWindow.getPDTable().getSelectedRow();
 		System.out.println(pdComplaintList.get(index));
 	}
 	

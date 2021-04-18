@@ -17,10 +17,11 @@ public class ViewAllComplaintsTech {
 	ViewAllComplaintsTechnician tWindow;
 	Client clientObj;
 	Employee employeeObj;
-	Complaint complaintObj;
 	Responses responseObj;
-	Object[] row = new Object[5];
 	DefaultTableModel model = new DefaultTableModel();
+	ArrayList<Complaint> nsComplaintList;
+	ArrayList<Complaint> bcComplaintList;
+	ArrayList<Complaint> pdComplaintList;
 	
 	public ViewAllComplaintsTech(ViewAllComplaintsTechnician view) {
 		setWindow(view);
@@ -62,6 +63,11 @@ public class ViewAllComplaintsTech {
 		}
 	}
 	
+	public void viewNSComplaintDetails() {
+		int index = tWindow.getNoServiceDetailTable().getSelectedRow();
+		System.out.println(nsComplaintList.get(index));
+	}
+	
 	public void populateBCTableForTech(String type) {
 		clientObj.sendAction("Get BCComplaint");
 		clientObj.sendComplaintType(type);
@@ -90,6 +96,11 @@ public class ViewAllComplaintsTech {
 		}
 	}
 	
+	public void viewBCComplaintDetails() {
+		int index = tWindow.getBillCDetailTable().getSelectedRow();
+		System.out.println(bcComplaintList.get(index));
+	}
+	
 	public void populatePDTableForRep(String type) {
 		clientObj.sendAction("Get PDComplaint");
 		clientObj.sendComplaintType(type);
@@ -116,6 +127,11 @@ public class ViewAllComplaintsTech {
 				});
 			}
 		}
+	}
+	
+	public void viewPDComplaintDetials() {
+		int index = tWindow.getpDDetailTable().getSelectedRow();
+		System.out.println(pdComplaintList.get(index));
 	}
 	
 	public void submitNSResponseToCustomer() {

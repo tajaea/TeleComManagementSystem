@@ -241,14 +241,11 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 		PDPanel.setBounds(0, 0, 811, 449);
 		layeredPane.add(PDPanel);
 		PDPanel.setLayout(null);
-		
-
+	
 		PDscrollPane = new JScrollPane();
 		PDscrollPane.setBounds(0, 0, 811, 449);
 		PDPanel.add(PDscrollPane);
 
-		
-		
 		PDTable = new JTable();
 		PDTable.addMouseListener(new MouseAdapter() {
 			@Override
