@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -17,6 +19,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import com.microstar.cablevision.controller.TechnicianController;
+import com.microstar.cablevision.utility.Utility;
 
 import microStarCableVision.Client;
 import microStarCableVision.Employee;
@@ -74,6 +77,51 @@ public class EmployeeTechnicianView extends JFrame {
 		getContentPane().setForeground(new Color(192, 192, 192));
 		setMaximumSize(new Dimension(1523, 914));
 		getContentPane().setLayout(null);
+		this.addWindowListener(new WindowListener() {
+
+			@Override
+			public void windowOpened(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowClosing(WindowEvent e) {
+				// TODO Auto-generated method stub
+				techController.endConnection();
+			}
+
+			@Override
+			public void windowClosed(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowIconified(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowDeiconified(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowActivated(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowDeactivated(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 		
 		mainGreetingsPanel = new JPanel();
 		mainGreetingsPanel.setBounds(156, 11, 953, 65);
@@ -101,7 +149,19 @@ public class EmployeeTechnicianView extends JFrame {
 		greetingsTextField.setBackground(new Color(30, 144, 255));
 		greetingsTextField.setEditable(false);
 		greetingsTextField.setFont(new Font("Dubai", Font.BOLD | Font.ITALIC, 30));
-		greetingsTextField.setText("Good Afternoon,");
+		int time = Integer.parseInt(Utility.setTime().subSequence(0, 2).toString()); 
+		if(time >=12 && time < 17){ 
+			greetingsTextField.setText("Good Afternoon,");
+		}
+		else if(time >=17 && time < 19 ) {
+			greetingsTextField.setText("Good Evening,");
+		}
+		else if(time > 19 ) {
+			greetingsTextField.setText("Good Night,");
+		}
+		else if(time < 12 && time >= 0) {
+			greetingsTextField.setText("Good Morning,");
+		}
 		greetingsTextField.setBounds(10, 11, 230, 43);
 		mainGreetingsPanel.add(greetingsTextField);
 		greetingsTextField.setColumns(10);
@@ -219,7 +279,6 @@ public class EmployeeTechnicianView extends JFrame {
 
 	public void setEmp(Employee employee) {
 		techController.setEmpObj(employee);
-		
 	}
 
 	public JTextField getNameTextField() {
@@ -229,4 +288,5 @@ public class EmployeeTechnicianView extends JFrame {
 	public void setNameTextField(JTextField nameTextField) {
 		this.nameTextField = nameTextField;
 	}
+	
 }

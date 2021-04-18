@@ -29,7 +29,7 @@ public class TechnicianController {
 	public void getLoginPage() {
 		clientObj.closeConnection();
 		window.dispose();
-		new LoginView(clientObj);
+		new LoginView(new Client());
 	}
 	
 	/*public void getChatViewPage() {
@@ -39,12 +39,16 @@ public class TechnicianController {
 	
 	public void getViewAllComplaintsGui() {
 		window.dispose();
-		new ViewAllComplaintsTechnician(clientObj);
+		new ViewAllComplaintsTechnician(clientObj).setEmp(empObj);;
 		//setEmpObj(empObj);
 	}
 	
 	public void setEmpObj(Employee employee) {
-		empObj = employee;
+		this.empObj = employee;
 		window.getNameTextField().setText(this.empObj.getFirst_Name() + " " + this.empObj.getLast_Name());
+	}
+	
+	public void endConnection() {
+		clientObj.closeConnection();
 	}
 }

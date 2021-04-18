@@ -38,7 +38,7 @@ public class CustomerDashboardController {
 		con.closeConnection();//close the connection to the server
 		
 		customerDashboardview.getFrame().dispose();//Close the Dashboard of a customer
-		new LoginView(con);
+		new LoginView(new Client());
 	}
 	public void setCustomerInformation(Customer customerObj) {
 
@@ -65,4 +65,7 @@ public class CustomerDashboardController {
 		new ViewAllComplaintCustomer(con).setCustomerInformation(customerObj); 
 	}
 
+	public void endConnection() {
+		con.closeConnection();
+	}
 }

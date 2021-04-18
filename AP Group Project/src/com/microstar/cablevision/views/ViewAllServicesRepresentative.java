@@ -42,7 +42,7 @@ public class ViewAllServicesRepresentative extends JFrame {
 	JButton billCButton;
 	JButton pDestructionButton;
 	JButton exitButton;
-	JLabel moralsLabel;
+	JButton customerReviewButton;
 	JPanel moralsPanel;
 	JLabel moralsLogo;
 	JLabel moralsDescription;
@@ -122,20 +122,28 @@ public class ViewAllServicesRepresentative extends JFrame {
 		logoImageLabel.setBounds(62, 5, 110, 100);
 		scomplaintsOptionsTab.add(logoImageLabel);
 		
-		moralsLabel = new JLabel("..");
-		moralsLabel.addMouseListener(new MouseAdapter() {
+		customerReviewButton = new JButton("Customer Review");
+		customerReviewButton.setFont(new Font("Dubai", Font.PLAIN, 23));
+		customerReviewButton.setBounds(10, 119, 233, 30);
+		scomplaintsOptionsTab.add(customerReviewButton);
+		
+		customerReviewButton.addActionListener(new ActionListener() {
+
 			@Override
-			public void mouseClicked(MouseEvent event) {
-				if(SwingUtilities.isLeftMouseButton(event)) {
-					moralsPanel.setVisible(true);
-					noServiceDetailPanel.setVisible(false);
-					billComplaintDetailPanel.setVisible(false);
-					pDestructionDetailPanel.setVisible(false);
-				}
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				customerReviewButton.addMouseListener(new MouseAdapter() {
+					public void mouseClicked(MouseEvent event) {
+						if(SwingUtilities.isLeftMouseButton(event)) {
+							moralsPanel.setVisible(true);
+							noServiceDetailPanel.setVisible(false);
+							billComplaintDetailPanel.setVisible(false);
+							pDestructionDetailPanel.setVisible(false);
+						}
+					}
+				});
 			}
 		});
-		moralsLabel.setBounds(10, 96, 233, 30);
-		scomplaintsOptionsTab.add(moralsLabel);
 		
 		noServiceButton = new JButton("No Service");
 		noServiceButton.setFont(new Font("Dubai", Font.PLAIN, 23));
@@ -156,7 +164,7 @@ public class ViewAllServicesRepresentative extends JFrame {
 				});
 			}
 		});
-		noServiceButton.setBounds(10, 137, 233, 37);
+		noServiceButton.setBounds(10, 185, 233, 37);
 		scomplaintsOptionsTab.add(noServiceButton);
 		
 		billCButton = new JButton("Bill Complaint");
@@ -178,7 +186,7 @@ public class ViewAllServicesRepresentative extends JFrame {
 				});
 			}	
 		});
-		billCButton.setBounds(10, 229, 233, 37);
+		billCButton.setBounds(10, 262, 233, 37);
 		scomplaintsOptionsTab.add(billCButton);
 		
 		pDestructionButton = new JButton("Property Destruction");
@@ -200,7 +208,7 @@ public class ViewAllServicesRepresentative extends JFrame {
 				});
 			}	
 		});
-		pDestructionButton.setBounds(10, 318, 233, 37);
+		pDestructionButton.setBounds(10, 338, 233, 37);
 		scomplaintsOptionsTab.add(pDestructionButton);
 		
 		exitButton = new JButton("Exit");
