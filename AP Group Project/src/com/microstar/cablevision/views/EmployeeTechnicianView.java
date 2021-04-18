@@ -219,7 +219,6 @@ public class EmployeeTechnicianView extends JFrame {
 
 	public void setEmp(Employee employee) {
 		techController.setEmpObj(employee);
-		
 	}
 
 	public JTextField getNameTextField() {

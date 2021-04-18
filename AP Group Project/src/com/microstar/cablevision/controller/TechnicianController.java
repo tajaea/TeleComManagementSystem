@@ -44,7 +44,7 @@ public class TechnicianController {
 	}
 	
 	public void setEmpObj(Employee employee) {
-		empObj = employee;
+		this.empObj = employee;
 		window.getNameTextField().setText(this.empObj.getFirst_Name() + " " + this.empObj.getLast_Name());
 	}
 }
