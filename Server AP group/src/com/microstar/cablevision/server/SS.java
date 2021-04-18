@@ -19,6 +19,8 @@ import javax.swing.JList;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 
+import com.microstar.cablevision.security.Security;
+
 
 
 public class SS {
@@ -41,7 +43,8 @@ public class SS {
 					SS window = new SS();  // object creation
 					window.frame.setVisible(true); // make jframe visible
 				} catch (Exception e) {
-					e.printStackTrace();
+					System.out.println("An error occurred in our chat server. Please try again later");	
+					Security.logger.error("An Exception was caught in the main method in the SS class");
 				}
 			}
 		});
@@ -58,7 +61,8 @@ public class SS {
 			msgBox.append("Waiting for the clients...\n");
 			new ClientAccept().start(); // this will create a thread for client
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("An error occurred in our chat server. Please try again later");	
+			Security.logger.error("An Exception was caught in the default constructor in the SS class");
 		}
 	}
 
@@ -86,9 +90,11 @@ public class SS {
 						new PrepareCLientList().start(); //create a thread to update all the active clients
 					}
 				} catch (IOException ioex) {  // throw any exception occurs
-					ioex.printStackTrace();
+					System.out.println("An error occurred in our chat server. Please try again later");	
+					Security.logger.error("An IO Exception was caught in the run in the ClientAccept class");
 				} catch (Exception e) {
-					e.printStackTrace();
+					System.out.println("An error occurred in our chat server. Please try again later");	
+					Security.logger.error("An Exception was caught in the run in the ClientAccept class");
 				}
 			}
 		}
@@ -119,7 +125,8 @@ public class SS {
 											.writeUTF("< " + Id + " >" + msgList[2]); // put message in output stream
 								}
 							} catch (Exception e) { // throw exceptions
-								e.printStackTrace();
+								System.out.println("An error occurred in our chat server. Please try again later");	
+								Security.logger.error("An Exception was caught in the run method in the MsgRead class");
 							}
 						}
 					} else if (msgList[0].equalsIgnoreCase("broadcast")) { // if broadcast then send message to all active clients
@@ -138,7 +145,8 @@ public class SS {
 												.writeUTF("Message couldn't be delivered to user " + usrName + " because it is disconnected.\n");
 									}
 								} catch (Exception e) {
-									e.printStackTrace(); // throw exceptions
+									System.out.println("An error occurred in our chat server. Please try again later");	
+									Security.logger.error("An Exception was caught in the run in the MsgRead class");
 								}
 							}
 						}
@@ -165,7 +173,8 @@ public class SS {
 						activeList.setModel(activeDlm); //update the active user list
 					}
 				} catch (Exception e) {
-					e.printStackTrace();
+					System.out.println("An error occurred in our chat server. Please try again later");	
+					Security.logger.error("An Exception was caught in the run in the MsgRead class");
 				}
 			}
 		}
@@ -191,11 +200,13 @@ public class SS {
 						new DataOutputStream(clientColl.get(key).getOutputStream())
 								.writeUTF(":;.,/=" + ids); // set output stream and send the list of active users with identifier prefix :;.,/=
 					} catch (Exception e) {
-						e.printStackTrace();
+						System.out.println("An error occurred in our chat server. Please try again later");	
+						Security.logger.error("An Exception was caught in the run in the PrepareCLientList class");
 					}
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				System.out.println("An error occurred in our chat server. Please try again later");	
+				Security.logger.error("An Exception was caught in the run in the PrepareCLientList class");
 			}
 		}
 	}

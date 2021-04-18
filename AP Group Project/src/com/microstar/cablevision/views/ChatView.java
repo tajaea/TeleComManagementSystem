@@ -184,7 +184,8 @@ public class ChatView extends JFrame {
 					frame.dispose();  
 				} catch (IOException e1) {
 					System.out.println("An error occurred in our chat server. Please try again later");	
-					Security.logger.error("An Input/Output Exception was caught in the Action Listener in the ChatView class");}
+					Security.logger.error("An Input/Output Exception was caught in the Action Listener in the ChatView class");
+				}
 			}
 		});
 		exitchatBtn.setBounds(480,420, 89, 38);

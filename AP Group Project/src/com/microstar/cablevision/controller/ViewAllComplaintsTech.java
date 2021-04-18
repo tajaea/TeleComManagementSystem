@@ -144,7 +144,7 @@ public class ViewAllComplaintsTech {
 			responseObj = new Responses(employeeObj.getStaff_Id(), employeeObj.getFirst_Name(), employeeObj.getLast_Name());
 			
 			clientObj.sendAction("Send NSTechResponse");
-			clientObj.sendResponse(responseObj);
+			//clientObj.sendResponse(responseObj);
 			if(clientObj.SuccessStatus()) {
 				employeeObj.getResponseList().add(responseObj);
 				returnToTechGui();

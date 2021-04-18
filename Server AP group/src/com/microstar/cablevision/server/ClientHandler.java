@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import com.microstar.cablevision.database.CRUD;
 import com.microstar.cablevision.security.Authentication;
+import com.microstar.cablevision.security.Security;
 
 import microStarCableVision.Complaint;
 import microStarCableVision.Customer;
@@ -140,9 +141,11 @@ public class ClientHandler extends Thread implements Runnable {
 						break;
 					}
 				} catch (ClassNotFoundException e) {
-					e.printStackTrace();
+					System.out.println("An error occurred in our server. Please try again later");	
+					Security.logger.error("A ClassNotFound Exception was caught in the run method in the ClientHandler class");	
 				} catch (ClassCastException cl) {
-					cl.printStackTrace();
+					System.out.println("An error occurred in our server. Please try again later");	
+					Security.logger.error("A ClassCast Exception was caught in the run method in the ClientHandler class");	
 				}
 				/*
 				 * catch(EOFException ex) {
@@ -153,26 +156,27 @@ public class ClientHandler extends Thread implements Runnable {
 
 		} catch (IOException e) {
 			System.out.println("Client has Ended Conection With Server");
-			// this.closeConnection();
+			Security.logger.error("An Input/Output Exception was caught in the run method in the ClientHandler class");			
+			this.closeConnection();
 		}
-
 	}
 
 	private void sendloginValue(Integer status) {
 		try {
 			objOs.writeObject(status);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("An error occurred in our server. Please try again later");	
+			Security.logger.error("An Input/Output Exception was caught in the sendloginValue method in the ClientHandler class");
+			}
 		}
-	}
+	
 
 	private void returnCustomer(Customer cust) {
 		try {
 			objOs.writeObject(cust);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("An error occurred in our server. Please try again later");	
+			Security.logger.error("An Input/Output Exception was caught in the returnCustomer method in the ClientHandler class");
 		}
 	}
 
@@ -181,8 +185,8 @@ public class ClientHandler extends Thread implements Runnable {
 		try {
 			objOs.writeObject(employee);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("An error occurred in our server. Please try again later");	
+			Security.logger.error("An Input/Output Exception was caught in the returnEmployee method in the ClientHandler class");
 		}
 	}
 
@@ -190,8 +194,8 @@ public class ClientHandler extends Thread implements Runnable {
 		try {
 			objOs.writeObject(onlinemsg);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("An error occurred in our server. Please try again later");	
+			Security.logger.error("An Input/Output Exception was caught in the send method in the ClientHandler class");
 		}
 	}
 
@@ -200,8 +204,8 @@ public class ClientHandler extends Thread implements Runnable {
 			objOs = new ObjectOutputStream(connectionSocket.getOutputStream());
 			objIs = new ObjectInputStream(connectionSocket.getInputStream());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("An error occurred in our server. Please try again later");	
+			Security.logger.error("An Input/Output Exception was caught in the configureStreams method in the ClientHandler class");
 		}
 
 	}
@@ -231,13 +235,9 @@ public class ClientHandler extends Thread implements Runnable {
 					stmt.execute(CRUD.complaintResponse());
 				}
 			}
-
-			// create database
-			// JOptionPane.showMessageDialog(null, "connection successful","CONNECTION
-			// STATUS",JOptionPane.INFORMATION_MESSAGE);
 		} catch (SQLException e) {
-
-			e.printStackTrace();
+			System.out.println("An error occurred in our databse connection. Please try again later");	
+			Security.logger.error("A SQL Exception was caught in the getDatabaseConnection method in the ClientHandler class");
 		}
 	}
 
@@ -247,8 +247,8 @@ public class ClientHandler extends Thread implements Runnable {
 			objIs.close();
 			connectionSocket.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("An error occurred in our server. Please try again later");	
+			Security.logger.error("An Input/Output Exception was caught in the closeConnection method in the ClientHandler class");
 		}
 
 	}
@@ -264,11 +264,11 @@ public class ClientHandler extends Thread implements Runnable {
 				objOs.writeObject(false);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("An error occurred in our database connection. Please try again later");	
+			Security.logger.error("A SQL Exception was caught in the getDatabaseConnection method in the ClientHandler class");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("An error occurred in our server. Please try again later");	
+			Security.logger.error("An Input/Output Exception was caught in the closeConnection method in the ClientHandler class");
 		}
 	}
 
@@ -284,11 +284,11 @@ public class ClientHandler extends Thread implements Runnable {
 				objOs.writeObject(false);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("An error occurred in our database connection. Please try again later");	
+			Security.logger.error("A SQL Exception was caught in the getDatabaseConnection method in the ClientHandler class");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("An error occurred in our server. Please try again later");	
+			Security.logger.error("An Input/Output Exception was caught in the closeConnection method in the ClientHandler class");
 		}
 	}
 
@@ -303,13 +303,12 @@ public class ClientHandler extends Thread implements Runnable {
 				objOs.writeObject(false);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("An error occurred in our database connection. Please try again later");	
+			Security.logger.error("A SQL Exception was caught in the getDatabaseConnection method in the ClientHandler class");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("An error occurred in our server. Please try again later");	
+			Security.logger.error("An Input/Output Exception was caught in the closeConnection method in the ClientHandler class");
 		}
-
 	}
 	
 	private ArrayList<Complaint> getCustomerComplaint(Customer customer) {
@@ -323,7 +322,8 @@ public class ClientHandler extends Thread implements Runnable {
 			complaintlist.add(new Complaint(resultSet.getInt("complaint_id"), resultSet.getString("cust_id"), resultSet.getString("type"), resultSet.getString("details"),responselist,resultSet.getString("status"),resultSet.getString("date"),resultSet.getString("time")));
 		}
 		}catch(Exception e){
-			
+			System.out.println("An error occurred in our database. Please try again later");	
+			Security.logger.error("An exception was caught in the getCustomerComplaint method in the ClientHandler class");
 		}
 		return complaintlist;
 	}
@@ -339,7 +339,8 @@ public class ClientHandler extends Thread implements Runnable {
 			complaintlist.add(new Complaint(resultSet.getInt("complaint_id"), resultSet.getString("cust_id"), resultSet.getString("type"), resultSet.getString("details"),responselist,resultSet.getString("status"),resultSet.getString("date"),resultSet.getString("time")));
 		}
 		}catch(Exception e){
-			
+			System.out.println("An error occurred in our database. Please try again later");	
+			Security.logger.error("An exception was caught in the getCustomerComplaintForEmployee method in the ClientHandler class");
 		}
 		//System.out.println(complaintlist.get(0).getDetails()+"Client Handler");
 		return complaintlist;
@@ -359,8 +360,8 @@ public class ClientHandler extends Thread implements Runnable {
 				cusobj.setTelephoneNumber(result.getInt(5));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("An error occurred in our database connection. Please try again later");	
+			Security.logger.error("A SQL Exception was caught in the findUserById method in the ClientHandler class");
 		}
 		return cusobj;
 	}
@@ -382,8 +383,8 @@ public class ClientHandler extends Thread implements Runnable {
 
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("An error occurred in our database connection. Please try again later");	
+			Security.logger.error("A SQL Exception was caught in the findEmployeeUserById method in the ClientHandler class");
 		}
 		return empObj;
 	}
