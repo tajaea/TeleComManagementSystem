@@ -15,8 +15,10 @@ public class ViewAllComplaintsRep {
 	ViewAllComplaintsRepresentative rCWindow;
 	Client clientObj;
 	Employee empObj;
-	Object[] row = new Object[5];
 	DefaultTableModel model = new DefaultTableModel();
+	ArrayList<Complaint> nsComplaintList;
+	ArrayList<Complaint> bcComplaintList;
+	ArrayList<Complaint> pdComplaintList;
 	
 	public ViewAllComplaintsRep(ViewAllComplaintsRepresentative view) {
 		setWindow(view);
@@ -34,7 +36,7 @@ public class ViewAllComplaintsRep {
 		clientObj.sendAction("Get NSComplaint");
 		clientObj.sendComplaintType(type);
 		
-		ArrayList<Complaint> nsComplaintList = new ArrayList<Complaint>();
+		//ArrayList<Complaint> nsComplaintList = new ArrayList<Complaint>();
 		nsComplaintList = clientObj.readComplaints();
 		
 		if(rCWindow.getNSTable().getModel().getRowCount()<0) {
@@ -58,10 +60,16 @@ public class ViewAllComplaintsRep {
 		}
 	}
 	
+	public void viewNSComplaintDetails() {
+		int  index = rCWindow.getNSTable().getSelectedRow();
+		System.out.println(((DefaultTableModel)rCWindow.getNSTable().getModel()).getValueAt(index, 0));
+		System.out.println( nsComplaintList.get(index));
+	}
+	
 	public void populateBCTableForRep(String type) {
 		clientObj.sendAction("Get BCComplaint");
 		clientObj.sendComplaintType(type);
-		ArrayList<Complaint> bcComplaintList = new ArrayList<Complaint>();
+		//ArrayList<Complaint> bcComplaintList = new ArrayList<Complaint>();
 		bcComplaintList = clientObj.readComplaints();
 		
 		if(rCWindow.getBCTable().getModel().getRowCount()<0) {
@@ -85,10 +93,16 @@ public class ViewAllComplaintsRep {
 		}
 	}
 	
+	public void viewBCComplaintDetails() {
+		int  index = rCWindow.getBCTable().getSelectedRow();
+		System.out.println(((DefaultTableModel)rCWindow.getBCTable().getModel()).getValueAt(index, 0));
+		System.out.println(bcComplaintList.get(index));
+	}
+	
 	public void populatePDTableForRep(String type) {
 		clientObj.sendAction("Get PDComplaint");
 		clientObj.sendComplaintType(type);
-		ArrayList<Complaint> pdComplaintList = new ArrayList<Complaint>();
+		//ArrayList<Complaint> pdComplaintList = new ArrayList<Complaint>();
 		pdComplaintList = clientObj.readComplaints();
 		
 		if(rCWindow.getBCTable().getModel().getRowCount()<0) {
@@ -110,6 +124,12 @@ public class ViewAllComplaintsRep {
 				});
 			}
 		}
+	}
+	
+	public void viewPDComplaintDetails() {
+		int  index = rCWindow.getPDTable().getSelectedRow();
+		System.out.println(((DefaultTableModel)rCWindow.getPDTable().getModel()).getValueAt(index, 0));
+		System.out.println(pdComplaintList.get(index));
 	}
 	
 	public void returnToRepGui() {

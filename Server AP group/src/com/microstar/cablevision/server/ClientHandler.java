@@ -80,21 +80,18 @@ public class ClientHandler extends Thread implements Runnable {
 					/*Added new Actions that came from the ViewAllComplaintRep Controller*/
 					case "Get NSComplaint":
 						String nsType = (String) objIs.readObject();
-						System.out.println("The type:"+nsType);
 						ArrayList<Complaint> nsComplaint = getCustomerComplaintForEmployee(nsType);
 						objOs.writeObject(nsComplaint);
 						break;
 						
 					case "Get BCComplaint":
 						String bcType = (String) objIs.readObject();
-						System.out.println("The type:"+bcType);
 						ArrayList<Complaint> bcComplaint = getCustomerComplaintForEmployee(bcType);
 						objOs.writeObject(bcComplaint);
 						break;
 						
 					case "Get PDComplaint":
 						String pdType = (String) objIs.readObject();
-						System.out.println("The type:"+pdType);
 						ArrayList<Complaint> pdComplaint = getCustomerComplaintForEmployee(pdType);
 						objOs.writeObject(pdComplaint);
 						break;
@@ -320,7 +317,7 @@ public class ClientHandler extends Thread implements Runnable {
 		ArrayList<Responses> responselist= new ArrayList<Responses>();		
 		
 		try {
-		ResultSet resultSet=state.executeQuery(CRUD.readAllComplaints());
+		ResultSet resultSet=state.executeQuery(CRUD.getComplaint(customer));
 		
 		while (resultSet.next()) {
 			complaintlist.add(new Complaint(resultSet.getInt("complaint_id"), resultSet.getString("cust_id"), resultSet.getString("type"), resultSet.getString("details"),responselist,resultSet.getString("status"),resultSet.getString("date"),resultSet.getString("time")));

@@ -210,6 +210,14 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 		BCPanel.add(BCscrollPane);
 		
 		BCTable = new JTable();
+		BCTable.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent event) {
+				if(event.getClickCount() == 2) {
+					viewcomplaintControl.viewBCComplaintDetails();
+				}
+			}
+		});
 		BCTable.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
@@ -242,6 +250,14 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 		
 		
 		PDTable = new JTable();
+		PDTable.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent event) {
+				if(event.getClickCount() == 2) {
+					viewcomplaintControl.viewPDComplaintDetails();
+				}
+			}
+		});
 		PDscrollPane.setViewportView(PDTable);
 		PDTable.setModel(new DefaultTableModel(
 			new Object[][] {
@@ -261,6 +277,15 @@ public class ViewAllComplaintsRepresentative extends JFrame {
 		PDTable.getColumnModel().getColumn(2).setPreferredWidth(101);
 		
 		NSTable = new JTable();
+		NSTable.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent event) {
+				if(event.getClickCount() == 2) {
+					viewcomplaintControl.viewNSComplaintDetails();
+				}
+			}
+		});
+		
 		NSTable.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
