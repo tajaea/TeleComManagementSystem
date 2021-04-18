@@ -192,7 +192,7 @@ public class CustomerDashBoard {
 		else if(time < 12 && time >= 0) {
 			greetingsTextField.setText("Good Morning");
 		}
-		greetingsTextField.setBounds(46, 11, 196, 43);
+		greetingsTextField.setBounds(30, 11, 212, 43);
 		mainGreetingsPanel.add(greetingsTextField);
 		greetingsTextField.setColumns(10);
 		

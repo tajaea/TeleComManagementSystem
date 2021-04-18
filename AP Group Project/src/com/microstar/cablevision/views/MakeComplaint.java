@@ -19,6 +19,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
+import javax.swing.JScrollPane;
 
 public class MakeComplaint {
 
@@ -30,6 +31,7 @@ public class MakeComplaint {
 	JTextArea complainttextArea ;
 	JComboBox complaintTypecomboBox; 
 	JButton btnBack;
+	private JScrollPane scrollPane;
 	/**
 	 * Launch the application.
 	 */
@@ -109,9 +111,12 @@ public class MakeComplaint {
 		btnSubmit.setBounds(340, 324, 89, 23);
 		frame.getContentPane().add(btnSubmit);
 		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(189, 130, 222, 164);
+		frame.getContentPane().add(scrollPane);
+		
 		complainttextArea = new JTextArea();
-		complainttextArea.setBounds(189, 130, 222, 164);
-		frame.getContentPane().add(complainttextArea);
+		scrollPane.setViewportView(complainttextArea);
 		
 		 btnBack = new JButton("Back");
 		
