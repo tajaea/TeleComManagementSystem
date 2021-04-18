@@ -122,6 +122,15 @@ public class Client{
 		}
 	}
 	
+	public void sendResponse(Responses responseObj) {
+		try {
+			objOs.writeObject(responseObj);
+		}catch(IOException e) {
+			System.out.println("An error occurred while trying to connect to the server. Please try again later");
+			Security.logger.error("An Input/Output Exception was caught in the sendResponse method of the Client class");
+		}	
+	}
+	
 	public void sendUser(Authentication auth) {
 		try {
 			objOs.writeObject(auth);
