@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.util.List;
 import java.util.StringTokenizer;
 
 import javax.swing.DefaultListModel;
@@ -23,6 +22,7 @@ import com.microstar.cablevision.security.Security;
 
 import microStarCableVision.Client;
 import microStarCableVision.Customer;
+import microStarCableVision.Employee;
 import microStarCableVision.Messages;
 
 public class ChatView extends JFrame {
@@ -37,7 +37,8 @@ public class ChatView extends JFrame {
 	DataInputStream din;
 	DataOutputStream dout;
 	DefaultListModel<String> dlm;
-	private Customer cust;
+	private Customer cust = null;
+	private Employee emp = null;
 	static Client client;
 	String id, clientID = "";
 	boolean flag = true;
@@ -168,7 +169,7 @@ public class ChatView extends JFrame {
 								JOptionPane.showMessageDialog(frame, "No user selected");
 							} else { 
 								Messages message = new Messages(cust.getCustomerID(),clientID,msgToServer);
-								//client.sendAction("Message");
+								client.sendAction("Message");
 								client.writeMessage(message);
 								sendField.setText("");
 								msgBox.append("< You sent msg to " + clientID + ">" + msg + "\n"); 
@@ -201,7 +202,12 @@ public class ChatView extends JFrame {
 					msgBox.append("You are disconnected now.\n");
 					flag = false;
 					frame.dispose();
+					if(cust!=null) {
 					new CustomerDashBoard(client).setCustomerObject(cust);
+					}
+					else if(emp!=null){
+						new EmployeeTechnicianView(client).setEmp(emp);
+					}
 				}/* catch (IOException e1) {
 					System.out.println("An error occurred in our chat server. Please try again later");	
 					Security.logger.error("An Input/Output Exception was caught in the Action Listener in the ChatView class");
@@ -223,6 +229,11 @@ public class ChatView extends JFrame {
 		this.cust = customerObj;
 		
 	}
+	public void setEmployee(Employee emp) {
+		this.emp = emp;
+		
+	}
+	
 	public void setClient(Client cl) {
 		client = cl;
 	}

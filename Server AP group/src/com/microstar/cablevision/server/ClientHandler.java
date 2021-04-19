@@ -519,16 +519,16 @@ public class ClientHandler extends Thread implements Runnable {
 
 				for(ClientHandler handler:clientlist) {
 					
-					//if(chatID.subSequence(0, 3).toString().equalsIgnoreCase(CUSTOMER)) {
-						//if(handler.getChatID().subSequence(0, 3).toString().equalsIgnoreCase(EMPLOYEE)) {
+					if(chatID.subSequence(0, 3).toString().equalsIgnoreCase(CUSTOMER)) {
+						if(handler.getChatID().subSequence(0, 3).toString().equalsIgnoreCase(EMPLOYEE)) {
 							handler.send(":;.,/=" +ids);
-						//}
-					//}
-					//else if(chatID.subSequence(0, 3).toString().equalsIgnoreCase(EMPLOYEE)) {
-						//if(handler.getChatID().subSequence(0, 3).toString().equalsIgnoreCase(CUSTOMER)) {
-							//handler.send(":;.,/=" +ids);
-						//}
-				    //}
+						}
+					}
+					else if(chatID.subSequence(0, 3).toString().equalsIgnoreCase(EMPLOYEE)) {
+						if(handler.getChatID().subSequence(0, 3).toString().equalsIgnoreCase(CUSTOMER)) {
+							handler.send(":;.,/=" +ids);
+						}
+				    }
 				}
 				
 				

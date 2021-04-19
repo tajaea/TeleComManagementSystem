@@ -215,7 +215,7 @@ public class EmployeeTechnicianView extends JFrame {
 					public void mouseClicked(MouseEvent event) {
 						// TODO Auto-generated method stub
 						if(SwingUtilities.isLeftMouseButton(event)) {
-							//techController.getChatViewPage();
+							techController.OpenChatWindow();
 						}
 					}
 				});

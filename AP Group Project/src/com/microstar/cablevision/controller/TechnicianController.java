@@ -1,5 +1,6 @@
 package com.microstar.cablevision.controller;
 
+import com.microstar.cablevision.views.ChatView;
 import com.microstar.cablevision.views.EmployeeTechnicianView;
 import com.microstar.cablevision.views.LoginView;
 import com.microstar.cablevision.views.ViewAllComplaintsTechnician;
@@ -38,7 +39,7 @@ public class TechnicianController {
 	
 	public void getViewAllComplaintsGui() {
 		window.dispose();
-		new ViewAllComplaintsTechnician(clientObj).setEmp(empObj);;
+		new ViewAllComplaintsTechnician(clientObj).setEmp(empObj);
 		//setEmpObj(empObj);
 	}
 	
@@ -49,5 +50,13 @@ public class TechnicianController {
 	
 	public void endConnection() {
 		clientObj.closeConnection();
+	}
+
+	public void OpenChatWindow() {
+		window.dispose();
+		new ChatView(empObj.getStaff_Id(),clientObj).setEmployee(empObj);
+		clientObj.sendAction("chat");
+		clientObj.writeUserChatID(empObj.getStaff_Id());
+		
 	}
 }
