@@ -106,7 +106,7 @@ public class SearchComplaint {
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent event) {
-				if(event.getClickCount() == 2) {
+				if(event.getClickCount() == 1) {
 					searchcomplaintControl.viewTableDetails();
 				}
 			}
@@ -149,7 +149,7 @@ public class SearchComplaint {
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();
-				searchcomplaintControl.returnTodasboard();
+				//searchcomplaintControl.returnTodasboard();
 			}
 		});
 	}

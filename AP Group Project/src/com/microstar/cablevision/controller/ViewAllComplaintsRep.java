@@ -2,9 +2,12 @@ package com.microstar.cablevision.controller;
 
 import java.util.ArrayList;
 
+import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import com.microstar.cablevision.views.EmployeeRepresentativeView;
+import com.microstar.cablevision.views.ShowRowData;
 import com.microstar.cablevision.views.ViewAllComplaintsRepresentative;
 
 import microStarCableVision.Client;
@@ -19,6 +22,7 @@ public class ViewAllComplaintsRep {
 	ArrayList<Complaint> nsComplaintList;
 	ArrayList<Complaint> bcComplaintList;
 	ArrayList<Complaint> pdComplaintList;
+	ShowRowData showRowData = new ShowRowData();
 	
 	public ViewAllComplaintsRep(ViewAllComplaintsRepresentative view) {
 		setWindow(view);
@@ -62,7 +66,29 @@ public class ViewAllComplaintsRep {
 	
 	public void viewNSComplaintDetails() {
 		int index = rCWindow.getNSTable().getSelectedRow();
-		System.out.println(nsComplaintList.get(index));
+		TableModel model = rCWindow.getNSTable().getModel();
+		
+		String complaintId = model.getValueAt(index, 0).toString();
+		String customerId = model.getValueAt(index, 1).toString();
+		String complaintType = model.getValueAt(index, 2).toString();
+		String complaintDetail = model.getValueAt(index, 3).toString();
+		String complaintStatus = model.getValueAt(index, 4).toString();
+		String complaintDate = model.getValueAt(index, 5).toString();
+		String complaintTime = model.getValueAt(index, 6).toString();
+		
+		showRowData.setVisible(true);
+		showRowData.pack();
+		showRowData.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
+		showRowData.getComplaintIDTextField().setText(complaintId);
+		showRowData.getCustomerIDTextField().setText(customerId);
+		showRowData.getComplaintTypeTextField().setText(complaintType);
+		showRowData.getComplaintDetailTextField().setText(complaintDetail);
+		showRowData.getComplaintStatusTextField().setText(complaintStatus);
+		showRowData.getComplaintDateTextField().setText(complaintDate);
+		showRowData.getComplaintTimeTextField().setText(complaintTime);
+		
+		//System.out.println(nsComplaintList.get(index));
 	}
 	
 	public void populateBCTableForRep(String type) {
@@ -94,7 +120,29 @@ public class ViewAllComplaintsRep {
 	
 	public void viewBCComplaintDetails() {
 		int index = rCWindow.getBCTable().getSelectedRow();
-		System.out.println(bcComplaintList.get(index));
+		TableModel model = rCWindow.getBCTable().getModel();
+		
+		String complaintId = model.getValueAt(index, 0).toString();
+		String customerId = model.getValueAt(index, 1).toString();
+		String complaintType = model.getValueAt(index, 2).toString();
+		String complaintDetail = model.getValueAt(index, 3).toString();
+		String complaintStatus = model.getValueAt(index, 4).toString();
+		String complaintDate = model.getValueAt(index, 5).toString();
+		String complaintTime = model.getValueAt(index, 6).toString();
+		
+		showRowData.setVisible(true);
+		showRowData.pack();
+		showRowData.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
+		showRowData.getComplaintIDTextField().setText(complaintId);
+		showRowData.getCustomerIDTextField().setText(customerId);
+		showRowData.getComplaintTypeTextField().setText(complaintType);
+		showRowData.getComplaintDetailTextField().setText(complaintDetail);
+		showRowData.getComplaintStatusTextField().setText(complaintStatus);
+		showRowData.getComplaintDateTextField().setText(complaintDate);
+		showRowData.getComplaintTimeTextField().setText(complaintTime);
+		
+		//System.out.println(nsComplaintList.get(index));
 	}
 	
 	public void populatePDTableForRep(String type) {
@@ -126,7 +174,29 @@ public class ViewAllComplaintsRep {
 	
 	public void viewPDComplaintDetails() {
 		int index = rCWindow.getPDTable().getSelectedRow();
-		System.out.println(pdComplaintList.get(index));
+		TableModel model = rCWindow.getPDTable().getModel();
+		
+		String complaintId = model.getValueAt(index, 0).toString();
+		String customerId = model.getValueAt(index, 1).toString();
+		String complaintType = model.getValueAt(index, 2).toString();
+		String complaintDetail = model.getValueAt(index, 3).toString();
+		String complaintStatus = model.getValueAt(index, 4).toString();
+		String complaintDate = model.getValueAt(index, 5).toString();
+		String complaintTime = model.getValueAt(index, 6).toString();
+		
+		showRowData.setVisible(true);
+		showRowData.pack();
+		showRowData.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
+		showRowData.getComplaintIDTextField().setText(complaintId);
+		showRowData.getCustomerIDTextField().setText(customerId);
+		showRowData.getComplaintTypeTextField().setText(complaintType);
+		showRowData.getComplaintDetailTextField().setText(complaintDetail);
+		showRowData.getComplaintStatusTextField().setText(complaintStatus);
+		showRowData.getComplaintDateTextField().setText(complaintDate);
+		showRowData.getComplaintTimeTextField().setText(complaintTime);
+		
+		//System.out.println(pdComplaintList.get(index));
 	}
 	
 	public void returnToRepGui() {
