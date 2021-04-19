@@ -148,8 +148,8 @@ public class SearchComplaint {
 		
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//frame.dispose();
-				searchcomplaintControl.returnTodasboard();
+				frame.dispose();
+				//searchcomplaintControl.returnTodasboard();
 			}
 		});
 	}
