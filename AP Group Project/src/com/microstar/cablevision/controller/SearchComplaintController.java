@@ -91,8 +91,7 @@ public class SearchComplaintController {
 
 	public void returnTodasboard() {
 		searchComplaint.getFrame().dispose();
-		new CustomerDashBoard(con);// return to customer dashboardod stub
-		
+		new CustomerDashBoard(con);//return to customer dashboardod stub
 	}
 	
 	public void setCustomer(Customer customer) {

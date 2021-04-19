@@ -29,10 +29,15 @@ public class ViewCompalintController {
 	ArrayList<Complaint> arrayList;
 	ShowRowData showRowData = new ShowRowData();
 	
-	public ViewCompalintController(ViewAllComplaintCustomer ViewComplaintView){
-		this.ViewComplaintView = ViewComplaintView;
-		
+	public ViewCompalintController(ViewAllComplaintCustomer view){
+		setWindow(view);	
 	}
+	
+	private void setWindow(ViewAllComplaintCustomer view) {
+		// TODO Auto-generated method stub
+		ViewComplaintView = view;
+	}
+
 	public void setClient(Client client) {
 		con = client;//Assigning the Client instance that was created
 	}
