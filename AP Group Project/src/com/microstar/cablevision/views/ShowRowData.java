@@ -113,7 +113,7 @@ public class ShowRowData extends JFrame {
 		
 		complaintDetailTextField = new JTextField();
 		complaintDetailTextField.setColumns(10);
-		complaintDetailTextField.setBounds(284, 151, 270, 25);
+		complaintDetailTextField.setBounds(284, 151, 340, 30);
 		contentPane.add(complaintDetailTextField);
 		
 		complaintStatusTextField = new JTextField();

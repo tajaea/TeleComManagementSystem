@@ -56,7 +56,7 @@ public class ComplaintController {
 			con.addComplaint(complaintObj);
 			if(con.SuccessStatus()) {
 				customerObj.getComplainList().add(complaintObj);//adding a complaint object to the customer complaint list
-				
+				JOptionPane.showMessageDialog(MakeComplaintView.getFrame(), "If You Wish To Write Another Complaint, Please Do So and Click The Submit Button.\nOtherwise Click The Back Button To Exit.", "Submit Complaint", JOptionPane.WARNING_MESSAGE);
 			}else {
 				JOptionPane.showMessageDialog(MakeComplaintView.getFrame(), "An error occurred while creating your complaint. Please Try Again", " Create Complaint Error", JOptionPane.WARNING_MESSAGE);
 				returnToCustomerDashboard();
