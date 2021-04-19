@@ -21,6 +21,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 
 public class ViewAllComplaintCustomer {
@@ -64,6 +66,14 @@ public class ViewAllComplaintCustomer {
 		viewcomplaintControl = new ViewCompalintController(this);
 		viewcomplaintControl.setClient(con);
 		table = new JTable();
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent event) {
+				if(event.getClickCount() == 2) {
+					viewcomplaintControl.viewTableDetails();
+				}
+			}
+		});
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
 			},

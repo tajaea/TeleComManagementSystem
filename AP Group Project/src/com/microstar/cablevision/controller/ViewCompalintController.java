@@ -23,7 +23,7 @@ public class ViewCompalintController {
 	Object[] row = new Object[5];
 	private Client con;
 	DefaultTableModel Model = new DefaultTableModel();
-	
+	ArrayList<Complaint> arrayList;
 	
 	public ViewCompalintController(ViewAllComplaintCustomer ViewComplaintView){
 		this.ViewComplaintView = ViewComplaintView;
@@ -34,7 +34,7 @@ public class ViewCompalintController {
 	}
 	
 	public void populateTable() {
-		ArrayList<Complaint> arrayList = new ArrayList<Complaint>();
+		arrayList = new ArrayList<Complaint>();
 		
 		arrayList=con.readCustomerComplaint(); // Returns an arraylist of the complaints made by the signed in ucustomer
 		
@@ -46,8 +46,13 @@ public class ViewCompalintController {
 				complain.getComplaintTime()
 			});
 		}
-		
-		}
+	}
+	
+	public void viewTableDetails() {
+		int index = ViewComplaintView.getTable().getSelectedRow();
+		System.out.println(arrayList.get(index));
+	}
+	
 	public void returnCustomer() {
 		con.sendAction("Get Complaint");
 		System.out.println(customerObj);
@@ -55,7 +60,6 @@ public class ViewCompalintController {
 	}
 	
 	public void returnToCustomerDashboard() {
-
 		ViewComplaintView.getFrame().dispose();//close make a complaint window
 		new CustomerDashBoard(con).setCustomerObject(customerObj);// return to customer dashboard
 	}

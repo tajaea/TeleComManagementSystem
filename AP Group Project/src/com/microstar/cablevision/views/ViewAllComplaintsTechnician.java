@@ -227,6 +227,14 @@ public class ViewAllComplaintsTechnician extends JFrame {
 					noServiceDetailPanel.add(noServiceTableSPane);
 					
 					noServiceDetailTable = new JTable();
+					noServiceDetailTable.addMouseListener(new MouseAdapter() {
+						@Override
+						public void mouseClicked(MouseEvent event) {
+							if(event.getClickCount() == 2) {
+								techComplaintControl.viewNSComplaintDetails();
+							}
+						}
+					});
 					noServiceDetailTable.setModel(new DefaultTableModel(
 						new Object[][] {
 						},
@@ -318,6 +326,14 @@ public class ViewAllComplaintsTechnician extends JFrame {
 			billComplaintDetailPanel.add(billCTableSPane);
 			
 			billCDetailTable = new JTable();
+			billCDetailTable.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent event) {
+					if(event.getClickCount() == 2) {
+						techComplaintControl.viewBCComplaintDetails();
+					}
+				}
+			});
 			billCDetailTable.setModel(new DefaultTableModel(
 				new Object[][] {
 				},
@@ -392,6 +408,14 @@ public class ViewAllComplaintsTechnician extends JFrame {
 			pDestructionDetailPanel.add(pDTableSPane);
 			
 				pDDetailTable = new JTable();
+				pDDetailTable.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent event) {
+						if(event.getClickCount() == 2) {
+							techComplaintControl.viewPDComplaintDetials();
+						}
+					}
+				});
 				pDDetailTable.setModel(new DefaultTableModel(
 					new Object[][] {
 					},

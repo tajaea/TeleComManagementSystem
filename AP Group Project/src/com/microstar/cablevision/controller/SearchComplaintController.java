@@ -61,6 +61,11 @@ public class SearchComplaintController {
 			}
 		}
 	}
+	
+	public void viewTableDetails() {
+		int index = searchComplaint.getTable().getSelectedRow();
+		System.out.println(complaintList.get(index));
+	}
 
 	public void returnTodasboard() {
 		searchComplaint.getFrame().dispose();
