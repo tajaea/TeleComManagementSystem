@@ -49,6 +49,8 @@ public class ClientHandler extends Thread implements Runnable {
 	int count = 50;
 	 List<ClientHandler> clientlist;
 	 private String chatID;
+	 boolean flag = true;
+	 boolean flag2 = false;
 	
 
 	public ClientHandler(Server server, Socket clientSocket) {
@@ -60,13 +62,15 @@ public class ClientHandler extends Thread implements Runnable {
 	public void run() {
 		String action = " ";
 		getDatabaseConnection();
-		boolean flag = true;
+		
 		Security.logger.info("Successfully Connected to Server");
 		try {
 			this.configureStreams();
-			while (flag) {
+			while (true) {
 				try {
-					action = (String) objIs.readObject();
+					if(flag2==false) {
+						action = (String) objIs.readObject();
+					}
 					Security.logger.info(action + " action");
 					switch (action) {
 					case "Add Customer":
@@ -165,7 +169,6 @@ public class ClientHandler extends Thread implements Runnable {
 						break;
 						
 					case "Message":
-						flag= false;
 						//message = (Messages) objIs.readObject();
 						//System.out.println("My "+message);
 						break;
@@ -446,7 +449,7 @@ public class ClientHandler extends Thread implements Runnable {
 
 		@Override
 		public void run() {
-			while (!clientlist.isEmpty()) {  // if allUserList is not empty then proceed further
+			while (!clientlist.isEmpty()&&flag==false) {  // if allUserList is not empty then proceed further
 				try {
 					System.out.println("read message");
 					//Messages messageobj = (Messages) (new ObjectInputStream(connectionSocket.getInputStream()).readObject()); // read message from client
@@ -467,37 +470,21 @@ public class ClientHandler extends Thread implements Runnable {
 									//cli.send("< " + Id + " >" + msgList[2]); // put message in output stream
 								}
 							} catch (Exception e) { // throw exceptions
+								e.printStackTrace();
 								System.out.println("An error occurred in our chat server. Please try again later");	
 								Security.logger.error("An Exception was caught in the run method in the MsgRead class");
 							}
 						}
-					} else if (msgList[0].equalsIgnoreCase("exit")) { // if a client's process is killed then notify other clients
-						//activeUserSet.remove(Id); // remove that client from active usre set
-
-						//msgBox.append(Id + " disconnected....\n"); // print message on server message board
-
-						//new PrepareCLientList().start(); // update the active and all user list on UI
-
-
-						//Iterator<String> itr = activeCusSet.iterator(); // iterate over other active users
-						//while (itr.hasNext()) {
-							//String usrName2 = itr.next();
-							//if (!usrName2.equalsIgnoreCase(Id)) { // we don't need to send this message to ourself
-								//try {
-									//new DataOutputStream(clientColl.get(usrName2).getOutputStream())
-											//.writeUTF(Id + " disconnected..."); // notify all other active user for disconnection of a user
-								//} catch (Exception e) { // throw errors
-								//	e.printStackTrace();
-								//}
-								//new PrepareCLientList().start(); // update the active user list for every client after a user is disconnected
-							//}
-						//}
-						//activeDlm.removeElement(Id); // remove client from Jlist for server
-						//activeList.setModel(activeDlm); //update the active user list
+					} else if (msgList[0].equalsIgnoreCase("exit")) { 
+						
+						flag = true;
+						flag2 = false;
+						objOs.writeObject(" ");
 					}
 				} catch (Exception e) {
-					//System.out.println("An error occurred in our chat server. Please try again later");	
-					//Security.logger.error("An Exception was caught in the run in the MsgRead class");
+					e.printStackTrace();
+					System.out.println("An error occurred in our chat serverer. Please try again later");	
+					Security.logger.error("An Exception was caught in the run in the MsgRead class");
 				}
 			}
 		}
@@ -507,23 +494,43 @@ public class ClientHandler extends Thread implements Runnable {
 		@Override
 		public void run() {
 			try {
-				
+				flag2 = true;
 				String ids = "";
 				for(ClientHandler handle:clientlist) {
-					if(chatID.subSequence(0, 3).toString().equalsIgnoreCase("CUS")) {
+					System.out.println("CHat" +chatID.subSequence(0, 3).toString());
+					if(chatID.subSequence(0, 3).toString().equalsIgnoreCase(CUSTOMER)) {
 						String key = handle.getChatID();
-						if(key.subSequence(0, 3).toString().equalsIgnoreCase("EMP")) {
+						System.out.println("The key"+ key);
+						if(key.subSequence(0, 3).toString().equalsIgnoreCase(EMPLOYEE)) {
 							ids += key +",";
 						}
 					}
+					else if(chatID.subSequence(0, 3).toString().equalsIgnoreCase(EMPLOYEE)) {
+						String key = handle.getChatID();
+						if(key.subSequence(0, 3).toString().equalsIgnoreCase(CUSTOMER)) {
+						ids += key +",";
+						}
+					}
 				}
+				
 				if (ids.length() != 0) { // just trimming the list for the safe side.
 					ids = ids.substring(0, ids.length() - 1);
 				}
 
-				for(ClientHandler handle:clientlist) {
-					handle.send(":;.,/=" +ids);
+				for(ClientHandler handler:clientlist) {
+					
+					//if(chatID.subSequence(0, 3).toString().equalsIgnoreCase(CUSTOMER)) {
+						//if(handler.getChatID().subSequence(0, 3).toString().equalsIgnoreCase(EMPLOYEE)) {
+							handler.send(":;.,/=" +ids);
+						//}
+					//}
+					//else if(chatID.subSequence(0, 3).toString().equalsIgnoreCase(EMPLOYEE)) {
+						//if(handler.getChatID().subSequence(0, 3).toString().equalsIgnoreCase(CUSTOMER)) {
+							//handler.send(":;.,/=" +ids);
+						//}
+				    //}
 				}
+				
 				
 			} catch (Exception e) {
 				e.printStackTrace();

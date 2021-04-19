@@ -40,7 +40,7 @@ public class ChatView extends JFrame {
 	private Customer cust;
 	static Client client;
 	String id, clientID = "";
-	Read read;
+	boolean flag = true;
 
 	
 	
@@ -61,8 +61,7 @@ public class ChatView extends JFrame {
 			activeUsersList.setModel(dlm);
 			//din = new DataInputStream(cli.getConnectionSocket().getInputStream()); 
 			//dout = new DataOutputStream(s.getOutputStream());
-			read = new Read(cli);
-			read.start(); 
+			new Read(cli).start();
 		} catch (Exception ex) {
 			System.out.println("An error occurred in our chat server. Please try again later");	
 			Security.logger.error("An exception was caught in Chat View");
@@ -71,13 +70,10 @@ public class ChatView extends JFrame {
 
 	class Read extends Thread 
 	{
-		boolean flag = true;
+		
 		private Client cli;
 		public Read(Client cli) {
 			this.cli = cli;
-		}
-		public void stopThread() {
-			flag = false;
 		}
 		public void run() {
 			while (flag) {
@@ -106,6 +102,7 @@ public class ChatView extends JFrame {
 					Security.logger.error("An exception was caught in inner class Read in parent class ChatView");
 					break;
 				}
+				client = cli;
 			}
 		}
 	}
@@ -202,7 +199,7 @@ public class ChatView extends JFrame {
 				client.sendAction("Message");
 					client.writeMessage(new Messages("","","exit")); 
 					msgBox.append("You are disconnected now.\n");
-					read.stopThread();
+					flag = false;
 					frame.dispose();
 					new CustomerDashBoard(client).setCustomerObject(cust);
 				}/* catch (IOException e1) {
