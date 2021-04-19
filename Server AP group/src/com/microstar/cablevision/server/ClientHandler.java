@@ -26,6 +26,7 @@ import com.microstar.cablevision.database.CRUD;
 import com.microstar.cablevision.security.Authentication;
 import com.microstar.cablevision.security.Security;
 import com.microstar.cablevision.server.SS.PrepareCLientList;
+import com.microstar.cablevision.server.SS;
 
 import microStarCableVision.Complaint;
 import microStarCableVision.Customer;
@@ -461,7 +462,7 @@ public class ClientHandler extends Thread implements Runnable {
 						String[] sendToList = msgList[1].split(","); //this variable contains list of clients which will receive message
 						for (String usr : sendToList) { // for every user send message
 							try {
-								if (activeUserSet.contains(usr)) { // check again if user is active then send the message
+								if (SS.activeUserSet.contains(usr)) { // check again if user is active then send the message
 									new DataOutputStream(clientColl.get(usr).getOutputStream())
 											.writeUTF("< " + Id + " >" + msgList[2]); // put message in output stream
 								}
@@ -471,12 +472,12 @@ public class ClientHandler extends Thread implements Runnable {
 							}
 						}
 					} else if (msgList[0].equalsIgnoreCase("exit")) { // if a client's process is killed then notify other clients
-						activeUserSet.remove(Id); // remove that client from active usre set
+						SS.activeUserSet.remove(Id); // remove that client from active usre set
 						//msgBox.append(Id + " disconnected....\n"); // print message on server message board
 
 						new PrepareCLientList().start(); // update the active and all user list on UI
 
-						Iterator<String> itr = activeUserSet.iterator(); // iterate over other active users
+						Iterator<String> itr = SS.activeUserSet.iterator(); // iterate over other active users
 						while (itr.hasNext()) {
 							String usrName2 = itr.next();
 							if (!usrName2.equalsIgnoreCase(Id)) { // we don't need to send this message to ourself
@@ -506,7 +507,7 @@ public class ClientHandler extends Thread implements Runnable {
 			try {
 				clientlist =  server.getClientList();
 				String ids = "";
-				Iterator<String> itr = activeUserSet.iterator(); // iterate over all active users
+				Iterator<String> itr = SS.activeUserSet.iterator(); // iterate over all active users
 				while (itr.hasNext()) { // prepare string of all the users
 					String key = itr.next();
 					ids += key + ",";
@@ -514,7 +515,7 @@ public class ClientHandler extends Thread implements Runnable {
 				if (ids.length() != 0) { // just trimming the list for the safe side.
 					ids = ids.substring(0, ids.length() - 1);
 				}
-				itr = activeUserSet.iterator(); 
+				itr = SS.activeUserSet.iterator(); 
 				while (itr.hasNext()) { // iterate over all active users
 					String key = itr.next();
 					try {

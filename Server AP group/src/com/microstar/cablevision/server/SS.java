@@ -26,7 +26,7 @@ import com.microstar.cablevision.security.Security;
 public class SS {
 	
 	private static Map<String, Socket> clientColl = new ConcurrentHashMap<>(); // keeps the mapping of all the															// usernames used and their socket connections
-	private static Set<String> activeUserSet = new HashSet<>(); // this set keeps track of all the active users 
+	public static Set<String> activeUserSet = new HashSet<>(); // this set keeps track of all the active users 
 	private JFrame frame; // jframe variable
 	private ServerSocket ss; //server socket variable
 	private JTextArea msgBox; // variable for server message board on UI

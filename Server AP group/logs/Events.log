@@ -1,0 +1,12 @@
+[INFO ] 2021-04-18 15:47:57:006 [Thread-1] Security - run
+ [INFO ] 2021-04-18 15:48:49:788 [Thread-1] Security - User Login action
+ [INFO ] 2021-04-18 15:49:30:189 [Thread-1] Security - Add Complaint action
+ [INFO ] 2021-04-18 15:52:14:140 [Thread-1] Security - Get Complaint action
+ [INFO ] 2021-04-18 15:59:41:555 [Thread-1] Security - run
+ [INFO ] 2021-04-18 15:59:56:701 [Thread-1] Security - User Login action
+ [INFO ] 2021-04-18 16:00:11:037 [Thread-1] Security - Get Complaint action
+ [INFO ] 2021-04-18 22:56:02:041 [Thread-1] Security - run
+ [INFO ] 2021-04-18 22:56:53:170 [Thread-1] Security - User Login action
+ [INFO ] 2021-04-18 22:57:16:285 [Thread-1] Security - Get Complaint action
+ [ERROR] 2021-04-18 22:57:19:344 [Thread-1] Security - An Input/Output Exception was caught in the run method of the ClientHandler class
+ 
