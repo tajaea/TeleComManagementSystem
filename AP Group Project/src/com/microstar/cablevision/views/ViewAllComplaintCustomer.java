@@ -92,6 +92,7 @@ public class ViewAllComplaintCustomer {
 		Model = (DefaultTableModel) table.getModel();
 		
 		table.setForeground(Color.WHITE);
+		table.setBackground(Color.CYAN);
 		Font font = new Font ("", 1, 22);
 		table.setFont(font);
 		table.setRowHeight(30);
