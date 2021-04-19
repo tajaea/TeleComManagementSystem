@@ -1,24 +1,35 @@
 package com.microstar.cablevision.server;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
 
 import com.microstar.cablevision.database.CRUD;
 import com.microstar.cablevision.security.Authentication;
 import com.microstar.cablevision.security.Security;
+import com.microstar.cablevision.server.SS.PrepareCLientList;
 
 import microStarCableVision.Complaint;
 import microStarCableVision.Customer;
 import microStarCableVision.Employee;
+import microStarCableVision.Messages;
 import microStarCableVision.Responses;
 
 public class ClientHandler extends Thread implements Runnable {
@@ -31,10 +42,15 @@ public class ClientHandler extends Thread implements Runnable {
 	private Customer customerobj = null;
 	private Employee employeeObj = null;
 	private Complaint complaintObj=null;
-	private String onlinemsg;
 	private String CUSTOMER = "CUS";
 	private String EMPLOYEE = "EMP";
-	
+	private static Map<String, Socket> clientColl = new ConcurrentHashMap<>(); // keeps the mapping of all the															// usernames used and their socket connections
+	private static Set<String> activeUserSet = new HashSet<>(); // this set keeps track of all the active users 
+	private JList<String> allUserList;  // variable on UI
+	private JList<String> activeList; // variable on UI
+	private DefaultListModel<String> activeDlm = new DefaultListModel<String>(); // keeps list of active users for display on UI
+	private DefaultListModel<String> allDlm = new DefaultListModel<String>(); // keeps list of all users for display on UI
+	int count = 50;
 	
 
 	public ClientHandler(Server server, Socket clientSocket) {
@@ -140,6 +156,11 @@ public class ClientHandler extends Thread implements Runnable {
 						 * if(!clienthandler.customerobj.getCustomerID().equals(customerobj.
 						 * getCustomerID())) { clienthandler.send(onlinemsg); } }
 						 */
+						break;
+						
+					case "Message":
+						Messages message = (Messages) objIs.readObject();
+						System.out.println(message);
 						break;
 					}
 				} catch (ClassNotFoundException e) {
@@ -389,5 +410,97 @@ public class ClientHandler extends Thread implements Runnable {
 			Security.logger.error("A SQL Exception was caught in the findEmployeeUserById method in the ClientHandler class");
 		}
 		return empObj;
+	}
+	
+	
+	
+	class MsgRead extends Thread { // this class reads the messages coming from client and take appropriate actions
+		Socket s;
+		String Id;
+		private MsgRead(Socket s, String uname) { // socket and username will be provided by client
+			this.s = s;
+			this.Id = uname;
+		}
+
+		@Override
+		public void run() {
+			while (allUserList != null && !clientColl.isEmpty()) {  // if allUserList is not empty then proceed further
+				try {
+					String message = new DataInputStream(s.getInputStream()).readUTF(); // read message from client
+					System.out.println("message read ==> " + message); // just print the message for testing
+					String[] msgList = message.split(":"); // I have used my own identifier to identify what action to take on the received message from client
+														// i have appended actionToBeTaken:clients_for_receiving_msg:message
+					if (msgList[0].equalsIgnoreCase("multicast")) { // if action is multicast then send messages to selected active users
+						String[] sendToList = msgList[1].split(","); //this variable contains list of clients which will receive message
+						for (String usr : sendToList) { // for every user send message
+							try {
+								if (activeUserSet.contains(usr)) { // check again if user is active then send the message
+									new DataOutputStream(clientColl.get(usr).getOutputStream())
+											.writeUTF("< " + Id + " >" + msgList[2]); // put message in output stream
+								}
+							} catch (Exception e) { // throw exceptions
+								System.out.println("An error occurred in our chat server. Please try again later");	
+								Security.logger.error("An Exception was caught in the run method in the MsgRead class");
+							}
+						}
+					} else if (msgList[0].equalsIgnoreCase("exit")) { // if a client's process is killed then notify other clients
+						activeUserSet.remove(Id); // remove that client from active usre set
+						//msgBox.append(Id + " disconnected....\n"); // print message on server message board
+
+						new PrepareCLientList().start(); // update the active and all user list on UI
+
+						Iterator<String> itr = activeUserSet.iterator(); // iterate over other active users
+						while (itr.hasNext()) {
+							String usrName2 = itr.next();
+							if (!usrName2.equalsIgnoreCase(Id)) { // we don't need to send this message to ourself
+								try {
+									new DataOutputStream(clientColl.get(usrName2).getOutputStream())
+											.writeUTF(Id + " disconnected..."); // notify all other active user for disconnection of a user
+								} catch (Exception e) { // throw errors
+									e.printStackTrace();
+								}
+								new PrepareCLientList().start(); // update the active user list for every client after a user is disconnected
+							}
+						}
+						activeDlm.removeElement(Id); // remove client from Jlist for server
+						activeList.setModel(activeDlm); //update the active user list
+					}
+				} catch (Exception e) {
+					System.out.println("An error occurred in our chat server. Please try again later");	
+					Security.logger.error("An Exception was caught in the run in the MsgRead class");
+				}
+			}
+		}
+	}
+
+	class PrepareCLientList extends Thread { // it prepares the list of active user to be displayed on the UI
+		@Override
+		public void run() {
+			try {
+				String ids = "";
+				Iterator<String> itr = activeUserSet.iterator(); // iterate over all active users
+				while (itr.hasNext()) { // prepare string of all the users
+					String key = itr.next();
+					ids += key + ",";
+				}
+				if (ids.length() != 0) { // just trimming the list for the safe side.
+					ids = ids.substring(0, ids.length() - 1);
+				}
+				itr = activeUserSet.iterator(); 
+				while (itr.hasNext()) { // iterate over all active users
+					String key = itr.next();
+					try {
+						new DataOutputStream(clientColl.get(key).getOutputStream())
+								.writeUTF(":;.,/=" + ids); // set output stream and send the list of active users with identifier prefix :;.,/=
+					} catch (Exception e) {
+						System.out.println("An error occurred in our chat server. Please try again later");	
+						Security.logger.error("An Exception was caught in the run in the PrepareCLientList class");
+					}
+				}
+			} catch (Exception e) {
+				System.out.println("An error occurred in our chat server. Please try again later");	
+				Security.logger.error("An Exception was caught in the run in the PrepareCLientList class");
+			}
+		}
 	}
 }

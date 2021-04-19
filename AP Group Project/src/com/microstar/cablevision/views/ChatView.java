@@ -5,8 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.IOException;
-import java.net.Socket;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -25,6 +23,7 @@ import com.microstar.cablevision.security.Security;
 
 import microStarCableVision.Client;
 import microStarCableVision.Customer;
+import microStarCableVision.Messages;
 
 public class ChatView extends JFrame {
 
@@ -41,6 +40,7 @@ public class ChatView extends JFrame {
 	private Customer cust;
 	static Client client;
 	String id, clientID = "";
+	Read read;
 
 	
 	
@@ -50,7 +50,7 @@ public class ChatView extends JFrame {
 		initialize();
 	}
 
-	public ChatView(String id, Socket s,Client cli) 
+	public ChatView(String id,Client cli) 
 	{ 
 		initialize(); 
 		this.id = id;
@@ -59,11 +59,11 @@ public class ChatView extends JFrame {
 			frame.setTitle("Live Chat ---- ChatID " + id); 
 			dlm = new DefaultListModel<String>(); 
 			activeUsersList.setModel(dlm);
-			din = new DataInputStream(s.getInputStream()); 
-			dout = new DataOutputStream(s.getOutputStream());
-			new Read().start(); 
+			//din = new DataInputStream(cli.getConnectionSocket().getInputStream()); 
+			//dout = new DataOutputStream(s.getOutputStream());
+			read = new Read(cli);
+			read.start(); 
 		} catch (Exception ex) {
-			ex.printStackTrace();
 			System.out.println("An error occurred in our chat server. Please try again later");	
 			Security.logger.error("An exception was caught in Chat View");
 		}
@@ -71,12 +71,19 @@ public class ChatView extends JFrame {
 
 	class Read extends Thread 
 	{
-
+		boolean flag = true;
+		private Client cli;
+		public Read(Client cli) {
+			this.cli = cli;
+		}
+		public void stopThread() {
+			flag = false;
+		}
 		public void run() {
-			while (true) {
+			while (flag) {
 				try
 				{
-					String m = din.readUTF(); 
+					String m = cli.readMessage(); 
 					if (m.contains(":;.,/=")) 
 					{ 
 						m = m.substring(6); 
@@ -94,6 +101,7 @@ public class ChatView extends JFrame {
 						msgBox.append("" + m + "\n"); 
 					}
 				} catch (Exception e) {
+					e.printStackTrace();
 					System.out.println("An error occurred in our chat server. Please try again later");	
 					Security.logger.error("An exception was caught in inner class Read in parent class ChatView");
 					break;
@@ -153,11 +161,13 @@ public class ChatView extends JFrame {
 						
 						if (cast.equalsIgnoreCase("multicast")) 
 						{ 
-							if (flag == 1) 
+							if (flag != 1) 
 							{ 
 								JOptionPane.showMessageDialog(frame, "No user selected");
 							} else { 
-								dout.writeUTF(msgToServer);
+								Messages message = new Messages(cust.getCustomerID(),clientID,msgToServer);
+								client.sendAction("Message");
+								client.writeMessage(message);
 								sendField.setText("");
 								msgBox.append("< You sent msg to " + clientID + ">" + msg + "\n"); 
 							}
@@ -182,17 +192,19 @@ public class ChatView extends JFrame {
 		exitchatBtn.addActionListener(new ActionListener() 
 		{ 
 			public void actionPerformed(ActionEvent e) {
-				try 
-				{
-					dout.writeUTF("exit"); 
+				//try 
+				//{
+				client.sendAction("Message");
+					client.writeMessage(new Messages("","","exit")); 
 					msgBox.append("You are disconnected now.\n");
+					read.stopThread();
 					frame.dispose();
 					new CustomerDashBoard(client).setCustomerObject(cust);
-				} catch (IOException e1) {
+				}/* catch (IOException e1) {
 					System.out.println("An error occurred in our chat server. Please try again later");	
 					Security.logger.error("An Input/Output Exception was caught in the Action Listener in the ChatView class");
-				}
-			}
+				}*/
+			//}
 		});
 		exitchatBtn.setBounds(480,420, 89, 38);
 		frame.getContentPane().add(exitchatBtn);

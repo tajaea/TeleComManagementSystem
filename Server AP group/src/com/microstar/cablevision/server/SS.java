@@ -129,27 +129,6 @@ public class SS {
 								Security.logger.error("An Exception was caught in the run method in the MsgRead class");
 							}
 						}
-					} else if (msgList[0].equalsIgnoreCase("broadcast")) { // if broadcast then send message to all active clients
-						
-						Iterator<String> itr1 = clientColl.keySet().iterator(); // iterate over all users
-						while (itr1.hasNext()) {
-							String usrName = itr1.next(); // it is the username
-							if (!usrName.equalsIgnoreCase(Id)) { // we don't need to send message to ourself, so we check for our Id
-								try {
-									if (activeUserSet.contains(usrName)) { // if client is active then send message through output stream
-										new DataOutputStream(clientColl.get(usrName).getOutputStream())
-												.writeUTF("< " + Id + " >" + msgList[1]);
-									} else {
-										//if user is not active then notify the sender about the disconnected client
-										new DataOutputStream(s.getOutputStream())
-												.writeUTF("Message couldn't be delivered to user " + usrName + " because it is disconnected.\n");
-									}
-								} catch (Exception e) {
-									System.out.println("An error occurred in our chat server. Please try again later");	
-									Security.logger.error("An Exception was caught in the run in the MsgRead class");
-								}
-							}
-						}
 					} else if (msgList[0].equalsIgnoreCase("exit")) { // if a client's process is killed then notify other clients
 						activeUserSet.remove(Id); // remove that client from active usre set
 						msgBox.append(Id + " disconnected....\n"); // print message on server message board

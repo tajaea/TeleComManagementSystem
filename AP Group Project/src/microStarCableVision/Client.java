@@ -221,6 +221,29 @@ public class Client{
 		return state;
 	}
 	
+	public String readMessage() {
+		String message = " ";
+		try {
+			message = (String)objIs.readObject();
+		}
+		catch(IOException ex) {
+			ex.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return message;
+	}
+	
+	public void writeMessage(Messages message) {
+		try {
+			objOs.writeObject(message);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public int numOfUsers() {
 		 this.amount = 0 ;
 		try {
