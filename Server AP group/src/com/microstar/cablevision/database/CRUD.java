@@ -20,17 +20,19 @@ public class CRUD {
 	}//Customer
 	public static String Customer() {
 	return "CREATE TABLE IF NOT EXISTS ap.`customer` ("
+			+ "  `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,"
 			+ "	 `customer_ID` varchar(50) PRIMARY KEY NOT NULL,"
 			+ " `first_name` varchar(20) NOT NULL,"
 			+ " `last_name` varchar(20) NOT NULL,"
 			+ " `email` varchar(30) NOT NULL,"
 			+ " `phone_number` int NOT NULL,"
 			+"`password` varchar (255) NOT NULL"
-			+ ") ENGINE=InnoDB DEFAULT CHARSET=latin1;";
+			+ ") AUTO_INCREMENT = 1, ENGINE=InnoDB DEFAULT CHARSET=latin1;";
 	}
 	//Employee
 	public static String Employee() {
 	return "CREATE TABLE IF NOT EXISTS ap.`employee` ("
+	+ "  `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,"
 	+ "	 `employee_ID` varchar(50) PRIMARY KEY NOT NULL,"
 	+ "  `first_name` varchar(20) NOT NULL,"
 	+ "  `last_name` varchar(20) NOT NULL,"
@@ -38,7 +40,7 @@ public class CRUD {
 	+ "  `phone_number` int NOT NULL,"
 	+ "  `password` varchar(255) NOT NULL,"
 	+ "	 `type` varchar(20) NOT NULL"
-	+ ") ENGINE=InnoDB DEFAULT CHARSET=latin1; ";
+	+ ")AUTO_INCREMENT = 1, ENGINE=InnoDB DEFAULT CHARSET=latin1; ";
 	}
 	// Status
 	public static String Status(){
@@ -64,7 +66,6 @@ public class CRUD {
 				+ ") AUTO_INCREMENT = 1, ENGINE=InnoDB DEFAULT CHARSET=latin1; ";
 	}
 	public static String createComplaint(Complaint complaint) {
-		System.out.println("I am in CRUD");
 		
 		return "INSERT INTO ap.complaint (cust_id,type,details,status,date,time)"+
 				"VALUES ('"+ complaint.getCustomerId() + "','" + complaint.getType() + "','" + complaint.getDetails()+"','"+
@@ -148,7 +149,7 @@ public class CRUD {
 public static String createEmployeeTables() {
 	return Employee();
 }
- 
+ /*
  public static String createCustomer(Customer customer) {
 	 return " INSERT INTO ap.customer(customer_ID, first_name, last_name, email, phone_number, password)"+
 		 "VALUES ('" + customer.getCustomerID() + "','" + customer.getFirstName() + "','" 
@@ -162,8 +163,8 @@ public static String createEmployee(Employee employee) {
 			+ employee.getLast_Name() + "', '" + employee.getEmail() + "', '"
 			+ employee.getTelephoneNumber() + "', '" + employee.getPassword() + "', '" + employee.getJob_Title() + "');";
 }
-
- public static String login_credentials(Authentication auth) {
+*/
+public static String login_credentials(Authentication auth) {
 	 return "SELECT * FROM ap.customer WHERE customer_ID = "+ "'"+auth.getUserid()+"'" + " AND password = "+ "'"+auth.getPassword()+"'";
 	 
  }

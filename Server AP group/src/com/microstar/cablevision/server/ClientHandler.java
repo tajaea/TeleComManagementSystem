@@ -60,29 +60,26 @@ public class ClientHandler extends Thread implements Runnable {
 
 	@Override
 	public void run() {
-		System.out.println("run");
-		Security.logger.info("run");
 		String action = " ";
 		getDatabaseConnection();
-
+		Security.logger.info("Successfully Connected to Server");
 		try {
 			this.configureStreams();
 			while (true) {
 				try {
 					action = (String) objIs.readObject();
-					System.out.println(action + " action");
 					Security.logger.info(action + " action");
 					switch (action) {
 					case "Add Customer":
 						customerobj = (Customer) objIs.readObject();
-						System.out.println(customerobj.getCustomerID() + " action");
+						//System.out.println(customerobj.getCustomerID() + " action");
 						addCustomer(customerobj);
 						break;
 
 					// Added Employee case
 					case "Add Employee":
 						employeeObj = (Employee) objIs.readObject();
-						System.out.println(employeeObj.getStaff_Id() + " action");
+						//System.out.println(employeeObj.getStaff_Id() + " action");
 						addEmployee(employeeObj);
 						break;
 						
@@ -132,7 +129,6 @@ public class ClientHandler extends Thread implements Runnable {
 								sendloginValue(80);
 								returnCustomer(customerobj);
 								activeCusSet.add(customerobj.getCustomerID());
-								clientColl.put(customerobj.getCustomerID(),connectionSocket);
 							}
 						}
 						// Employee section
@@ -165,17 +161,11 @@ public class ClientHandler extends Thread implements Runnable {
 						 * if(!clienthandler.customerobj.getCustomerID().equals(customerobj.
 						 * getCustomerID())) { clienthandler.send(onlinemsg); } }
 						 */
-						
-						
 						break;
 						
 					case "Message":
 						Messages message = (Messages) objIs.readObject();
 						System.out.println(message);
-						break;
-						
-					case "chat":
-						new PrepareCLientList().start();
 						break;
 					}
 				} catch (ClassNotFoundException e) {
@@ -193,8 +183,7 @@ public class ClientHandler extends Thread implements Runnable {
 			}
 
 		} catch (IOException e) {
-			System.out.println("Client has Ended Conection With Server");
-			Security.logger.error("An Input/Output Exception was caught in the run method in the ClientHandler class");			
+			Security.logger.error("Client has Ended Conection With Server");			
 			this.closeConnection();
 		}
 	}
@@ -292,41 +281,29 @@ public class ClientHandler extends Thread implements Runnable {
 	}
 
 	private void addCustomer(Customer customer) {
-		String sql = CRUD.createCustomer(customer);
 		try {
-			state = dBConn.createStatement();
-			if ((state.executeUpdate(sql) == 1)) {
-				System.out.println("check 1");
+			if(customer.create()) {
 				objOs.writeObject(true);
-			} else {
+			}else {
 				objOs.writeObject(false);
 			}
-		} catch (SQLException e) {
-			System.out.println("An error occurred in our database connection. Please try again later");	
-			Security.logger.error("A SQL Exception was caught in the getDatabaseConnection method in the ClientHandler class");
 		} catch (IOException e) {
-			System.out.println("An error occurred in our server. Please try again later");	
-			Security.logger.error("An Input/Output Exception was caught in the closeConnection method in the ClientHandler class");
+			System.out.println("An error occurred while trying to create your account. Please try again later");
+			Security.logger.error("An Input/Output Exception was caught in the addCustomer method of the Client class");
 		}
 	}
 
 	// Employee function
 	private void addEmployee(Employee employee) {
-		String sql = CRUD.createEmployee(employee);
 		try {
-			state = dBConn.createStatement();
-			if ((state.executeUpdate(sql) == 1)) {
-				System.out.println("check 1");
-				objOs.writeObject(true);
-			} else {
-				objOs.writeObject(false);
-			}
-		} catch (SQLException e) {
-			System.out.println("An error occurred in our database connection. Please try again later");	
-			Security.logger.error("A SQL Exception was caught in the getDatabaseConnection method in the ClientHandler class");
+		if(employee.create()) {
+			objOs.writeObject(true);
+		}else {
+			objOs.writeObject(false);
+		}
 		} catch (IOException e) {
-			System.out.println("An error occurred in our server. Please try again later");	
-			Security.logger.error("An Input/Output Exception was caught in the closeConnection method in the ClientHandler class");
+			System.out.println("An error occurred while trying to create your account. Please try again later");
+			Security.logger.error("An Input/Output Exception was caught in the addEmployee method of the ClientHandler class");
 		}
 	}
 
@@ -410,11 +387,11 @@ public class ClientHandler extends Thread implements Runnable {
 			state = dBConn.createStatement();
 			ResultSet result = state.executeQuery(query);
 			if (result.next()) {
-				cusobj.setCustomerID(result.getString(1));
-				cusobj.setFirstName(result.getString(2));
-				cusobj.setLastName(result.getString(3));
-				cusobj.setEmail(result.getString(4));
-				cusobj.setTelephoneNumber(result.getInt(5));
+				cusobj.setCustomerID(result.getString("customer_ID"));
+				cusobj.setFirstName(result.getString("first_name"));
+				cusobj.setLastName(result.getString("last_name"));
+				cusobj.setEmail(result.getString("email"));
+				cusobj.setTelephoneNumber(result.getInt("phone_number"));
 			}
 		} catch (SQLException e) {
 			System.out.println("An error occurred in our database connection. Please try again later");	
@@ -431,13 +408,12 @@ public class ClientHandler extends Thread implements Runnable {
 			state = dBConn.createStatement();
 			ResultSet result = state.executeQuery(query);
 			if (result.next()) {
-				empObj.setStaff_Id(result.getString(1));
-				empObj.setFirst_Name(result.getString(2));
-				empObj.setLast_Name(result.getString(3));
-				empObj.setEmail(result.getString(4));
-				empObj.setTelephoneNumber(result.getInt(5));
-				empObj.setJobTitle(result.getString(7));
-
+				empObj.setStaff_Id(result.getString("employee_ID"));
+				empObj.setFirst_Name(result.getString("first_name"));
+				empObj.setLast_Name(result.getString("last_name"));
+				empObj.setEmail(result.getString("email"));
+				empObj.setTelephoneNumber(result.getInt("phone_number"));
+				empObj.setJobTitle(result.getString("type"));
 			}
 		} catch (SQLException e) {
 			System.out.println("An error occurred in our database connection. Please try again later");	
@@ -469,11 +445,7 @@ public class ClientHandler extends Thread implements Runnable {
 						String[] sendToList = msgList[1].split(","); //this variable contains list of clients which will receive message
 						for (String usr : sendToList) { // for every user send message
 							try {
-<<<<<<< HEAD
-								if (activeCusSet.contains(usr)) { // check again if user is active then send the message
-=======
 								if (SS.activeUserSet.contains(usr)) { // check again if user is active then send the message
->>>>>>> branch 'main' of https://github.com/tajaea/APProject.git
 									new DataOutputStream(clientColl.get(usr).getOutputStream())
 											.writeUTF("< " + Id + " >" + msgList[2]); // put message in output stream
 								}
@@ -483,39 +455,30 @@ public class ClientHandler extends Thread implements Runnable {
 							}
 						}
 					} else if (msgList[0].equalsIgnoreCase("exit")) { // if a client's process is killed then notify other clients
-<<<<<<< HEAD
-						//activeUserSet.remove(Id); // remove that client from active usre set
-=======
 						SS.activeUserSet.remove(Id); // remove that client from active usre set
->>>>>>> branch 'main' of https://github.com/tajaea/APProject.git
 						//msgBox.append(Id + " disconnected....\n"); // print message on server message board
 
-						//new PrepareCLientList().start(); // update the active and all user list on UI
+						new PrepareCLientList().start(); // update the active and all user list on UI
 
-<<<<<<< HEAD
-						Iterator<String> itr = activeCusSet.iterator(); // iterate over other active users
-						//while (itr.hasNext()) {
-=======
 						Iterator<String> itr = SS.activeUserSet.iterator(); // iterate over other active users
 						while (itr.hasNext()) {
->>>>>>> branch 'main' of https://github.com/tajaea/APProject.git
 							String usrName2 = itr.next();
-							//if (!usrName2.equalsIgnoreCase(Id)) { // we don't need to send this message to ourself
-								//try {
+							if (!usrName2.equalsIgnoreCase(Id)) { // we don't need to send this message to ourself
+								try {
 									new DataOutputStream(clientColl.get(usrName2).getOutputStream())
 											.writeUTF(Id + " disconnected..."); // notify all other active user for disconnection of a user
-								//} catch (Exception e) { // throw errors
-								//	e.printStackTrace();
-								//}
-								//new PrepareCLientList().start(); // update the active user list for every client after a user is disconnected
-							//}
-						//}
+								} catch (Exception e) { // throw errors
+									e.printStackTrace();
+								}
+								new PrepareCLientList().start(); // update the active user list for every client after a user is disconnected
+							}
+						}
 						//activeDlm.removeElement(Id); // remove client from Jlist for server
 						//activeList.setModel(activeDlm); //update the active user list
 					}
 				} catch (Exception e) {
-					//System.out.println("An error occurred in our chat server. Please try again later");	
-					//Security.logger.error("An Exception was caught in the run in the MsgRead class");
+					System.out.println("An error occurred in our chat server. Please try again later");	
+					Security.logger.error("An Exception was caught in the run in the MsgRead class");
 				}
 			}
 		}
@@ -527,11 +490,7 @@ public class ClientHandler extends Thread implements Runnable {
 			try {
 				clientlist =  server.getClientList();
 				String ids = "";
-<<<<<<< HEAD
-				Iterator<String> itr = activeCusSet.iterator(); // iterate over all active users
-=======
 				Iterator<String> itr = SS.activeUserSet.iterator(); // iterate over all active users
->>>>>>> branch 'main' of https://github.com/tajaea/APProject.git
 				while (itr.hasNext()) { // prepare string of all the users
 					String key = itr.next();
 					ids += key + ",";
@@ -539,28 +498,18 @@ public class ClientHandler extends Thread implements Runnable {
 				if (ids.length() != 0) { // just trimming the list for the safe side.
 					ids = ids.substring(0, ids.length() - 1);
 				}
-<<<<<<< HEAD
-				itr = activeCusSet.iterator();
-				for(ClientHandler handle:clientlist) {
-					handle.send(":;.,/=" +ids);
-				}
-				/*while (itr.hasNext()) { // iterate over all active users
-=======
 				itr = SS.activeUserSet.iterator(); 
 				while (itr.hasNext()) { // iterate over all active users
->>>>>>> branch 'main' of https://github.com/tajaea/APProject.git
 					String key = itr.next();
 					try {
-						
-						new ObjectOutputStream(clientColl.get(key).getOutputStream())
-								.writeObject(":;.,/=" + ids); // set output stream and send the list of active users with identifier prefix :;.,/=
+						new DataOutputStream(clientColl.get(key).getOutputStream())
+								.writeUTF(":;.,/=" + ids); // set output stream and send the list of active users with identifier prefix :;.,/=
 					} catch (Exception e) {
 						System.out.println("An error occurred in our chat server. Please try again later");	
 						Security.logger.error("An Exception was caught in the run in the PrepareCLientList class");
 					}
-				}*/
+				}
 			} catch (Exception e) {
-				e.printStackTrace();
 				System.out.println("An error occurred in our chat server. Please try again later");	
 				Security.logger.error("An Exception was caught in the run in the PrepareCLientList class");
 			}

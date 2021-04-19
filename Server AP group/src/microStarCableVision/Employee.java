@@ -4,25 +4,62 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 
-import com.microstar.cablevision.security.Security;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
-//Creating the Parent Class as Employee
-public class Employee implements Serializable
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import com.microstar.cablevision.database.CustomerSessionFactoryBuilder;
+import com.microstar.cablevision.database.EmployeeSessionFactoryBuilder;
+import com.microstar.cablevision.security.Security;
+@Entity
+@Table(name = "employee")
+public class Employee implements Serializable //Creating the Parent Class as Employee
+
 {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	//Creating the General/Main attributes that all Employees would share.
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	
+	@Column(name = "ID")
+	private int ID;
+	
+	@Column(name = "employee_ID")
 	private String empId;
+
+	@Column(name = "first_name")
 	private String firstName;
+
+	@Column(name = "last_name")
 	private String lastName;
-	private String jobTitle;
+
+	@Column(name = "email")
 	private String email;
+	
+	@Column(name = "phone_number")
 	private int telephoneNumber;
-	private ArrayList<Messages> messageList;
-	private ArrayList<Complaint> complaintList;
+	
+	@Column(name = "password")
 	private String password;
+	
+	@Column(name = "type")
+	private String jobTitle;
+	
+	@Transient
+	private ArrayList<Messages> messageList;
+	@Transient
+	private ArrayList<Complaint> complaintList;
+	@Transient
 	final String ID_PREFIX = "EMP";
 	
 	
@@ -156,4 +193,20 @@ public class Employee implements Serializable
 				+ jobTitle + ", email=" + email + ", telephoneNumber=" + telephoneNumber + ", messageList="
 				+ messageList + ", complaintList=" + complaintList + ", password=" + password + "]";
 	}
+		public boolean create() {
+			try {
+				Session session = EmployeeSessionFactoryBuilder.getSessionFactory().getCurrentSession();
+				Transaction transaction = session.beginTransaction();
+				session.save(this);
+				transaction.commit();
+				System.out.println("Employee Record successfully created");
+				Security.logger.info("Employee Record successfully created");
+				session.close();
+				return true;
+			} catch (Exception e) {
+				Security.logger.fatal("Could not create Employee using ORM");
+				return false;
+			}
+	}
+
 }

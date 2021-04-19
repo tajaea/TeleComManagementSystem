@@ -29,7 +29,6 @@ public class Server extends Thread implements Runnable{
 				serverSocket = new ServerSocket(serverPort);
 				while(true) {
 					connectionSocket = serverSocket.accept();
-					System.out.println(connectionSocket.getPort());
 						ClientHandler serverhandle = new ClientHandler(this,connectionSocket);
 						clientList.add(serverhandle);
 						serverhandle.start();
