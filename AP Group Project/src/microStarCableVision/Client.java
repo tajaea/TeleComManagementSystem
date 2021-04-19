@@ -1,6 +1,7 @@
 package microStarCableVision;
 
 import java.io.IOException;
+
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -211,6 +212,23 @@ public class Client{
 		}
 		return complaint;
 	}
+	
+	
+	public PaymentHistory getpaymentHistory() {
+		PaymentHistory paymentHistory = null;
+		try {
+			paymentHistory = (PaymentHistory)objIs.readObject();
+		} catch (IOException e) {
+			System.out.println("An error occurred while trying to connect to the server. Please try again later");
+			Security.logger.error("An Input/Output Exception was caught in the getComplaint method of the Client class");
+		} catch (ClassNotFoundException e) {
+			System.out.println("An error occurred while trying to connect to the server. Please try again later");
+			Security.logger.error("A ClassNotFound Exception was caught in the getComplaint method of the Client class");
+		}
+		return paymentHistory;
+	}
+	
+	
 	public String UsersOnlineState() {
 		try {
 			state = (String)objIs.readObject();
