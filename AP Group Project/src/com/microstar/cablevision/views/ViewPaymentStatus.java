@@ -96,7 +96,7 @@ public class ViewPaymentStatus {
 		lastNameValue.setBounds(275, 57, 80, 35);
 		frame.getContentPane().add(lastNameValue);
 		
-		paymentStatus = new JLabel("Your Account Has An Oustanding Balance");
+		paymentStatus = new JLabel("Your Account Is Up To Date");
 		paymentStatus.setFont(new Font("Dubai", Font.PLAIN, 25));
 		paymentStatus.setBounds(149, 103, 560, 112);
 		frame.getContentPane().add(paymentStatus);
