@@ -30,7 +30,8 @@ public class CustomerDashboardController {
 		con = client;//Assigning the Client instance that was created
 	}
 	public void OpenChatWindow() {
-		new ChatView(customerObj.getCustomerID(), con.getConnectionSocket());
+		customerDashboardview.getFrame().dispose();
+		new ChatView(customerObj.getCustomerID(), con.getConnectionSocket(),con).setCustomer(customerObj);
 		
 	}
 	public void SignOut() {

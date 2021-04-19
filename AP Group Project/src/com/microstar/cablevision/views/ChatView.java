@@ -1,6 +1,6 @@
 package com.microstar.cablevision.views;
 
-import java.awt.Color; 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.DataInputStream;
@@ -20,10 +20,11 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import com.microstar.cablevision.security.Security;
+
+import microStarCableVision.Client;
+import microStarCableVision.Customer;
 
 public class ChatView extends JFrame {
 
@@ -37,6 +38,8 @@ public class ChatView extends JFrame {
 	DataInputStream din;
 	DataOutputStream dout;
 	DefaultListModel<String> dlm;
+	private Customer cust;
+	static Client client;
 	String id, clientID = "";
 
 	
@@ -47,11 +50,12 @@ public class ChatView extends JFrame {
 		initialize();
 	}
 
-	public ChatView(String id, Socket s) 
+	public ChatView(String id, Socket s,Client cli) 
 	{ 
 		initialize(); 
 		this.id = id;
 		try {
+			setClient(cli);
 			frame.setTitle("Live Chat ---- ChatID " + id); 
 			dlm = new DefaultListModel<String>(); 
 			activeUsersList.setModel(dlm);
@@ -59,6 +63,7 @@ public class ChatView extends JFrame {
 			dout = new DataOutputStream(s.getOutputStream());
 			new Read().start(); 
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			System.out.println("An error occurred in our chat server. Please try again later");	
 			Security.logger.error("An exception was caught in Chat View");
 		}
@@ -181,7 +186,8 @@ public class ChatView extends JFrame {
 				{
 					dout.writeUTF("exit"); 
 					msgBox.append("You are disconnected now.\n");
-					frame.dispose();  
+					frame.dispose();
+					new CustomerDashBoard(client).setCustomerObject(cust);
 				} catch (IOException e1) {
 					System.out.println("An error occurred in our chat server. Please try again later");	
 					Security.logger.error("An Input/Output Exception was caught in the Action Listener in the ChatView class");
@@ -197,5 +203,13 @@ public class ChatView extends JFrame {
 		frame.getContentPane().add(lblNewLabel);
 		frame.setVisible(true);
 		
+	}
+
+	public void setCustomer(Customer customerObj) {
+		this.cust = customerObj;
+		
+	}
+	public void setClient(Client cl) {
+		client = cl;
 	}
 }
