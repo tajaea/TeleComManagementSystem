@@ -198,7 +198,7 @@ public class Customer implements Serializable {
 		return "Customer [customerID=" + customerID + ", firstName=" + firstName + ", lastName=" + lastName + ", email="
 				+ email + ", telephoneNumber=" + telephoneNumber + ", password=" + password + "]";
 	}
-
+	
 	public boolean create() {
 		try {
 			Session session = CustomerSessionFactoryBuilder.getSessionFactory().getCurrentSession();

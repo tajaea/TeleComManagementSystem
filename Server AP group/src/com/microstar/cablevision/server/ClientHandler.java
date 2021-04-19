@@ -183,7 +183,7 @@ public class ClientHandler extends Thread implements Runnable {
 			}
 
 		} catch (IOException e) {
-			Security.logger.error("Client has Ended Conection With Server");			
+			Security.logger.error("Client has Ended Connection With Server");			
 			this.closeConnection();
 		}
 	}
