@@ -121,7 +121,7 @@ public class ViewAllComplaintCustomer {
 		btnClickHere = new JButton("VIEW YOUR COMPLAINTS");
 
 		btnClickHere.setFont(new Font("Times New Roman", Font.BOLD, 12));
-		btnClickHere.setBounds(325, 11, 185, 40);
+		btnClickHere.setBounds(417, 11, 185, 40);
 		frame.getContentPane().add(btnClickHere);
 		
 		btnBack = new JButton("Back");

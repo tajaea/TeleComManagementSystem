@@ -44,14 +44,14 @@ public class ShowRowData extends JFrame {
 	 * Create the frame.
 	 */
 	public ShowRowData() {
-		setMinimumSize(new Dimension(700, 350));
-		setMaximumSize(new Dimension(700, 350));
+		setMinimumSize(new Dimension(750, 350));
+		setMaximumSize(new Dimension(750, 350));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 245, 238));
-		contentPane.setMinimumSize(new Dimension(700, 350));
-		contentPane.setMaximumSize(new Dimension(700, 350));
+		contentPane.setMinimumSize(new Dimension(750, 350));
+		contentPane.setMaximumSize(new Dimension(750, 350));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -97,36 +97,43 @@ public class ShowRowData extends JFrame {
 		contentPane.add(complaintTime);
 		
 		complaintIDTextField = new JTextField();
+		complaintIDTextField.setEditable(false);
 		complaintIDTextField.setBounds(260, 19, 86, 20);
 		contentPane.add(complaintIDTextField);
 		complaintIDTextField.setColumns(10);
 		
 		customerIDTextField = new JTextField();
+		customerIDTextField.setEditable(false);
 		customerIDTextField.setColumns(10);
 		customerIDTextField.setBounds(260, 63, 86, 20);
 		contentPane.add(customerIDTextField);
 		
 		complaintTypeTextField = new JTextField();
+		complaintTypeTextField.setEditable(false);
 		complaintTypeTextField.setColumns(10);
 		complaintTypeTextField.setBounds(284, 107, 190, 25);
 		contentPane.add(complaintTypeTextField);
 		
 		complaintDetailTextField = new JTextField();
+		complaintDetailTextField.setEditable(false);
 		complaintDetailTextField.setColumns(10);
-		complaintDetailTextField.setBounds(284, 151, 340, 30);
+		complaintDetailTextField.setBounds(284, 151, 440, 30);
 		contentPane.add(complaintDetailTextField);
 		
 		complaintStatusTextField = new JTextField();
+		complaintStatusTextField.setEditable(false);
 		complaintStatusTextField.setColumns(10);
 		complaintStatusTextField.setBounds(214, 192, 110, 27);
 		contentPane.add(complaintStatusTextField);
 		
 		complaintDateTextField = new JTextField();
+		complaintDateTextField.setEditable(false);
 		complaintDateTextField.setColumns(10);
 		complaintDateTextField.setBounds(214, 232, 110, 27);
 		contentPane.add(complaintDateTextField);
 		
 		complaintTimeTextField = new JTextField();
+		complaintTimeTextField.setEditable(false);
 		complaintTimeTextField.setColumns(10);
 		complaintTimeTextField.setBounds(214, 275, 110, 27);
 		contentPane.add(complaintTimeTextField);
