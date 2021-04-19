@@ -100,6 +100,7 @@ public class ViewPaymentStatus {
 		exitButton.setBounds(10, 425, 116, 35);
 		frame.getContentPane().add(exitButton);
 		frame.setVisible(true);
+		RegisterListener();
 	}
 	
 	public void RegisterListener() {

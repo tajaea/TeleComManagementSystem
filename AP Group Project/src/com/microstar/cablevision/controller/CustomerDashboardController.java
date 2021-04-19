@@ -5,6 +5,7 @@ import com.microstar.cablevision.views.CustomerDashBoard;
 import com.microstar.cablevision.views.LoginView;
 import com.microstar.cablevision.views.MakeComplaint;
 import com.microstar.cablevision.views.ViewAllComplaintCustomer;
+import com.microstar.cablevision.views.ViewPaymentHistory;
 import com.microstar.cablevision.views.ViewPaymentStatus;
 
 import microStarCableVision.Client;
@@ -77,7 +78,6 @@ public class CustomerDashboardController {
 		new ViewPaymentStatus(con).setCustomerInformation(customerObj); 		
 	}
 	public void getViewPaymentHistory() {
-		// TODO Auto-generated method stub
-		
+		new ViewPaymentHistory(con).setCustomerInformation(customerObj); 		
 	}
 }
