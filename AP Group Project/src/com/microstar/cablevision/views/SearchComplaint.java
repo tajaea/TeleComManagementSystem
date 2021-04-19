@@ -22,6 +22,7 @@ import microStarCableVision.Customer;
 
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
+import java.awt.Dimension;
 
 public class SearchComplaint {
 	JFrame frame;
@@ -64,6 +65,12 @@ public class SearchComplaint {
 	 */
 	private void initialize(Client client) {
 		frame = new JFrame();
+		frame.setTitle("Search Complaint");
+		frame.getContentPane().setBackground(new Color(255, 245, 238));
+		frame.getContentPane().setMinimumSize(new Dimension(900, 500));
+		frame.getContentPane().setMaximumSize(new Dimension(900, 500));
+		frame.setMinimumSize(new Dimension(900, 500));
+		frame.setMaximumSize(new Dimension(900, 500));
 		frame.setResizable(false);
 		frame.setBounds(100, 100, 737, 434);
 		frame.getContentPane().setLayout(null);
@@ -71,27 +78,28 @@ public class SearchComplaint {
 		searchcomplaintControl = new SearchComplaintController(this);
 		searchcomplaintControl.setClient(client);
 		JLabel lblSearchComplaint = new JLabel("Search Complaint");
-		lblSearchComplaint.setFont(new Font("Times New Roman", Font.BOLD, 13));
-		lblSearchComplaint.setBounds(221, 11, 185, 14);
+		lblSearchComplaint.setFont(new Font("Dubai", Font.PLAIN, 20));
+		lblSearchComplaint.setBounds(10, 11, 159, 28);
 		frame.getContentPane().add(lblSearchComplaint);
 		
 		JLabel lblEnterComplaintId = new JLabel("Enter Complaint Id");
-		lblEnterComplaintId.setFont(new Font("Times New Roman", Font.BOLD, 13));
-		lblEnterComplaintId.setBounds(67, 94, 124, 14);
+		lblEnterComplaintId.setFont(new Font("Dubai", Font.PLAIN, 18));
+		lblEnterComplaintId.setBounds(193, 50, 143, 30);
 		frame.getContentPane().add(lblEnterComplaintId);
 		
 		txtComplaintId = new JTextField(); 
-		txtComplaintId.setBounds(214, 91, 152, 20);
+		txtComplaintId.setBounds(346, 56, 89, 20);
 		frame.getContentPane().add(txtComplaintId);
 		txtComplaintId.setColumns(10);
 		
 		 btnSearch = new JButton("Search");
+		 btnSearch.setFont(new Font("Dubai", Font.PLAIN, 15));
 		
-		btnSearch.setBounds(470, 90, 89, 23);
+		btnSearch.setBounds(498, 55, 95, 36);
 		frame.getContentPane().add(btnSearch);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(71, 142, 552, 207);
+		scrollPane.setBounds(10, 142, 874, 284);
 		frame.getContentPane().add(scrollPane);
 		
 		table = new JTable();
@@ -117,7 +125,7 @@ public class SearchComplaint {
 		btnBack = new JButton("Back");
 		
 		btnBack.setFont(new Font("Times New Roman", Font.BOLD, 12));
-		btnBack.setBounds(608, 360, 89, 23);
+		btnBack.setBounds(10, 437, 89, 23);
 		frame.getContentPane().add(btnBack);
 		frame.setVisible(true);
 		RegisterListener();

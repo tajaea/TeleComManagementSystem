@@ -25,6 +25,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
+import java.awt.Dimension;
 
 public class ViewAllComplaintCustomer {
 
@@ -56,13 +57,19 @@ public class ViewAllComplaintCustomer {
 	 */
 	private void initialize(Client con) {
 		frame = new JFrame();
+		frame.setTitle("View All Complaint Customer");
+		frame.getContentPane().setBackground(new Color(255, 245, 238));
+		frame.getContentPane().setMinimumSize(new Dimension(1000, 500));
+		frame.setMinimumSize(new Dimension(1000, 500));
+		frame.getContentPane().setMaximumSize(new Dimension(1000, 500));
+		frame.setMaximumSize(new Dimension(1000, 500));
 		frame.setResizable(false);
 		frame.setBounds(100, 100, 747, 364);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(-2, 74, 723, 222);
+		scrollPane.setBounds(10, 62, 974, 364);
 		frame.getContentPane().add(scrollPane);
 
 		viewcomplaintControl = new ViewCompalintController(this);
@@ -114,13 +121,13 @@ public class ViewAllComplaintCustomer {
 		btnClickHere = new JButton("VIEW YOUR COMPLAINTS");
 
 		btnClickHere.setFont(new Font("Times New Roman", Font.BOLD, 12));
-		btnClickHere.setBounds(221, 11, 185, 40);
+		btnClickHere.setBounds(325, 11, 185, 40);
 		frame.getContentPane().add(btnClickHere);
 		
 		btnBack = new JButton("Back");
 		
 		btnBack.setFont(new Font("Times New Roman", Font.BOLD, 12));
-		btnBack.setBounds(8, 302, 89, 23);
+		btnBack.setBounds(10, 437, 89, 23);
 		frame.getContentPane().add(btnBack);
 		frame.setVisible(true);
 		RegisterListener();
