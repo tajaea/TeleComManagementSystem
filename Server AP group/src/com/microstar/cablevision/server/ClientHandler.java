@@ -14,6 +14,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -45,12 +46,10 @@ public class ClientHandler extends Thread implements Runnable {
 	private String CUSTOMER = "CUS";
 	private String EMPLOYEE = "EMP";
 	private static Map<String, Socket> clientColl = new ConcurrentHashMap<>(); // keeps the mapping of all the															// usernames used and their socket connections
-	private static Set<String> activeUserSet = new HashSet<>(); // this set keeps track of all the active users 
-	private JList<String> allUserList;  // variable on UI
-	private JList<String> activeList; // variable on UI
-	private DefaultListModel<String> activeDlm = new DefaultListModel<String>(); // keeps list of active users for display on UI
-	private DefaultListModel<String> allDlm = new DefaultListModel<String>(); // keeps list of all users for display on UI
+	private static Set<String> activeEmpSet = new HashSet<>(); // this set keeps track of all the active users 
+	private static Set<String> activeCusSet = new HashSet<>();
 	int count = 50;
+	 List<ClientHandler> clientlist;
 	
 
 	public ClientHandler(Server server, Socket clientSocket) {
@@ -131,6 +130,7 @@ public class ClientHandler extends Thread implements Runnable {
 							} else {
 								sendloginValue(80);
 								returnCustomer(customerobj);
+								activeCusSet.add(customerobj.getCustomerID());
 							}
 						}
 						// Employee section
@@ -143,6 +143,7 @@ public class ClientHandler extends Thread implements Runnable {
 							} else {
 								sendloginValue(80);
 								returnEmployee(employeeObj);
+								activeEmpSet.add(employeeObj.getStaff_Id());
 							}
 						} else {
 							objOs.writeObject("UNKNOWN");
@@ -449,12 +450,13 @@ public class ClientHandler extends Thread implements Runnable {
 
 		@Override
 		public void run() {
-			while (allUserList != null && !clientColl.isEmpty()) {  // if allUserList is not empty then proceed further
+			while (!clientColl.isEmpty()) {  // if allUserList is not empty then proceed further
 				try {
 					String message = new DataInputStream(s.getInputStream()).readUTF(); // read message from client
 					System.out.println("message read ==> " + message); // just print the message for testing
 					String[] msgList = message.split(":"); // I have used my own identifier to identify what action to take on the received message from client
 														// i have appended actionToBeTaken:clients_for_receiving_msg:message
+					
 					if (msgList[0].equalsIgnoreCase("multicast")) { // if action is multicast then send messages to selected active users
 						String[] sendToList = msgList[1].split(","); //this variable contains list of clients which will receive message
 						for (String usr : sendToList) { // for every user send message
@@ -487,8 +489,8 @@ public class ClientHandler extends Thread implements Runnable {
 								new PrepareCLientList().start(); // update the active user list for every client after a user is disconnected
 							}
 						}
-						activeDlm.removeElement(Id); // remove client from Jlist for server
-						activeList.setModel(activeDlm); //update the active user list
+						//activeDlm.removeElement(Id); // remove client from Jlist for server
+						//activeList.setModel(activeDlm); //update the active user list
 					}
 				} catch (Exception e) {
 					System.out.println("An error occurred in our chat server. Please try again later");	
@@ -502,6 +504,7 @@ public class ClientHandler extends Thread implements Runnable {
 		@Override
 		public void run() {
 			try {
+				clientlist =  server.getClientList();
 				String ids = "";
 				Iterator<String> itr = activeUserSet.iterator(); // iterate over all active users
 				while (itr.hasNext()) { // prepare string of all the users
