@@ -2,11 +2,14 @@ package com.microstar.cablevision.controller;
 
 import java.util.ArrayList;
 
+import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import com.microstar.cablevision.views.CustomerDashBoard;
 import com.microstar.cablevision.views.MakeComplaint;
 import com.microstar.cablevision.views.SearchComplaint;
+import com.microstar.cablevision.views.ShowRowDataForEmployee;
 import com.microstar.cablevision.views.ViewAllComplaintCustomer;
 
 import microStarCableVision.Client;
@@ -19,6 +22,7 @@ public class SearchComplaintController {
 	Object[] row = new Object[5];
 	DefaultTableModel model = new DefaultTableModel();
 	ArrayList<Complaint> complaintList;
+	ShowRowDataForEmployee showRowDataForEmployee = new ShowRowDataForEmployee();
 	Client con;
 	
 	public SearchComplaintController(SearchComplaint view) {
@@ -64,7 +68,25 @@ public class SearchComplaintController {
 	
 	public void viewTableDetails() {
 		int index = searchComplaint.getTable().getSelectedRow();
-		System.out.println(complaintList.get(index));
+		TableModel model = searchComplaint.getTable().getModel();
+		
+		String complaintId = model.getValueAt(index, 0).toString();
+		String customerId = model.getValueAt(index, 1).toString();
+		String complaintType = model.getValueAt(index, 2).toString();
+		String complaintDetail = model.getValueAt(index, 3).toString();
+		String complaintStatus = model.getValueAt(index, 4).toString();
+		
+		showRowDataForEmployee.setVisible(true);
+		showRowDataForEmployee.pack();
+		showRowDataForEmployee.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
+		showRowDataForEmployee.getComplaintIDTextField().setText(complaintId);
+		showRowDataForEmployee.getCustomerIDTextField().setText(customerId);
+		showRowDataForEmployee.getComplaintTypeTextField().setText(complaintType);
+		showRowDataForEmployee.getComplaintDetailTextField().setText(complaintDetail);
+		showRowDataForEmployee.getComplaintStatusTextField().setText(complaintStatus);
+		
+		//System.out.println(complaintList.get(index));
 	}
 
 	public void returnTodasboard() {
