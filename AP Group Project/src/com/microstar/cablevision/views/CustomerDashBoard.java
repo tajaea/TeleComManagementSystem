@@ -68,6 +68,8 @@ public class CustomerDashBoard {
 	private JMenuItem mntmViewAllComplaints;
 	private JMenuItem mntmSearchForComplaint;
 	private JMenuItem mntmAmountDue;
+	private JMenu mnViewPaymentHistory;
+	private JMenuItem mntmPaymentStatus;
 	CustomerDashboardController customerControl;
 	private JTextField greetingsTextField;
 
@@ -342,15 +344,11 @@ public class CustomerDashBoard {
 		menuBar.setBackground(new Color(255, 245, 238));
 		frame.setJMenuBar(menuBar);
 
-		JMenu mnViewPaymentHistory = new JMenu(" Payment");
+		mnViewPaymentHistory = new JMenu(" Payment");
 		menuBar.add(mnViewPaymentHistory);
 
-		JMenuItem mntmPaymentStatus = new JMenuItem("Payment Status");
-		mntmPaymentStatus.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//crud operation
-			}
-		});
+		 mntmPaymentStatus = new JMenuItem("Payment Status");
+		
 		mnViewPaymentHistory.add(mntmPaymentStatus);
 
 		 mntmAmountDue = new JMenuItem("History");
@@ -432,11 +430,16 @@ public class CustomerDashBoard {
 			}
 		});
 		
-		/*mntmAmountDue.addActionListener(new ActionListener(){
+		mntmPaymentStatus.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//crud operation
+				customerControl.getViewPaymentStatus();
 			}
-		}); */
+		});
+		
+		mntmAmountDue.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				customerControl.getViewPaymentHistory();			}
+		}); 
 
 	}
 
