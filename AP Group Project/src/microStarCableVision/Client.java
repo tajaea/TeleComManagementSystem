@@ -20,7 +20,7 @@ public class Client{
 	private String complaintType = "";
 	private String state = " ";
 	private int amount;
-	
+	private int complaintID = 0;
 	
 
 	public Socket getConnectionSocket() {
@@ -359,5 +359,16 @@ public class Client{
 			Security.logger.error("An Input/Output Exception was caught in the sendComplaintType method of the Client class");
 		}
 		
+	}
+	
+	public void searchComplaintID(int id) {
+		// TODO Auto-generated method stub
+		try {
+			this.complaintID = id;
+			objOs.writeObject(this.complaintID);
+		}catch(IOException e) {
+			System.out.println("An error occurred while trying to connect to the server. Please try again later");
+			Security.logger.error("An Input/Output Exception was caught in the searchComplaintID method of the Client class");
+		}
 	}
 }

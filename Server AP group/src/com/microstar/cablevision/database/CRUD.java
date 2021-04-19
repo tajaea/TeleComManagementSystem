@@ -83,6 +83,10 @@ public class CRUD {
 		return "SELECT * FROM ap.complaint WHERE type = '" + type + "';";
 	}
 	
+	public static String searchComplaintByID(int id) {
+		return "SELECT * FROM ap.complaint WHERE complaint_id = '" + id + "';";
+	}
+	
 	public static String readAllComplaints() {
 		return "SELECT * FROM ap.complaint";
 	}

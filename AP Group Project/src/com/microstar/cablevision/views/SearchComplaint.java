@@ -28,6 +28,7 @@ public class SearchComplaint {
 	Object[] row = new Object[5];
 	JButton btnSearch;
 	private JButton btnBack;
+	SearchComplaint searchComplaintView;
 	SearchComplaintController searchcomplaintControl;
 	/**
 	 * Launch the application.
@@ -113,14 +114,15 @@ public class SearchComplaint {
 	public void RegisterListener() {
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				row[0]= "heo";
+				/*row[0]= "heo";
 				row[1]= "jump";
 				row[2]= "jump";
 				row[3]= "jump";
 				row[4]= "jump";
-				
-
-				Model.addRow(row);
+				Model.addRow(row);*/
+				String id = txtComplaintId.getText();
+				int complaint_id = Integer.parseInt(id);
+				searchcomplaintControl.searchComplaintForEmployee(complaint_id);	
 			}
 		});
 		
@@ -178,6 +180,4 @@ public class SearchComplaint {
 	public void setBtnBack(JButton btnBack) {
 		this.btnBack = btnBack;
 	}
-	
-	
 }

@@ -115,6 +115,12 @@ public class ClientHandler extends Thread implements Runnable {
 						objOs.writeObject(pdComplaint);
 						break;
 						
+					case "Search Complaint":
+						int id = (int) objIs.readObject();
+						ArrayList<Complaint> searchComplaintList = searchComplaintForEmployee(id);
+						objOs.writeObject(searchComplaintList);
+						break;
+						
 					case "User Login":
 						Authentication authe = (Authentication) objIs.readObject();
 						if (authe.getUserid().substring(0, 3).equals(CUSTOMER)) {
@@ -368,7 +374,26 @@ public class ClientHandler extends Thread implements Runnable {
 		//System.out.println(complaintlist.get(0).getDetails()+"Client Handler");
 		return complaintlist;
 	}
+	
+	private ArrayList<Complaint> searchComplaintForEmployee(int id) {
+		// TODO Auto-generated method stub
+		ArrayList<Complaint> complaintlist= new ArrayList<Complaint>();
+		ArrayList<Responses> responselist= new ArrayList<Responses>();		
 
+		try {
+		ResultSet resultSet=state.executeQuery(CRUD.searchComplaintByID(id));
+
+		while (resultSet.next()) {
+			complaintlist.add(new Complaint(resultSet.getInt("complaint_id"), resultSet.getString("cust_id"), resultSet.getString("type"), resultSet.getString("details"),responselist,resultSet.getString("status"),resultSet.getString("date"),resultSet.getString("time")));
+		}
+		}catch(Exception e){
+			System.out.println("An error occurred in our database. Please try again later");	
+			Security.logger.error("An exception was caught in the getCustomerComplaintForEmployee method in the ClientHandler class");
+		}
+		//System.out.println(complaintlist.get(0).getDetails()+"Client Handler");
+		return complaintlist;
+		}
+	
 	private Customer findUserById(Authentication auth) {
 		Customer cusobj = new Customer();
 		String query = CRUD.login_credentials(auth);
