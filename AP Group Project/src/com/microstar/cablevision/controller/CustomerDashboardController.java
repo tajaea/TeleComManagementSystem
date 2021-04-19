@@ -32,6 +32,7 @@ public class CustomerDashboardController {
 	public void OpenChatWindow() {
 		customerDashboardview.getFrame().dispose();
 		new ChatView(customerObj.getCustomerID(),con).setCustomer(customerObj);
+		con.sendAction("chat");
 		
 	}
 	public void SignOut() {

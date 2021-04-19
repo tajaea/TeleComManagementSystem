@@ -131,6 +131,7 @@ public class ClientHandler extends Thread implements Runnable {
 								sendloginValue(80);
 								returnCustomer(customerobj);
 								activeCusSet.add(customerobj.getCustomerID());
+								clientColl.put(customerobj.getCustomerID(),connectionSocket);
 							}
 						}
 						// Employee section
@@ -163,11 +164,17 @@ public class ClientHandler extends Thread implements Runnable {
 						 * if(!clienthandler.customerobj.getCustomerID().equals(customerobj.
 						 * getCustomerID())) { clienthandler.send(onlinemsg); } }
 						 */
+						
+						
 						break;
 						
 					case "Message":
 						Messages message = (Messages) objIs.readObject();
 						System.out.println(message);
+						break;
+						
+					case "chat":
+						new PrepareCLientList().start();
 						break;
 					}
 				} catch (ClassNotFoundException e) {
@@ -461,7 +468,7 @@ public class ClientHandler extends Thread implements Runnable {
 						String[] sendToList = msgList[1].split(","); //this variable contains list of clients which will receive message
 						for (String usr : sendToList) { // for every user send message
 							try {
-								if (activeUserSet.contains(usr)) { // check again if user is active then send the message
+								if (activeCusSet.contains(usr)) { // check again if user is active then send the message
 									new DataOutputStream(clientColl.get(usr).getOutputStream())
 											.writeUTF("< " + Id + " >" + msgList[2]); // put message in output stream
 								}
@@ -471,30 +478,30 @@ public class ClientHandler extends Thread implements Runnable {
 							}
 						}
 					} else if (msgList[0].equalsIgnoreCase("exit")) { // if a client's process is killed then notify other clients
-						activeUserSet.remove(Id); // remove that client from active usre set
+						//activeUserSet.remove(Id); // remove that client from active usre set
 						//msgBox.append(Id + " disconnected....\n"); // print message on server message board
 
-						new PrepareCLientList().start(); // update the active and all user list on UI
+						//new PrepareCLientList().start(); // update the active and all user list on UI
 
-						Iterator<String> itr = activeUserSet.iterator(); // iterate over other active users
-						while (itr.hasNext()) {
+						Iterator<String> itr = activeCusSet.iterator(); // iterate over other active users
+						//while (itr.hasNext()) {
 							String usrName2 = itr.next();
-							if (!usrName2.equalsIgnoreCase(Id)) { // we don't need to send this message to ourself
-								try {
+							//if (!usrName2.equalsIgnoreCase(Id)) { // we don't need to send this message to ourself
+								//try {
 									new DataOutputStream(clientColl.get(usrName2).getOutputStream())
 											.writeUTF(Id + " disconnected..."); // notify all other active user for disconnection of a user
-								} catch (Exception e) { // throw errors
-									e.printStackTrace();
-								}
-								new PrepareCLientList().start(); // update the active user list for every client after a user is disconnected
-							}
-						}
+								//} catch (Exception e) { // throw errors
+								//	e.printStackTrace();
+								//}
+								//new PrepareCLientList().start(); // update the active user list for every client after a user is disconnected
+							//}
+						//}
 						//activeDlm.removeElement(Id); // remove client from Jlist for server
 						//activeList.setModel(activeDlm); //update the active user list
 					}
 				} catch (Exception e) {
-					System.out.println("An error occurred in our chat server. Please try again later");	
-					Security.logger.error("An Exception was caught in the run in the MsgRead class");
+					//System.out.println("An error occurred in our chat server. Please try again later");	
+					//Security.logger.error("An Exception was caught in the run in the MsgRead class");
 				}
 			}
 		}
@@ -506,7 +513,7 @@ public class ClientHandler extends Thread implements Runnable {
 			try {
 				clientlist =  server.getClientList();
 				String ids = "";
-				Iterator<String> itr = activeUserSet.iterator(); // iterate over all active users
+				Iterator<String> itr = activeCusSet.iterator(); // iterate over all active users
 				while (itr.hasNext()) { // prepare string of all the users
 					String key = itr.next();
 					ids += key + ",";
@@ -514,18 +521,23 @@ public class ClientHandler extends Thread implements Runnable {
 				if (ids.length() != 0) { // just trimming the list for the safe side.
 					ids = ids.substring(0, ids.length() - 1);
 				}
-				itr = activeUserSet.iterator(); 
-				while (itr.hasNext()) { // iterate over all active users
+				itr = activeCusSet.iterator();
+				for(ClientHandler handle:clientlist) {
+					handle.send(":;.,/=" +ids);
+				}
+				/*while (itr.hasNext()) { // iterate over all active users
 					String key = itr.next();
 					try {
-						new DataOutputStream(clientColl.get(key).getOutputStream())
-								.writeUTF(":;.,/=" + ids); // set output stream and send the list of active users with identifier prefix :;.,/=
+						
+						new ObjectOutputStream(clientColl.get(key).getOutputStream())
+								.writeObject(":;.,/=" + ids); // set output stream and send the list of active users with identifier prefix :;.,/=
 					} catch (Exception e) {
 						System.out.println("An error occurred in our chat server. Please try again later");	
 						Security.logger.error("An Exception was caught in the run in the PrepareCLientList class");
 					}
-				}
+				}*/
 			} catch (Exception e) {
+				e.printStackTrace();
 				System.out.println("An error occurred in our chat server. Please try again later");	
 				Security.logger.error("An Exception was caught in the run in the PrepareCLientList class");
 			}

@@ -161,7 +161,7 @@ public class ChatView extends JFrame {
 						
 						if (cast.equalsIgnoreCase("multicast")) 
 						{ 
-							if (flag != 1) 
+							if (flag == 1) 
 							{ 
 								JOptionPane.showMessageDialog(frame, "No user selected");
 							} else { 
