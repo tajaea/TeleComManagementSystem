@@ -150,25 +150,12 @@ public class ClientHandler extends Thread implements Runnable {
 							objOs.writeObject("UNKNOWN");
 							sendloginValue(00);
 						}
-						// objOs.writeObject(customerobj);
-						/*
-						 * String message =
-						 * customerobj.getFirstName()+" "+customerobj.getLastName()+" is online";
-						 * this.onlinemsg = message; List<ClientHandler> clientlist =
-						 * server.getClientList();
-						 * 
-						 * // Send current user state to all online login
-						 * 
-						 * this.objOs.writeObject(server.getClientList().size()); for(ClientHandler
-						 * clienthandler:clientlist) {
-						 * if(!clienthandler.customerobj.getCustomerID().equals(customerobj.
-						 * getCustomerID())) { clienthandler.send(onlinemsg); } }
-						 */
 						clientlist =  server.getClientList();
 						
 						break;
 						
 					case "Message":
+						flag = false;
 						//message = (Messages) objIs.readObject();
 						//System.out.println("My "+message);
 						break;
@@ -451,7 +438,6 @@ public class ClientHandler extends Thread implements Runnable {
 		public void run() {
 			while (!clientlist.isEmpty()&&flag==false) {  // if allUserList is not empty then proceed further
 				try {
-					System.out.println("read message");
 					//Messages messageobj = (Messages) (new ObjectInputStream(connectionSocket.getInputStream()).readObject()); // read message from client
 					Messages messageobj = (Messages) objIs.readObject(); // read message from client
 					String message = messageobj.getMessageBody();
@@ -465,8 +451,7 @@ public class ClientHandler extends Thread implements Runnable {
 							try {
 								if (sendToList.equalsIgnoreCase(cli.getChatID())) { // check again if user is active then send the message
 									//new ObjectOutputStream(clientColl.get(sendToList).getOutputStream()).writeObject("< " + Id + " >" + msgList[2]);
-										cli.send("< " + Id + " >" + msgList[2]);	
-									System.out.println("pp");
+										cli.send("< " + Id + " >" + msgList[2]);
 									//cli.send("< " + Id + " >" + msgList[2]); // put message in output stream
 								}
 							} catch (Exception e) { // throw exceptions
@@ -495,22 +480,11 @@ public class ClientHandler extends Thread implements Runnable {
 		public void run() {
 			try {
 				flag2 = true;
+				clientlist=server.getClientList();
 				String ids = "";
 				for(ClientHandler handle:clientlist) {
-					System.out.println("CHat" +chatID.subSequence(0, 3).toString());
-					if(chatID.subSequence(0, 3).toString().equalsIgnoreCase(CUSTOMER)) {
 						String key = handle.getChatID();
-						System.out.println("The key"+ key);
-						if(key.subSequence(0, 3).toString().equalsIgnoreCase(EMPLOYEE)) {
 							ids += key +",";
-						}
-					}
-					else if(chatID.subSequence(0, 3).toString().equalsIgnoreCase(EMPLOYEE)) {
-						String key = handle.getChatID();
-						if(key.subSequence(0, 3).toString().equalsIgnoreCase(CUSTOMER)) {
-						ids += key +",";
-						}
-					}
 				}
 				
 				if (ids.length() != 0) { // just trimming the list for the safe side.
@@ -518,20 +492,8 @@ public class ClientHandler extends Thread implements Runnable {
 				}
 
 				for(ClientHandler handler:clientlist) {
-					
-					if(chatID.subSequence(0, 3).toString().equalsIgnoreCase(CUSTOMER)) {
-						if(handler.getChatID().subSequence(0, 3).toString().equalsIgnoreCase(EMPLOYEE)) {
 							handler.send(":;.,/=" +ids);
-						}
-					}
-					else if(chatID.subSequence(0, 3).toString().equalsIgnoreCase(EMPLOYEE)) {
-						if(handler.getChatID().subSequence(0, 3).toString().equalsIgnoreCase(CUSTOMER)) {
-							handler.send(":;.,/=" +ids);
-						}
-				    }
 				}
-				
-				
 			} catch (Exception e) {
 				e.printStackTrace();
 				System.out.println("An error occurred in our chat server. Please try again later");	

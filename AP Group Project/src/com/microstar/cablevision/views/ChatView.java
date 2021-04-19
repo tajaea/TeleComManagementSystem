@@ -152,14 +152,7 @@ public class ChatView extends JFrame {
 						else {
 							clientID += receiver;
 						}
-							
-						/*for (String selectedUsr : clientList) 
-						{
-							if (clientID.isEmpty())
-								
-							else
-								clientID += "," + selectedUsr;
-						}*/
+						
 						msgToServer = cast + ":" + clientID + ":" + msg; 
 						
 						if (cast.equalsIgnoreCase("multicast")) 
@@ -197,7 +190,7 @@ public class ChatView extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				//try 
 				//{
-				client.sendAction("Message");
+				//client.sendAction("Message");
 					client.writeMessage(new Messages("","","exit")); 
 					msgBox.append("You are disconnected now.\n");
 					flag = false;
