@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -17,6 +18,7 @@ import org.hibernate.Transaction;
 import com.microstar.cablevision.database.CustomerSessionFactoryBuilder;
 import com.microstar.cablevision.database.PaymentSessionFactoryBuilder;
 import com.microstar.cablevision.security.Security;
+import microStarCableVision.Customer;
 
 
 
@@ -42,7 +44,10 @@ public class PaymentHistory {
 	
 	@Column(name = "payment_method")
 	private String paymentMethod;
-
+	
+	@Transient
+	Customer customer =new Customer();
+	
 	public PaymentHistory() {
 		this.customerID = "";
 		this.amountPaid = 0;
@@ -104,14 +109,14 @@ public class PaymentHistory {
 				+ paymentMethod + "]";
 	}
 	public void createPayment1() {
-		this.setCustomerID("CUSc99a95");
+		this.setCustomerID((customer.getCustomerID()));
 		this.setAmountPaid(10000.00);
 		this.setBalanceRemaining(0.00);
 		this.setDatePaid(new Date(17/04/2021));
 		this.setPaymentMethod("Paid with card ending in xxxxxx9897");
 	}
 	public void createPayment2() {
-		this.setCustomerID("CUSc99a95");
+		this.setCustomerID((customer.getCustomerID()));
 		this.setAmountPaid(5000.00);
 		this.setBalanceRemaining(1500.00);
 		this.setDatePaid(new Date(10/04/2021));

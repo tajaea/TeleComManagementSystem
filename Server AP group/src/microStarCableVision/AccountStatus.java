@@ -10,12 +10,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.microstar.cablevision.database.StatusSessionFactoryBuilder;
 import com.microstar.cablevision.security.Security;
+import microStarCableVision.Customer;
 @Entity
 @Table(name = "status")
 public class AccountStatus {
@@ -32,8 +34,10 @@ public class AccountStatus {
 
 	@Column(name = "payment_due_date")
 	private Date due_date;
-
-
+	
+	@Transient
+	Customer customer =new Customer();
+	
 	public AccountStatus() {
 		this.cust_ID = "";
 		this.amount_due = 0;
@@ -82,7 +86,7 @@ public class AccountStatus {
 				+ ", due_date=" + due_date + "]";
 	}
 	public void createStatus() {
-		this.setCust_ID("CUSc99a95");
+		this.setCust_ID(customer.getCustomerID());
 		this.setAmount_due(10000.00);
 		this.setDue_date(new Date(20/04/2021));
 	}

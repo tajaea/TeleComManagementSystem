@@ -26,22 +26,22 @@ public class CRUD {
 			+ " `last_name` varchar(20) NOT NULL,"
 			+ " `email` varchar(30) NOT NULL,"
 			+ " `phone_number` int NOT NULL,"
-			+"`password` varchar (255) NOT NULL"
+			+"	`password` varchar (255) NOT NULL"
 			+ ") AUTO_INCREMENT = 1, ENGINE=InnoDB DEFAULT CHARSET=latin1;";
 	}
 	//Employee
 	public static String Employee() {
 	return "CREATE TABLE IF NOT EXISTS ap.`employee` ("
-	+ "  `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,"
-	+ "	 `employee_ID` varchar(50) PRIMARY KEY NOT NULL,"
-	+ "  `first_name` varchar(20) NOT NULL,"
-	+ "  `last_name` varchar(20) NOT NULL,"
-	+ "  `email` varchar(30) NOT NULL,"
-	+ "  `phone_number` int NOT NULL,"
-	+ "  `password` varchar(255) NOT NULL,"
-	+ "	 `type` varchar(20) NOT NULL"
-	+ ")AUTO_INCREMENT = 1, ENGINE=InnoDB DEFAULT CHARSET=latin1; ";
-	}
+			+ "  `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,"
+			+ "	 `employee_ID` varchar(50) PRIMARY KEY NOT NULL,"
+			+ "  `first_name` varchar(20) NOT NULL,"
+			+ "  `last_name` varchar(20) NOT NULL,"
+			+ "  `email` varchar(30) NOT NULL,"
+			+ "  `phone_number` int NOT NULL,"
+			+ "  `password` varchar(255) NOT NULL,"
+			+ "	 `type` varchar(20) NOT NULL"
+			+ ") AUTO_INCREMENT = 1, ENGINE=InnoDB DEFAULT CHARSET=latin1; ";
+		}
 	// Status
 	public static String Status(){
 		return "CREATE TABLE IF NOT EXISTS ap.`status` ("
