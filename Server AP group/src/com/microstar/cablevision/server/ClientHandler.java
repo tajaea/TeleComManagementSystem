@@ -494,7 +494,7 @@ public class ClientHandler extends Thread implements Runnable {
 		@Override
 		public void run() {
 			try {
-				flag2 = true ;
+				flag2 = true;
 				String ids = "";
 				for(ClientHandler handle:clientlist) {
 					System.out.println("CHat" +chatID.subSequence(0, 3).toString());
