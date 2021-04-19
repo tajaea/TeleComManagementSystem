@@ -69,8 +69,11 @@ public class SearchComplaintController {
 
 	public void returnTodasboard() {
 		searchComplaint.getFrame().dispose();
-		//searchComplaint.getFrame().dispose();//close make a complaint window
-		new CustomerDashBoard(con);// return to customer dashboardod stub
+		new CustomerDashBoard(con).setCustomerObject(customerObj);;// return to customer dashboardod stub
 		
+	}
+	
+	public void setCustomer(Customer customer) {
+		this.customerObj = customer;
 	}
 }

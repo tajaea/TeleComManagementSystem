@@ -18,6 +18,7 @@ import com.microstar.cablevision.controller.ComplaintController;
 import com.microstar.cablevision.controller.SearchComplaintController;
 
 import microStarCableVision.Client;
+import microStarCableVision.Customer;
 
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
@@ -63,6 +64,7 @@ public class SearchComplaint {
 	 */
 	private void initialize(Client client) {
 		frame = new JFrame();
+		frame.setResizable(false);
 		frame.setBounds(100, 100, 737, 434);
 		frame.getContentPane().setLayout(null);
 		
@@ -105,8 +107,8 @@ public class SearchComplaint {
 		
 		Model.setColumnIdentifiers(columns);
 		table.setModel(Model);
-		table.setBackground(Color.cyan);
-		table.setForeground(Color.WHITE);
+		//table.setBackground(Color.cyan);
+		//table.setForeground(Color.WHITE);
 		Font font = new Font ("", 1, 22);
 		table.setFont(font);
 		table.setRowHeight(30);
@@ -138,9 +140,14 @@ public class SearchComplaint {
 		
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
 				searchcomplaintControl.returnTodasboard();
 			}
 		});
+	}
+	
+	public void setCustomerInformation(Customer customerObj) {
+		searchcomplaintControl.setCustomer(customerObj);
 	}
 
 	public JFrame getFrame() {

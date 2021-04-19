@@ -56,6 +56,7 @@ public class ViewAllComplaintCustomer {
 	 */
 	private void initialize(Client con) {
 		frame = new JFrame();
+		frame.setResizable(false);
 		frame.setBounds(100, 100, 747, 364);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -102,8 +103,8 @@ public class ViewAllComplaintCustomer {
 
 		Model = (DefaultTableModel) table.getModel();
 		
-		table.setForeground(Color.WHITE);
-		table.setBackground(Color.CYAN);
+		//table.setForeground(Color.WHITE);
+		//table.setBackground(Color.CYAN);
 		Font font = new Font ("", 1, 22);
 		table.setFont(font);
 		table.setRowHeight(30);
