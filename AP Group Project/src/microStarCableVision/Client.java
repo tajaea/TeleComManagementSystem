@@ -244,6 +244,15 @@ public class Client{
 		}
 	}
 	
+	public void writeUserChatID(String userID) {
+		try {
+			objOs.writeObject(userID);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public int numOfUsers() {
 		 this.amount = 0 ;
 		try {

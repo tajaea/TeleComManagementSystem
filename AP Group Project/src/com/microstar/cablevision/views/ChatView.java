@@ -147,16 +147,21 @@ public class ChatView extends JFrame {
 						String msgToServer = "";
 						int flag = 0; 
 						String cast = "multicast"; 
-						List<String> clientList = activeUsersList.getSelectedValuesList(); 
-						if (clientList.size() == 0) 
+						String receiver = activeUsersList.getSelectedValue(); 
+						if (receiver.isEmpty()) {
 							flag = 1;
-						for (String selectedUsr : clientList) 
+						}
+						else {
+							clientID += receiver;
+						}
+							
+						/*for (String selectedUsr : clientList) 
 						{
 							if (clientID.isEmpty())
-								clientID += selectedUsr;
+								
 							else
 								clientID += "," + selectedUsr;
-						}
+						}*/
 						msgToServer = cast + ":" + clientID + ":" + msg; 
 						
 						if (cast.equalsIgnoreCase("multicast")) 
@@ -166,7 +171,7 @@ public class ChatView extends JFrame {
 								JOptionPane.showMessageDialog(frame, "No user selected");
 							} else { 
 								Messages message = new Messages(cust.getCustomerID(),clientID,msgToServer);
-								client.sendAction("Message");
+								//client.sendAction("Message");
 								client.writeMessage(message);
 								sendField.setText("");
 								msgBox.append("< You sent msg to " + clientID + ">" + msg + "\n"); 

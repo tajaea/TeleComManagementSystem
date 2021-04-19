@@ -9,7 +9,6 @@ import com.microstar.cablevision.views.ViewPaymentHistory;
 import com.microstar.cablevision.views.ViewPaymentStatus;
 
 import microStarCableVision.Client;
-import microStarCableVision.Complaint;
 import microStarCableVision.Customer;
 
 public class CustomerDashboardController {
@@ -35,7 +34,7 @@ public class CustomerDashboardController {
 		customerDashboardview.getFrame().dispose();
 		new ChatView(customerObj.getCustomerID(),con).setCustomer(customerObj);
 		con.sendAction("chat");
-		
+		con.writeUserChatID(customerObj.getCustomerID());
 	}
 	public void SignOut() {
 

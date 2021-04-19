@@ -5,6 +5,10 @@ import java.io.Serializable;
 import com.microstar.cablevision.utility.Utility;
 
 public class Messages implements Serializable{
+/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 private String sender;
 private String receiver;
 private String messageBody;

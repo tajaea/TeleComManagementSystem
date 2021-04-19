@@ -45,12 +45,10 @@ public class ClientHandler extends Thread implements Runnable {
 	private Employee employeeObj = null;
 	private Complaint complaintObj=null;
 	private String CUSTOMER = "CUS";
-	private String EMPLOYEE = "EMP";
-	private static Map<String, Socket> clientColl = new ConcurrentHashMap<>(); // keeps the mapping of all the															// usernames used and their socket connections
-	private static Set<String> activeEmpSet = new HashSet<>(); // this set keeps track of all the active users 
-	private static Set<String> activeCusSet = new HashSet<>();
+	private String EMPLOYEE = "EMP";										
 	int count = 50;
 	 List<ClientHandler> clientlist;
+	 private String chatID;
 	
 
 	public ClientHandler(Server server, Socket clientSocket) {
@@ -62,10 +60,11 @@ public class ClientHandler extends Thread implements Runnable {
 	public void run() {
 		String action = " ";
 		getDatabaseConnection();
+		boolean flag = true;
 		Security.logger.info("Successfully Connected to Server");
 		try {
 			this.configureStreams();
-			while (true) {
+			while (flag) {
 				try {
 					action = (String) objIs.readObject();
 					Security.logger.info(action + " action");
@@ -128,7 +127,7 @@ public class ClientHandler extends Thread implements Runnable {
 							} else {
 								sendloginValue(80);
 								returnCustomer(customerobj);
-								activeCusSet.add(customerobj.getCustomerID());
+								chatID = customerobj.getCustomerID();
 							}
 						}
 						// Employee section
@@ -141,7 +140,7 @@ public class ClientHandler extends Thread implements Runnable {
 							} else {
 								sendloginValue(80);
 								returnEmployee(employeeObj);
-								activeEmpSet.add(employeeObj.getStaff_Id());
+								chatID = employeeObj.getStaff_Id();
 							}
 						} else {
 							objOs.writeObject("UNKNOWN");
@@ -161,11 +160,21 @@ public class ClientHandler extends Thread implements Runnable {
 						 * if(!clienthandler.customerobj.getCustomerID().equals(customerobj.
 						 * getCustomerID())) { clienthandler.send(onlinemsg); } }
 						 */
+						clientlist =  server.getClientList();
+						
 						break;
 						
 					case "Message":
-						Messages message = (Messages) objIs.readObject();
-						System.out.println(message);
+						flag= false;
+						//message = (Messages) objIs.readObject();
+						//System.out.println("My "+message);
+						break;
+						
+					case "chat":
+						String userID = (String) objIs.readObject();
+						new PrepareCLientList().start();
+						new MsgRead(connectionSocket,userID).start();
+						flag= false;
 						break;
 					}
 				} catch (ClassNotFoundException e) {
@@ -422,8 +431,11 @@ public class ClientHandler extends Thread implements Runnable {
 		return empObj;
 	}
 	
+	public String getChatID() {
+		return this.chatID;
+	}
 	
-	
+
 	class MsgRead extends Thread { // this class reads the messages coming from client and take appropriate actions
 		Socket s;
 		String Id;
@@ -434,20 +446,25 @@ public class ClientHandler extends Thread implements Runnable {
 
 		@Override
 		public void run() {
-			while (!clientColl.isEmpty()) {  // if allUserList is not empty then proceed further
+			while (!clientlist.isEmpty()) {  // if allUserList is not empty then proceed further
 				try {
-					String message = new DataInputStream(s.getInputStream()).readUTF(); // read message from client
+					System.out.println("read message");
+					//Messages messageobj = (Messages) (new ObjectInputStream(connectionSocket.getInputStream()).readObject()); // read message from client
+					Messages messageobj = (Messages) objIs.readObject(); // read message from client
+					String message = messageobj.getMessageBody();
 					System.out.println("message read ==> " + message); // just print the message for testing
 					String[] msgList = message.split(":"); // I have used my own identifier to identify what action to take on the received message from client
 														// i have appended actionToBeTaken:clients_for_receiving_msg:message
 					
 					if (msgList[0].equalsIgnoreCase("multicast")) { // if action is multicast then send messages to selected active users
-						String[] sendToList = msgList[1].split(","); //this variable contains list of clients which will receive message
-						for (String usr : sendToList) { // for every user send message
+						String sendToList = msgList[1]; //this variable contains list of clients which will receive message
+						for (ClientHandler cli: clientlist) { // for every user send message
 							try {
-								if (SS.activeUserSet.contains(usr)) { // check again if user is active then send the message
-									new DataOutputStream(clientColl.get(usr).getOutputStream())
-											.writeUTF("< " + Id + " >" + msgList[2]); // put message in output stream
+								if (sendToList.equalsIgnoreCase(cli.getChatID())) { // check again if user is active then send the message
+									//new ObjectOutputStream(clientColl.get(sendToList).getOutputStream()).writeObject("< " + Id + " >" + msgList[2]);
+										cli.send("< " + Id + " >" + msgList[2]);	
+									System.out.println("pp");
+									//cli.send("< " + Id + " >" + msgList[2]); // put message in output stream
 								}
 							} catch (Exception e) { // throw exceptions
 								System.out.println("An error occurred in our chat server. Please try again later");	
@@ -455,30 +472,32 @@ public class ClientHandler extends Thread implements Runnable {
 							}
 						}
 					} else if (msgList[0].equalsIgnoreCase("exit")) { // if a client's process is killed then notify other clients
-						SS.activeUserSet.remove(Id); // remove that client from active usre set
+						//activeUserSet.remove(Id); // remove that client from active usre set
+
 						//msgBox.append(Id + " disconnected....\n"); // print message on server message board
 
-						new PrepareCLientList().start(); // update the active and all user list on UI
+						//new PrepareCLientList().start(); // update the active and all user list on UI
 
-						Iterator<String> itr = SS.activeUserSet.iterator(); // iterate over other active users
-						while (itr.hasNext()) {
-							String usrName2 = itr.next();
-							if (!usrName2.equalsIgnoreCase(Id)) { // we don't need to send this message to ourself
-								try {
-									new DataOutputStream(clientColl.get(usrName2).getOutputStream())
-											.writeUTF(Id + " disconnected..."); // notify all other active user for disconnection of a user
-								} catch (Exception e) { // throw errors
-									e.printStackTrace();
-								}
-								new PrepareCLientList().start(); // update the active user list for every client after a user is disconnected
-							}
-						}
+
+						//Iterator<String> itr = activeCusSet.iterator(); // iterate over other active users
+						//while (itr.hasNext()) {
+							//String usrName2 = itr.next();
+							//if (!usrName2.equalsIgnoreCase(Id)) { // we don't need to send this message to ourself
+								//try {
+									//new DataOutputStream(clientColl.get(usrName2).getOutputStream())
+											//.writeUTF(Id + " disconnected..."); // notify all other active user for disconnection of a user
+								//} catch (Exception e) { // throw errors
+								//	e.printStackTrace();
+								//}
+								//new PrepareCLientList().start(); // update the active user list for every client after a user is disconnected
+							//}
+						//}
 						//activeDlm.removeElement(Id); // remove client from Jlist for server
 						//activeList.setModel(activeDlm); //update the active user list
 					}
 				} catch (Exception e) {
-					System.out.println("An error occurred in our chat server. Please try again later");	
-					Security.logger.error("An Exception was caught in the run in the MsgRead class");
+					//System.out.println("An error occurred in our chat server. Please try again later");	
+					//Security.logger.error("An Exception was caught in the run in the MsgRead class");
 				}
 			}
 		}
@@ -488,28 +507,26 @@ public class ClientHandler extends Thread implements Runnable {
 		@Override
 		public void run() {
 			try {
-				clientlist =  server.getClientList();
+				
 				String ids = "";
-				Iterator<String> itr = SS.activeUserSet.iterator(); // iterate over all active users
-				while (itr.hasNext()) { // prepare string of all the users
-					String key = itr.next();
-					ids += key + ",";
+				for(ClientHandler handle:clientlist) {
+					if(chatID.subSequence(0, 3).toString().equalsIgnoreCase("CUS")) {
+						String key = handle.getChatID();
+						if(key.subSequence(0, 3).toString().equalsIgnoreCase("EMP")) {
+							ids += key +",";
+						}
+					}
 				}
 				if (ids.length() != 0) { // just trimming the list for the safe side.
 					ids = ids.substring(0, ids.length() - 1);
 				}
-				itr = SS.activeUserSet.iterator(); 
-				while (itr.hasNext()) { // iterate over all active users
-					String key = itr.next();
-					try {
-						new DataOutputStream(clientColl.get(key).getOutputStream())
-								.writeUTF(":;.,/=" + ids); // set output stream and send the list of active users with identifier prefix :;.,/=
-					} catch (Exception e) {
-						System.out.println("An error occurred in our chat server. Please try again later");	
-						Security.logger.error("An Exception was caught in the run in the PrepareCLientList class");
-					}
+
+				for(ClientHandler handle:clientlist) {
+					handle.send(":;.,/=" +ids);
 				}
+				
 			} catch (Exception e) {
+				e.printStackTrace();
 				System.out.println("An error occurred in our chat server. Please try again later");	
 				Security.logger.error("An Exception was caught in the run in the PrepareCLientList class");
 			}
